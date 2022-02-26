@@ -1,0 +1,31 @@
+								Code Quality: Code Coverage
+
+1. What's code coverage?
+
+	Ensure the code is doing what it's supposed to do. Code coverage tell you how many code have been cover when running automated test. It tells you the percentage of code covered.
+
+
+2. What's a good coverage number?
+
+	Combine all the tests, automated and manual, we want to have a coverage as closs to 100% as possible
+
+
+3. Is this really useful?
+
+	It draws you into code, shows you some problem areas. 
+
+	Low value of coverage indicates a problem but a high value of coverage doesn't mean the code is good or even the tests are covered all the situations.
+
+
+4. Why care about it?
+
+	It makes us go deep into the code to understand why it got poor coverage. It help us to write better code and maybe refactor the code and the quality of the code
+	
+
+								Quiz Question
+
+1. Quick feedback from regression tests are very valuable, to know things did not fall apart
+2. High code coverage does NOT means the tests are really good
+3. High code coverage not necessarily means we have a great quality of code
+4. Strive for a high code coverage from meaningful tests
+5. Code coverage from unit tests does NOT have to be 100%

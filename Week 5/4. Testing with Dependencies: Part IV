@@ -1,0 +1,36 @@
+							Testing with Dependencies: Part IV:
+
+1. To mock or not to mock?
+
+	The purpose of mocking is really to make the test easier to write and faster to run. If we are already able to write the test easily and run them fast without mocks, don't bother writing mocks
+
+	Use mock as an exception than a norm. If you have a lot of mocks in your application, thats the sign of word design you won't have the least amout of mocks to get away with
+
+	Only mock if mock makes your test faster. Don't mock code that is fast, predictable, easy to wokrk with, easily to set up with. 
+
+
+2. What to mock?
+
+	You mock code that you are dependent on directly and only if it help you by speeding up your test and making your test more reliable and predictable
+
+
+3. When not to mock?
+
+4. What about databases?
+
+5. Don't create one mock per dependecy, one per usage
+
+6. Knock out before you mock out
+
+	Avoid creating mock if you can postpone or move around so that you can create a fewwer mocks. 
+
+	Rather than doing dependency inversion or dependency injection, we would rather do dependecy elimination. 
+
+
+								QUIZ QUESTION
+
+1. Reducing dependecy will have a direct effect on reducing mocks
+2. We should try to use mocks as an exception than a norm
+3. Class A that we're testing depends on class B which in turns depends on class C. In this case we may need to mock class B
+4. An alternative to mocking when working with databases is to configure the tests to run the transactions in roll-back only mode
+5. It's far better to remove dependecy than to decouple and inject dependencies

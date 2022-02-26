@@ -1,0 +1,46 @@
+							Testing with Dependencies: Part II:
+
+1. Working around dependencies
+
+2. A problem
+
+	- currencyExchange
+
+3. Creating tests
+
+	Task:
+		- markdown by 2% a value of 100
+		- markdown by 2% a value of 50
+		- markdown by 2% a value of 97
+		- markdown by 2% a value of 0
+		- get rate when there is no vendor //this is when dependency comes in
+		- get rate when there is one vendor
+		- get rate when there is one vendor with erro
+		- get rate when two vendors with first having higher rate
+		- get rate when two vendors with second having higher rate
+		- get rate shoud log error when a vendor fails
+
+4. Starting with tests
+
+5. Ways to inject
+
+	- constructor based injection
+		we pass the mock object as a value through the contructor.
+		Constructor based injection is effectively a static or inflexible in that we set the value during construction, it's really hard to change it afterwards and also it is not that flexible to work with multiple values. 
+	- setter based injection
+		it easy to vary this as well dynamically and so that gives quite a bit of flexibility. You can make this setter method a protected method and have it available only through that test and during integration maybe you can pre create object if it makes sense
+	- factory based injection
+		often used with tools like Spring or JUICE, which is a google based injection framework. This injection add a little bit more complexity and if we don't care for that complexity without much value we would rather do a simple setter based injection
+	- overriding based injection
+
+6. Hand toss a mock
+
+
+								QUIZ QUESTION
+
+1. Setter based injection provides more flexibility than constructor based injection
+2. The class being tested will neven know about the mocks, it's purely managed by the tests
+3. The interface we add to decouple the dependecy should be part of the Production Library not Test library
+4. We should not hit dependecy head on, but try to move along first with some tests that can help decouple our code
+5. The mocks we create should be part of test library not production library
+

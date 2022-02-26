@@ -1,0 +1,370 @@
+						Flavors of Polymorphism
+
+1. What's Polymorphism 
+
+	Polymorphism say that when you invoke a method on an object, the method that is invoke is not based on the type of the reference but the type of the object at runtime. 
+
+	When call a method on a reference, but the method that's called is based on the type of the object at runtime not the type of the reference you hold onto at compile time.
+
+
+2. What's the big deal?
+
+	Polymorphism provides extensibility, you can come back add any number of classes
+
+---JAVA CODE---
+public class Vehicle {
+	public void drive(int distance) {
+		System.out.println("Vehicle driving...");
+	}
+}
+
+
+---JAVA CODE---
+public class Car extends Vehicle {
+	@Override
+	public void drive(int distance) {
+		System.out.println("driving a car...");
+	}
+}
+
+
+
+---JAVA CODE---
+public class Truck extends Vehicle {
+	@Override
+	public void drive(int distance) {
+		System.out.println("driving a truck...");
+	}
+}	
+
+
+
+---JAVA CODE---
+public class Main {
+	public static void driveAround(Vehicle vehicle) {
+		vehicle.drive(10);
+	}
+
+	public static void main(string[] args) {
+		Car car = new Car();
+		
+		driveAround(car);         //driving a car..
+		driveAround(new Truck());	 //driving a truck
+	}
+}
+
+
+
+3. Inheritance?
+
+	Inheritance doesn't lead to polymorphism, or polymorphism doesn't require inheritance. Java, C++ and C# rely heavily on inheritance. But that does not mean we cannot reach polymorphism without inheritance, it is just a little harder. 
+
+
+4. Static vs. Dynamic
+
+	Java, Haskell, Scala is statically typed. In a static languages, oftentimes we use inheritance as a gateway to arrive at polymorphism.
+
+
+
+---RUBY CODE---
+class Vehicle
+	def drive(distance)
+		puts "Vehicle driving..."
+	end
+end
+
+
+class Car
+	def drive(distance)
+		puts "Car driving..."
+	end
+end
+
+
+def driveAround(vehicle)
+	vehicle.drive(10)
+end
+
+driveAround(Vehicle.new)   #Vehicle driving
+driveAround(Car.new)       #Car driving
+
+	---
+
+#klass = Vehicle #polymorphic 
+driveAround(Vehicle.new)   #Vehicle driving
+#klass = Car
+driveAround(Car.new)       #Car driving
+
+
+
+	The code above works without inheritance because Ruby only cares about the fact that the method "drive" is available on an instance. It doesn't care what the type of the instances is. It cares more about that instance having that method.
+
+	"new" is polymorphic in the case of Ruby vs. "new" is not polymorphic in C++, C, C# or Java. 
+
+
+---JAVASCRIPT CODE---
+var Car = function() {
+	this.drive = function(distance) {
+		console.log("Car driving...")
+	}
+}
+
+var Truck = function() {
+	this.drive = function(distance) {
+		console.log("Truck driving...")
+	}
+}
+
+var driveAround = function(vehicle) {
+	vehicle.drive(10);
+}
+
+driveAround(new Car());		#Car driving...
+driveAround(new Truck());		#Truck driving...
+	
+
+
+	Polymorphism doesn't care about inheritance. Polymorphism say go ahead and call a method and I'll call the method based on the type of the object at runtime. 
+
+
+
+5. Weak vs. Strong
+
+	Weak typing is garbage in garbage out, you don't know what type you are dealing with. Strong typing is where the type checking does happen but happens at runtime.
+
+
+
+6. Polymorphism vs Overloading
+
+	We do not need overloading to achieve polymorphism. Because overloading often is either not present in some languages or overloading is something that is decided at compile time using core analysis rather than determining the type at runtime and invoking the methods
+
+
+---JAVA CODE---
+public class Vehicle {
+	public void drive(int distance) {
+		System.out.println("Vehicle driving...");
+	}
+
+	public void drive(int distance, int mode) {
+		System.out.println("Vehicle driving with mode...");
+	}
+}
+
+
+	Overloading is simply a method with the same name but for all practical purposes, it's a very different method.
+
+
+
+7. Multimethods
+
+
+---JAVA CODE---
+public class ValueConverter {
+	public int convert(int value) {
+		System.out.println("Value converter called with " + value);
+		return value * 2;
+	}
+}
+
+---JAVA CODE---
+public class IntConverter extends ValueConverter {
+	@Override
+	public int convert(int value) {
+		System.out.println("IntConverter called with " + value);
+		return 0;
+	}
+}
+
+---JAVA CODE---
+public class DoubleConverter extends ValueConverter {
+	@Override
+	public double converter(double value) {
+		System.out.println("Double Converter called with " + value);
+		return 0;
+	}
+}
+---JAVA CODE---
+public class Main {
+	public static void useConverter(ValueConverter converter) {
+		converter.covert(2);
+	}
+
+	//Figure out the method to call at runtime.
+	//The method you call should be on the object of the real type not the perceived reference tyoe
+	//The method should receive an int
+
+
+	public static main(String[] args) {
+		ValueConverter converter = new ValueConverter();
+		userConverter(converter);
+
+		ValueConverter converter2 = new IntConverter();
+		useConverter(converter2);
+
+		ValueConverter converter3 = new DoubleConverter();
+		useConverter(converter3);
+
+	}
+}
+
+	The code above will print:
+
+	Value Converter called with 2
+	IntConverter called with 2
+	Value Converter called with 2
+
+	This happen because when you call the method "converter", the converter say i've got a 2 and I want a method convert that takes an int and as a result because DoubleConverter doesn't have a method that takes an int, it decided to call the method in the ValueConverter. This is still polymorphic, polymorphic meaning it says at runtime, call the method on the object of that type, so it is calling the method on the object of DoubleConverter but the method it's calling is a one that takes an int
+
+
+
+
+
+
+---JAVA CODE---
+public class ValueConverter {
+	public double convert(double value) {
+		System.out.println("Value converter called with " + value);
+		return value * 2;
+	}
+}
+
+---JAVA CODE---
+public class IntConverter extends ValueConverter {
+	@Override
+	public int covert(int value) {
+		System.out.println("IntConverter called with " + value);
+		return 0;
+	}
+}
+
+---JAVA CODE---
+public class DoubleConverter extends ValueConverter {
+	@Override
+	public double converter(double value) {
+		System.out.println("Double Converter called with " + value);
+		return 0;
+	}
+}
+---JAVA CODE---
+public class Main {
+	public static void useConverter(ValueConverter converter) {
+		converter.convert(2);
+		//converter.convert(2.0);  compile time
+	}
+
+	//Figure out the method to call at runtime.
+	//The method you call should be on the object of the real type not the perceived reference tyoe
+	//The method should receive an double
+
+	//Method called is based on the type of the object at runtime.
+	//The parameter of the method is decided based on the type of the reference
+
+
+	public static main(String[] args) {
+		ValueConverter converter = new ValueConverter();
+		userConverter(converter);
+
+		ValueConverter converter2 = new IntConverter();
+		useConverter(converter2);
+
+		ValueConverter converter3 = new DoubleConverter();
+		useConverter(converter3);
+
+	}
+}
+		
+	
+	The code above output:
+	
+	Value Converter called with 2.0
+	Value Converter called with 2.0
+	Double Converter called with 2.0
+	
+
+
+
+
+
+
+---JAVA CODE---
+public class ValueConverter {
+	public double convert(double value) {
+		System.out.println("Value converter called on " + this + " with " + value);
+		return value * 2;
+	}
+}
+
+---JAVA CODE---
+public class IntConverter extends ValueConverter {
+	@Override
+	public int covert(int value) {
+		System.out.println("IntConverter called on " + this + " with " + value);
+		return 0;
+	}
+}
+
+---JAVA CODE---
+public class DoubleConverter extends ValueConverter {
+	@Override
+	public double converter(double value) {
+		System.out.println("Double Converter called on " + this + " with " + value));
+		return 0;
+	}
+}
+---JAVA CODE---
+public class Main {
+	public static void useConverter(ValueConverter converter) {
+		converter.convert(2);
+		//converter.convert(2.0);  compile time
+	}
+
+	//Figure out the method to call at runtime.
+	//The method you call should be on the object of the real type not the perceived reference tyoe
+	//The method should receive an double
+
+	//Method called is based on the type of the object at runtime.
+	//The parameter of the method is decided based on the type of the reference
+
+
+	public static main(String[] args) {
+		ValueConverter converter = new ValueConverter();
+		userConverter(converter); //on ValueConverter with double
+
+		ValueConverter converter2 = new IntConverter();
+		useConverter(converter2); //on IntConverter with double
+
+		ValueConverter converter3 = new DoubleConverter();
+		useConverter(converter3);	  //on DoubleConverter with double
+
+	}
+}
+
+
+	The code above output:
+
+	Value Converter called on com.company.ValueConverter@74sda with 2.0
+	Value Converter called on com.company.IntConverter@85gvaa with 2.0
+	Double Converter called on com.company.DoubleConverter@89gaga with 2.0
+
+
+	The parameter decision is made at compile time, the function is decided at runtime based on the object. We can fix this problem with multimethods.
+
+
+	Polymorphism:
+	Pick the method based on the type of the target object at runtime
+
+	Multimethod:
+	Pick the method based on the type of both the target object and the type of the parameters at runtime
+
+
+
+					QUIZ QUESTION:
+
+1. Statically typed languages often can't provide polymorphism without inheritance.
+2. Languages that support polymorphism does not always  support multimethods
+3. Inheritance and polymorphism are very critical for object-oriented programming.
+4. Polymorphism looks for the type of the instance at compile time instead of the type of the reference at runtime.
+5. Take away polymorphism, there's not much exciting about object-oriented programming.
+
+
+

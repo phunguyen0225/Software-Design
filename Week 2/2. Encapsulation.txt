@@ -1,0 +1,310 @@
+					Effective Encapsulation Part 1
+
+1. Information Hiding
+
+	The main purpose of encapsulation is to reduce cost of code change. Encapsulating a particular logic or a piece of code around a certain functions that operate on it can contain the effect of that change exploding or rippling through the system
+
+
+2. Encapsulating a field
+
+	when you create fields, if they are final, you have a choice of making the "public final" or "private final" depending on whether you have an intention to modify the implementation later on or maybe not. 
+
+
+3. Access boundaries
+
+
+4. It's not about security
+
+	Encapsulation doesn't give you guarantee that this object would be protected from the security point of view.
+
+	Encapsulation is really not about security but encapsulation is really about making sure that the code is maintainable, that a change to a particular variables implementation does not ripple through the code, it also helps to preserve invariant, but not by ensuring that malicious access won't go through but more so for accidental access. 
+
+
+5. Real purpose of encapsulation
+
+	1. Minimize cost of change
+		a change to a variable does not ripple through the system and cause havoc. The first and primary most purpose encapsulation is to minimize the effect of code change, it gives the ability for us to evolve the application. 
+
+	2. Preserve invariant
+
+----JAVA CODE Main.java----
+package com.company;
+
+import java.lang.reflect.Field;
+
+public class Main {
+
+    public static void main(String[] args) throws NoSuchFieldException, IllegalAccessException {
+        Car car = new Car(2015);
+
+        Field miles = Car.class.getDeclaredField("miles");
+        miles.setAccessible(true);
+        miles.set(car, 60);
+
+        System.out.println(car.getMiles());
+
+    }
+}
+//In Java (in C++ or C#) encapsulation is at the class level
+//In Ruby, encapsulation is at the instance level and not class level
+
+
+----JAVA CODE Car.java----
+package com.company;
+public class Car {
+
+    public final int year;
+    private int miles;
+
+    public Car(int theYear) {
+        year = theYear;
+        miles = 0;
+    }
+
+    public Car(int theYear, int distance) {
+        year = theYear;
+        miles = distance;
+    }
+
+    public int getMiles() {
+        return miles;
+    }
+
+    public void drive(int distance) {
+        if(distance > 0)
+            miles += distance;
+    }
+
+    public void tow(int distance, Car otherCar) {
+        otherCar.miles += distance;
+        miles += distance;
+    }
+}
+
+
+
+
+
+
+					QUIZ QUESTION PART 1:
+1. In Java, encapsulation is at the class level, in Ruby, it's at the instance level, In Scala it can be at both.
+2. Encapsulation is not only about hiding data, but it's hiding implementation also.
+3. Encapsulation is not about security, it is to minimize the effect and cost of code change.
+4. In C# and Java, we can use the features of reflection to modify private fields
+
+
+
+
+
+
+					Effective Encapsulation Part 2
+1. Preserving invariants
+
+	An invariant of a proper object is a never changing property or universal truth about that particular object. Property a condition or a particular constraint on a property that you would expect to be true all the time. Example: age is only a increase constraint. 
+
+	Object encapsulation, encapsulation helps to preserve the invariants. Encapsulation helps to makes sure objects transition from one valid state to another. So the constructor of an object creates the object in a valid state and encapsulation make sure that the object goes from one valid state to another valid state to another valid state, and is never found in an invalid state at any given time. This is one of the biggest benefits of encapsulation
+
+	public void drive(int distance) {
+        if(distance < 0)
+            throw new RuntimeException("Invalid distance provided");
+        _miles += distance;
+    	}
+
+
+
+2. Minimizing cost of change
+	   and
+3. Evolving implementation
+
+---JAVA CODE Inventory.java----
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+public class Inventory {
+    private List<Book> _books = new ArrayList<>();
+
+    public void add(Book book) {
+        _books.add(book);
+    }
+    public List<Book> getBooks() {
+        return _books;
+    }
+}
+
+
+----JAVA CODE Main.java----
+package com.company;
+import java.util.List;
+public class Main {
+    public static void main(String[] args) {
+        Inventory inventory = new Inventory();
+        inventory.add(new Book());
+        List<Book> books = inventory.getBooks();
+        System.out.println(books.size());
+    }
+}
+
+	Encapsulation works a lot better when we not only protect and hide fields, but when we hide implementation details. So encapsulation is the separation of the interface from the implementation. We are exposing an interface rather than an implementation, so we can vary the implementation. 
+	
+	When we create classes, we shouldn't create an encapsulation interface, so that we can vary the implementation. And the users of the abstraction can also very the implementation they're going to use at will as it make sense.
+
+	Encapsulation protected not just the variable name but also encapsulation was used to protect or hide the implementation details as well
+
+
+
+4. Mangage concurrency 
+
+----BAD JAVA CODE - Main.java-----
+package com.company;
+import java.util.List;
+public class Main {
+    public static void main(String[] args) {
+        Inventory inventory = new Inventory();
+
+        for (int i = 0; i < 5; i++)
+            inventory.add(new Book());
+
+        List<Book> books = inventory.getBooks();
+        books.remove(2);
+        books.add(new Book());
+        books.add(new Book());
+        System.out.println(books.size());
+    }
+}
+
+	This code above is bad because we found a way to breach encapsulation and directly manipulate inventory without going through the inventory class itself. In order to protect that, we would probably have to come back to the add method and we would have to probably synchronize this to make sure that the method change doesn't happen uncontrolled and multiple threads don't run into each other and break encapsulation.
+
+	To manage concurrency, we would often need effective encapsulation, so we would not only have to make the variable private, hide its implementation details, but also synchronize the methods on the class to make sure that the access to it is properly managed.
+
+	Encapsulation is very vital from the point of view of concurrency, it's impossible to write concurrent code correctly, it's already difficult but it's impossible to write concurrent code correctly if we do not have encapsulation, and if we don't have a way to protect the invariant of the object and to avoid waste conditions.
+
+
+
+
+
+5. Safe iteration
+
+	How do we really make sure that the accessor from the outside doesn't end up violating and messing with objects like this? 
+
+
+----JAVA CODE Inventory.java-----
+public class Inventory {
+    private List<Book> _books = new ArrayList<>();
+
+    public void add(Book book) {
+        _books.add(book);
+    }
+    public List<Book> getBooks() {
+        return Collections.unmodifiableList(_books); //we cannot modify the list that we are obtaining from this inventory
+    }
+}
+
+----JAVA CODE Main.java----
+package com.company;
+import java.util.List;
+public class Main {
+    public static void main(String[] args) {
+        Inventory inventory = new Inventory();
+
+        for (int i = 0; i < 5; i++)
+            inventory.add(new Book());
+
+        List<Book> books = inventory.getBooks();
+	books.remove(2); //error   cannot modify collection in inventory
+        System.out.println(books.size());
+        for(Book book : books) {
+            System.out.println(book);
+        }
+    }
+}
+
+
+	It allow for iteration quite effectively, however it doesn't allow us to modify the collection in any way. This is good from the POV of the inventory class, it makes sure that the user of the class doesn't mess with things, BUT unfortunately, though there are other few problems we need to worry about. 
+
+
+----JAVA ERROR CODE Main.java----
+public class Main {
+    public static void main(String[] args) {
+        Inventory inventory = new Inventory();
+
+        for (int i = 0; i < 5; i++)
+            inventory.add(new Book());
+
+        List<Book> books = inventory.getBooks();
+        System.out.println(books.size());
+        int index = 0;
+        for (Book book : books) {
+            System.out.println(book);
+            index++;
+            if (index == 2) inventory.add(new Book());
+        }
+    }
+}
+
+	This code give a "Exception in thread "main" java.util.ConcurrentModificationException". There's no concurrency at all in this code other than one single thread running through, but what they mean by concurrency is while you are iterating through the collection, at the same time, concurrently, you're also trying to add into the same collection. 
+
+----JAVA BAD CODE Main.java---
+public class Main {
+    public static void main(String[] args) {
+        Inventory inventory = new Inventory();
+
+        for (int i = 0; i < 5; i++)
+            inventory.add(new Book());
+
+        List<Book> books = inventory.getBooks();
+        System.out.println(books.size());
+        for (int i = 0; i < books.size(); i++) {
+            System.out.println(books.get(i));
+            if(i == 2) inventory.add(new Book());
+        }
+    }
+}
+
+	The reason is that the for loop was not iterating through the collection, it was fetching an element at an index over and over and over, in this case though we're using the for each, which is using an iterator, so the iterator is maintaining a state and saying here's a collection and it's viewing through one element in the collection at a time. In the meantime you went in and insert or remove from the collection but iterator gets all messed up and that's why we got the exception.
+
+	Unfortunately, while our encapsulation was making the field private, our encapsulation was not only make the field private but we exposed only an interface, and we make sure that we are giving an unmodifiable list.
+
+
+	One way to fix this is we should not return a unmodifiabllist BUT we should return an unmodifiable CLOSE of the list. If we go this route, the user of the class would not get the concurrent modification exception and we would not be exposing our implementation.
+
+---JAVA GOOD CODE Inventory.java----
+public class Inventory {
+    private List<Book> _books = new ArrayList<>();
+
+    public void add(Book book) {
+        _books.add(book);
+    }
+    public List<Book> getBooks() {
+        List<Book> copyOfBook = new ArrayList<>();       //making a clone
+        copyOfBook.addAll(_books);                         //add all of the book into the clone list
+        return Collections.unmodifiableList(copyOfBook);     //return a unmodified clone list
+    }
+}
+
+
+	The advantages is that the iteration of the book is not interrupted by additions to the book. The disadvantage though is the iteration sees a slightly stale version. So while it's iterating, it only sees the values given in the beginning of the iteration, but if you modify something in the middle of iteration, you don't see it. Which is only fair because in a truly concurrent world, things do happen concurrently and you have to make those decisions whether the changes seen immediately or the changes seen on the next fetch. 
+
+
+	*Encapsulation as we saw is not about placing private in front of variables. Encapsulation is a lot more, encapsulation is very important to preserve the invariant. Encapsulation is very important to make sure the change doesn't ripple through the system. Encapsulation is very important to make sure we're able to evolve implementation. Encapsulation is very important to make sure the user can vary and alter and pick different implementations, it gives a choice for the users of abstraction. Encapsulation is also something that should help us ensure that there's a safe traversal and safe access. 
+
+
+
+
+
+
+							QUIZ QUESTION PART 2:
+
+1. A good encapsulation should expose only the interface and hide the implementation.
+2. Making all fields private is NOT a sufficient for encapsulation.
+3. To ensure safe navigation, we need more than encapsulation.
+4. Good encapsulation should ensure objects never land in an invalid state.
+5. Encapsulation is very important to avoid race conditions, evolve the implementation, help user switch implementations, and preserve the invariants.
+
+
+
+
+
+
+
+

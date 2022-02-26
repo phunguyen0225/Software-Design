@@ -1,0 +1,147 @@
+						Pleasures and Perils of Inheritance
+1. Relationship between abstractions
+	
+	Abstraction are representation of ideas concepts unintangible and intangile things as well are represented in abstraction. Abstraction rarely live in isolation, abstractions often relate to other abstractions. This is called coupling. We want to minimize coupling as much as we can. 
+
+2. Inheritance 
+
+	- What's that?
+		
+		Inheritance is where a particular abstractions brings along all de details of another abstractions and built on top of that.
+
+
+	- Main purpose
+		
+		Inheritance promotes reuse but it also increase coupling. It's a worse form of coupling because when you inherit from a class, you are coupled to the concrete implementations in the class. 
+
+		Inheritance unfortunately problematic because it increase the poorest power coupling between class and its base class. One disadvantage of this particular inheritance is that it increase a burden of coupling. 
+
+
+	- Benefits and burdens
+
+		Inheritance increase the burden of the contractual obligation, it's not a reuse that comes for free into the reuse that imposes a contractor constraint on the implementer which receives the reuse
+
+	
+	- Interface vs. Implementation inheritance
+
+		A interface gives you a contract without any implementation detail, so as a result when you extends a class you have a much more deeper coupling or a stronger coupling than a loose coupling that you get when you implement an interface
+
+		It is easier to implement an interface and follow a contractual obligation than implement a class and follow that obligation. For that reason, Interface inheritance is a lot more beneficial than implementation inheritance
+
+		Interface inheritance leads to loose coupling, implementation inheritance leads to stronger coupling. We want more loose coupling rather than strong coupling as much as we can. Because loose coupling is really more extensible than strong coupling
+
+
+----JAVA CODE Vehicle.java----
+public interface Vehicle {
+	void drive(int distance);
+}
+
+
+
+----JAVA CODE Car.java-----
+public class Car implements Vehicle {
+	@Override
+	public void drive(int distance) {
+
+	}
+}
+
+
+	- Inheritance vs Delegation
+		
+		If a Class B should be used anywhere an object of a class A is used -> then use inheritance. Otherwise, for reuse, use delegation. If an object of B should use an implementation of A, then use delegation. 
+		
+		Open-closed principle is a software module most be open for extension without modification.
+
+
+----RUBY CODE----
+class Worker {
+	def work() { println "working..."}
+	def analyze() { println "analyzing..."}
+	def writeReport() { println "writing..."}
+}
+
+class Manager {
+	@Delegate Worker worker = new Worker()
+}
+
+def manager = new Manager()
+manager.work()
+manager.analyze()
+manager.writeReport()
+
+
+		It is better to use delegation than inheritance but unfortunately not all languages make delegation as easy to use as inheritance. That's one of the reason why inheritance is one of the most overused concepts, if languages supported delegation more natively, then you would be using lot less inheritance. But even otherwise, we should only use inheritance only when it's the right choice and not at other times. 
+
+
+	-When to use inheritance?
+
+		When you inherit a class from another class, that is a static nature, that inheritance is bound at compile time. Delegation is dynamic, you can point to an object now and it can change to another object later on. While inheritance is static, the delegation is dynamic. You want more dynamic behavior in your code because it gives more extensibility and flexibility. 
+
+		If you are going to be using inheritance, you are binding to this relationship statically at compile time, gives you less flexibility
+
+		Inheritance is very powerful, it promotes reuse but it's static in nature, it increases coupling and there are times when inheritance is the right choice. But there's a lot of times when delegation is a better choice. We should try to use delegation more often than using inheritance itself.
+
+
+
+
+
+
+
+						QUIZ QUESTION:
+
+1. All languages that have objects or classes does not always have class-based inheritance.
+2. Inheritance promotes reuse, but at the same time also increases coupling.
+3. In some languages, interfaces may contain two kinds of methods, required and optional.
+4. A 'has-a' represents aggregation, while a 'is-a' represent inheritance.
+5. Inheritance increases the contractual obligation of the implementors.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

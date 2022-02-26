@@ -1,0 +1,67 @@
+					Designing Software
+1. What's design?
+	- Design is a mapping of a certain concept into implementation.
+	- Trying to solve a certain problem we are trying to implement software systems which solve
+	  a certain problem in an application or in a particular domain so the idea really is to 
+          implement software in a way it not only solves the problem we have on our hand but it also
+	  becomes easier to maintain to keep up with change as it happen.
+
+2. When should we create design created?
+	- BUFD (Big Up Front Design)
+	
+	- JID (Just in-time Design)
+		- We cannot really code software without actively designing the software, so design has
+		  to happen a little bit in the beginning of the feature implementation but quite oddly
+		  during the implementation of the feature itself. Evolve quite a bit along the way
+		  as develop software
+
+3. How to know if the design is good?
+	- User stories - features that you want to implement on your project  
+		1. Value 
+			- How valuable are these stories from user POV, from a customer POV
+				- If a story is not very valuable, give a very low value for the value
+				- If a story is extremely valuable, you cannot evven imagine having this 
+				  particular application without this feature, then the value should be
+				  extremely high
+		2. Impact
+			- How much impaact the sotry potentially would have on your architecture
+				- If a story have a higher impact you would want to work on it more 
+				  before the less impact story
+	- The design is good if the design is easy to evolve and make change and maintain it, to keep
+	  the cost of that change minimum.
+
+4. Influence of languages and paradigms on design
+	- The languages we choose influence the design because languages after all are a gateway to
+	  implement a certain programming paradigm
+	- The object-oriteted programming (OOP) paradigm is the most popular paradigm today but functional
+	  style of programming is gaining quite a bit of popularity as well.
+	- Whether you choose a language is predominantly object-orited or predominantly functional style or
+	  a language which is hybird (Scala).
+	- Hybird language support both object-oriented and functional style programming
+
+5. Why is it hard to develop software?
+	1. Who is using it?
+	2. Who pays for it?
+
+	- Relevance
+		- Only make relevant feature in the program
+	- Maintainability
+		- We want to do more maintenance on the software when it is easier to maintain
+
+6. Keeping the design simple
+	- What's simple?
+	- What's simple design?
+		- Easier to understand
+		- Easier to make change
+		- Doesn't have something that is irrelevant
+		- Fails more gracefully
+
+
+
+
+							Quiz Question
+1) Prioritize user stories based on business _value_ and architectural _impact_.
+2) A good design fails less gracefully
+3) If the quality of software is good, more maintenance we could do
+4) Software has entropy, it has a tendency to go bad
+5) Good design activities should include creating strategic design, tactical design and prototyping

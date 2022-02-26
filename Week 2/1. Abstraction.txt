@@ -1,0 +1,50 @@
+				Thinking about Abstraction
+
+1. what's a good abstraction?
+
+	Separate the irrelevant details or details we don't need to think about right now and narrow down and really separate out the important and essential details from those that are there that are to simply distract us. 
+
+	When it comes to modeling, we should really focus on what is it that's very very important and how can we represent it. Is this information relevant to my model. Is this information relevant to solving this application.
+
+	If we carry around a piece of information and abstraction that is not quite relevant or essential, we increase the burden of our abstraction and end up complicating the design quite a bit.
+
+	Is this really relevant and if it is relevant what is a better simpler way to represent in a way it can get our work done but also makes it easier to affect change in the future
+
+	A good abstraction only has minimum essential details. Any details that is not really part of the abstraction should be removed or postponed. So a good abstraction is fairly minimal. A good abstraction represent only what we care about, it doesn't represent the real-world object. It represent our perception of the real world object within the context, within the confines of what our application is supposed to do for us.
+
+	We have to know what application we are creating and then decide to create our perception of the abstraction depending on what the purpose for us. 
+
+	* A good abstraction has to be small, it's got to be focused, it's got to only give us the essential details, it should remove things that not really important.
+
+	* Abstraction should not be self-serving. Abstraction should be there to serve the usage of those models in the application. We are not really interested in modeling applications, we are interest in solving problems and use the model as a tool for the purpose.
+
+
+2. Domain
+	- our goal is not to model everything imaginable or everything that is tangible, but really focus on the domain.
+	- a domain give us details about a certain representation.
+	- a domain can be like medical field or insurance business and there are several entities and several representations and models in that system.
+
+
+
+3. Context
+4. Bounded context
+
+	Exclude a certain behavior, we can exclude a certain range of values. So not just the data but also the type of operation we may perform may simply fizzle out. By considering the bounded context, we are able to come up with a better abstraction and representation in the system.
+
+
+5. Domain Driven Design
+
+	How do we identiy abstractions based on the problem, the bounded context.
+
+
+
+
+
+
+
+						QUIZ QUESTION:
+1. Whether a concept is modeled as a class or not depends on bounded context
+2. Information we model should be relevant, not cool and complex
+3. Ignoring the usage pattern may lead to applications that are complex, get bloated and have poor performance
+4. Creation of an abstraction should be influence by usage, domain, context and application
+5. Variable names represent abstraction also they stand in for relevant concepts

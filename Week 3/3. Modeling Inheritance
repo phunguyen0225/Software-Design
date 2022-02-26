@@ -1,0 +1,142 @@
+											Modeling Inheritance
+
+1. is-a relationship
+
+2. base class or super class
+
+	provide some general concepts behavior abstraction implementation
+
+
+3. derived class or subclass
+
+	provide a specialization or something that really gives a alternate implementation
+
+
+4. inhertitaance is transitive
+
+	If a class inherits from a base class and that class inherits from another base class then the child class here inherits from the grandfather class of the grandparent class.
+
+--JAVA CODE--- 
+
+class Vehicle {}
+class Car extends Vehicle {}
+
+
+5. aggregation may be fixed, variable, or recursive
+
+	variable aggregation is where i could have multiple object
+
+	recursive aggregation is where you aggregates an objects which in turn aggregates another object and keep on going.
+
+
+6. generalization vs. inheritance
+
+7. breath vs. depth
+
+	We want this to be as thin and short as possible rather than being too deep or too bread in the sense because inheritance increases coupling and th more inheritance you have the worse off we are.
+
+	If the hierarchy is too deep, it really becomes too hard to maintain this level of coupling, something that changes way up "here" could modify it affect something way below "here". And people lose sight of what this hierarchy is once we get beyond seven or eight levels. 
+
+
+8. discriminator
+
+9. association vs. aggregation vs. inheritance
+
+	association and aggregation is a object level relationship. Inhertiance is a class level relationship
+
+--JAVA CODE--- 
+
+class Vehicle {}
+class Engine{}
+class Car extends Vehicle { //inheritance
+	Engine engine;     //aggregation / association
+}
+
+
+10. abstract classes
+
+	you can not have objects of this class, you cannot have direct instances of this class, it's purely used for extending purpose and substitution purpose. 
+
+
+11. interfaces
+
+	a collection of contract, things you could use. Interface give much more extensibility. There is no implementation in a interface
+
+	If you have an option to use between abstract base class and interface, use an interface instead of using an abstract base class
+
+
+12. extension vs restriction
+
+	When it comes to inheritance, we should extend rather than restrict. In other words, you shouldn't override the methods of a base class and start to throw arbitrary exceptions, you should't override a methods of base class and do something completely different in behavior than what expect in the base class
+
+	When we use inheritance, the behavior of the dervied class must be consistent with the published behavior of the based class 
+
+	When inherit, in other words, a derived class should not restrict or narrow or make things harder than what the base class provides, you should be really substitutable and if you're not being substitutable then that inheritance will eventually fail because the user of the base class will have trouble using an instance of the derived class
+
+
+13. prototypal inheritance
+
+	Is where we use inheritance but not class-based but prototype based. Prototype is just another object, so we inherit the features of another object rather than in the features of a class. 
+
+	In class based inheritance we inherit from a class. In prototypal inheritance we inherit from an object.
+
+
+---JAVA CODE: Class-based inheritance---
+
+class Vehicle {
+	public void drive() {
+		sout ("driving")
+	}
+} 
+
+class Car extends Vehicle {
+	
+}
+
+public class Main {
+	public static void main(String[] args) {
+		Car car = new Car();
+		car.drive(); 
+	}
+}
+
+	The code above is class-based inheritance because we extends Vehicle which the Car object call. 
+
+
+---Javascript: Prototype inheritance---
+
+var Vehicle = function() {
+	this.drive = function() {
+	console.log("driving..");
+	}
+}
+
+var Car = function() {
+}
+
+Car.prototype = new Vehicle()
+var car = new Car();
+car.drive();
+
+car.__proto__ = {drive: function()} {  //instance level
+	console.log("drive faster...");
+}
+
+car.drive(); 
+
+
+	Class-based inheritance is static, prototypa inheritance is very dynamic.
+
+
+
+								QUIZ QUESTION
+
+1. Inheritance is often used in design by contract
+2. So we don't restrict the subclass, Java chose the word "extends" to represent inheritance
+3. A diamond is used to represent aggregation while a triangle is used to represent inheritance
+4. Inheritance models a "is-a" and "kind-of" NOT "has-a" or "part-of"
+5. Javascript supports prototypal-inheritance while Java support class-based inheritance
+
+
+
+

@@ -1,0 +1,116 @@
+							Influences of TDD on Agility and Sustainability
+
+1. Projetcs already takes time! Why do it?
+
+2. What's Agile Development?
+
+	One word: Feedback
+
+3. Feedback is critical, bulding what they still want...
+
+	Feednack loop is what really helps us to create relevant working software, it's not important to just create software, it's not important to just create working sofware. It's important to create relvant working software
+
+	If your objective is to build what your customer wanted, you will fail. You need to build what they still want. 
+
+4. Circles of feedback
+	
+	Code meets your expectation (inner circle)
+
+	Code meets customer's expectation (outter circle)
+
+	We want both of this expectation in our developement
+
+
+5. Not about speed, but sustainable speed
+
+6. Cost of doing TDD
+
+	- Cost of testing
+
+		local optimization is where the interested is to reduce to programming cost.
+		global optimization is reducing the overall cost of developing and maintaing the software.
+
+	- Cost of learning and unlearning
+
+
+7. Cost of not doing it - insanity to repeat what does not work
+
+8. Dealing with entropy and software rot
+	
+	Software dealing with entropy, things change, things goes bads, things that works once don't work anymore and software is never actually done, we keep maintaining and imporving the software along the way every bit of the time. So as a result, we need to really focus on having these automated feedback loops. 
+
+
+9. Types of design
+
+	Test Driven Development (TDD) fits nicely into the tactical design phase. As we conceptualize what we want to build and then sit down to start building, writing the code, we can refine the design further and start building these tactical details along the way.
+
+	TDD helps us to drive this tactical design, so we don;t concede the entire design in the tactical design phase but we can save some ideas in the strategic design phase.
+
+
+10. Why Automation?
+
+	Do perform manual testing, but sparingly.
+
+
+11. How projects end up in waterfall?
+
+	Postponing the testing for the code to stabilize and the sign of this is we're doing way too many manual verifcations but if the tester foes manual testing once and extract everything that can be manually verified and extracts them as automated verifaction and authors test cases for a machine to run then every time the program modifies the code, the automated scripts can run the test, the tester is no longer needed for that purpose and the tester can now focus on authoring more test cases for various combinations and permutations based on the problem domain.
+
+	The investment here is the tester works towards improving the product by giving valuable feedback by authoring test cases by running manual test that are to be run manually and leave verification to the system to automatically verfied
+
+
+12. Tenets of testing
+
+	The job of a tester is to manually verify once and automate the verification for future executions that becomes extremely important
+
+13. Automation is key
+
+14. Type of Tests
+
+	- White-box testing
+
+		Tester is keenly interest in the design and implementation of the code. THis is why programmers do unit testing because unit testing falls into this category of white-box testing
+
+	- Black-box testing
+
+		Tester doesn't care about the details of the implementation of the design of the codem but the tester is interest in the external behavior, from the POV of the application, the problem that domain. This is where analysts and testers are involved in
+
+	Unit testing is generally a white-box testing. Functional and acceptance testing normally is black-box testing.
+
+
+15. Where to Automate and where not to
+
+	UI/Presentaion/...    - Watir, Selnium for autamoted testing at the UI level
+
+	Controls/Services/...  - bdd tools, FIT help with functional testing
+
+	Classes/Models/....   - Help with Unit testing
+
+
+	Unit testing predominantly is focused on meeting the programmers expectations and all the other test combined are focused on making sure the program is meeting the customer expectations.
+
+	- Automation at the right level to the right measure
+
+		Do as much testing at the low level as possible then at higher levels.  Pyramid structure not an ice cream cone. If we have a lot of testing layer at the bottom, we get a very quick feedback loop. 
+
+
+
+16. Most important thing needed for TDD
+
+	- Discipline 
+	- Learning and unlearning
+
+
+17. Why is it not popular?
+	
+	Because people does not have discipline to follow and learn.
+
+	I don't write automated tests because I have a lot of time, it is because I don't have enough time.
+
+											QUIZ QUESTION
+
+1. The job of a tester should not be to run verification, but to automate them
+2. A few important things to succceed with TDD are disciple, learning, unlearning and reviews
+3. For successful development, we need both the inner circle of expectations and the out circle of relevance
+4. UI level testing be can slow, hard and brittle NOT effective
+5. Automated testing is really about verification than testing

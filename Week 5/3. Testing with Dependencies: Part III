@@ -1,0 +1,44 @@
+							Testing with Dependencies: Part III:
+
+1. As tests grow
+
+2. Don't grow mocks
+
+3. Keeping mocks under tight leash
+
+	DO NOT DO THIS - ITS A MOCKING HELL
+
+	Code -------MOCK --> Dependent code
+
+
+	WHAT WE SHOULD DO
+
+
+	Code -------------------------->Dependent Code
+	/ |
+   /  |	
+  t1 --------------------
+  	  |
+  	  t2 -------------------- M2
+  	  |
+  	  |
+  	  t3 -------------------- M3
+
+
+  	A mock should really focus on only the specific interaction needed for that test to pass and not about all the complexities. 
+
+  	Create little mock object you need (M2, M3) to make those test cases to pass instead of creating one massive mock object and land into trouble with it
+
+
+4. Mocking without a mock
+
+5. Frameworks to ease the pain
+
+
+								QUIZ QUESTION
+
+1. We should NOT write unit tests on mocks to ensure they're implemented correctly
+2. When a test passes as soon as we write it we should examine to ensure the test passesd for the right reasons. It may also mean that the test is possible wrong
+3. For a given dependency, we could possibly have one mock per test, as necessary, with limited behavior or state to ensure the code passes the test on hand
+4. While a stub can help to stand in for another object, a spy can help to selectively replace methods on the object being tested
+5. To keep all the tests maintainble we should create mutilple mock for each dependency

@@ -1,0 +1,110 @@
+									Design Benefits of TDD: Part I
+
+1. How does tests influence design?
+
+	Writing test cases forces the code to become more modular, likewise if a code has a lot of dependencies it becomes really hard to write tests on it because it just becomes brittle because of these dependencies, and as a result we tend to decouple the code as well.
+
+	The code the is written through test ends up being more cohesive, narrow small focused, has a single responsibility and also has less coupling. So high cohesion and low coupling is one example of a good design code.
+
+	Unit testing is an act of design more than an act of verification 
+
+
+2. Types of Tests
+
+	Unit testing, white-box testing, black-box testing, functional testing, integration testing, acceptance testing.
+
+
+3. Types of Unit Tests: positive, negative, and exception
+
+	Positive test: the code is doing what it's supposed to do
+
+	Negative test: when the preconditions are not being met, or when the surrounding situations are not what you expect. When the state of the object is not in a valid state to receive that particular call, what do you do?
+
+	Exception: make sure the code is throwing the right kind of exceptions
+
+
+4. Performance tests
+
+	Code have to finish executing within a certain amount of time.
+
+	If your tester or business analysts says this code has to perform within 200 milliseconds ask them: please don't tell this to us, write a test for it. They could write an acceptance test which can then get translated into low-level unit tests at various different levels of the code and you can set up an environment with a certain test data with a certain configuration and say always make sure this code runs faster than this given particular time. 
+
+	There are tools to help us with this. One is called JUnitPerf: make sure that a piece of code not only passes the particular expectation but it completes within a certain duration of time as well. So having performance test is as important as any other type of test
+
+
+5. What's a unit test?
+
+	A unit test is a test on a unit of code. -> What's a unit of code?
+
+	A unit of code is a smallest piece of code that does useful work.
+
+	Don't write unit test for getters and setters. In fact, when writing the test, you should focus on testing behavior rather than state. If you start testing the state, you end up creating objects that are heavy on state. If you start testing the behavior, you move quickly towards the purpose of the application rather than polluting the objects with states. So focus on writing tests for behavior. 
+
+	A unit is not a class, a unit is often a method, a small function. 
+
+
+6. How we typically write classes?
+
+7. How TDD changes that?
+
+8. Test first vs. unit testing
+
+9. Test first coding
+
+	We write the test first and minimum code, just the bare minimum. Sometime we fake the result and give the reponse so that test would pass. By doing this, we are really helping to structure the code, form the skin and then the guts of the function that we are trying to model, the one we are trying to design.
+
+
+10. Benefits
+
+	- reverts : the way we think of the code, rather than rushing eagerly to create the implementation, we grow the skin, the interface and then once we got something nice and usable and practical, then we put minimum details in it. It helps to keep things minimum and practical from that POV. 
+
+	- robustness : this is the regression benefits we get out of it. Anytime you add or change the code, the test immediately check and verify if anything deviate from the expectation.
+
+	- verification : help to verify that what use to work is still working and help to verify that the code is still functioning.
+
+	- confidence
+	- decoupling : lower the coupling and dependencies because it becomes hard to test the code with all those dependecies, so overall that contributes to better design of the code as well.
+
+	- form of documentation
+
+
+11. Influence of TDD
+
+	- clean code that works
+	- predictability
+
+
+12. Programming by intention
+
+13. Simplicity and minimalism
+
+14. Let's design using tests
+
+	Let's implement a game of tic-tac-toe.
+
+	The game has two players each with three pegs. One player has X pegs the other O pegs. There is a 3x3 grid. The object of the game is for the players to take turn to place a peg at an empty cell. The first player who places three pegs in same row, column, or diagonally wins. The game stores the winner and can report the number of times the person has won overall. 
+
+	Strategic Desgin:
+	Class:
+
+		Game
+	Player
+	Peg
+		X
+		O
+	Grid
+	Cell
+	Turn
+	Rule
+	Score
+	ScoreHistory
+	GUI
+
+
+											QUIZ QUESTION:
+
+1. Unit tests are a form of documentation, they tell us how a piece of code can be used and how it behaves
+2. Writing tests of a piece of code makes it more modular, more robust, more cohesive and less coupled
+3. We should NOT write a getter or setter along with direct tests for them
+4. Initial tests on a unit grows its interface or skin, and the tests that follow help grow its implementation, internals or guts.
+5. Write performance tests to ensure the code completes within desired time limits.

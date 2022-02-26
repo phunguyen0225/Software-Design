@@ -1,0 +1,102 @@
+									Regression Benefits of TDD
+
+1. Software Systems
+
+	Grow in size over time as months and years pass by, we keep adding code, developers come in and they go. One thing we can say for here about software system is that it grow in complexity and they evolve.
+
+
+2. Evolutionary
+
+3. When things go wrong
+
+	When a bug is found, an error is found years or even months are weeks from the time the code is modified. The cost is enormous, the amount of money it takes to fix a problem. Find and fix a problem is inproportion to that time between the time the problem is found and the code was modified 
+
+
+4. Feedback loop
+
+	The sooner we know that something is wrong in the code we touched, the better it is, the easier it is, the less costly it is and less time consuming it is. Feedback loop is extreme critical
+
+
+5. Example
+
+
+---JAVA CODE: Caculator.java----
+
+package com.company;
+public class Calculator {
+    public int add(int op1, int op2) {
+        return op1 + op2;
+    }
+    public double divide(double numerator, double denominator) {
+        if(Math.abs(denominator) < 0.0000001)
+            throw new ArithmeticException("Division by zero");
+        return numerator / denominator;
+    }
+}
+
+
+
+---JAVA CODE: CaculatorTest.java----
+
+package com.company;
+import jdk.internal.icu.text.UnicodeSet;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
+
+public class CaculatorTest {
+    private Calculator calculator;
+    private final double DELTA = 0.001;
+
+    @Before
+    public void setUp() {
+        calculator = new Calculator();
+    }
+
+    @Test
+    public void AddTwoPositiveNumbersReturnsTheirSum() {
+        assertEquals(6, calculator.add(2, 4));
+    }
+
+    @Test
+    public void AddPositiveAndNegativeNumberReturnsTheirSum() {
+        assertEquals(3, calculator.add(6, -3));
+    }
+
+    @Test
+    public void DivideOfTwoPositiveNumberReturnAPositiveResult() {
+        assertEquals(6, calculator.divide(12, 2), DELTA);
+    }
+
+    @Test
+    public  void DivideOfAPositiveNumberByNegativeReturnNegativeResult() {
+        assertEquals(-3, calculator.divide(12, -4), DELTA);
+    }
+
+    @Test
+    public void DivdeByZeroThrowsAnException() {
+        try {
+            calculator.divide(6, 0);
+            fail("Expected exception for division by zero");
+        } catch (ArithmeticException ex) {
+            assertTrue(true);
+            // :)
+        }
+    }
+}
+
+
+	Using TDD guarantees no bugs is not true, that's a myth. There will always be bugs, but what TDD really gives us the ability is to make sure the bugs don't recur in the code. 
+
+	When you have enough test cases and the code and everything is working, you find the bug, what you do? Don't fix the bug! but write a test first so the test fails because of the bug that is there. Once the test is failling then fix the code and ensure that the test is passing. And once you do that you can make sure that if a similar bug were to arise in the same place that test will be there to guard you and protect you.
+
+
+
+									QUIZ QUESTION:
+
+1. FALSE: In a statically typed language, compiler thoroughly verifies types, so regression testing is not necessary for types related refactoring.
+2. The cost of finding and fixing errors increases with time.
+3. Automated tests complete a feedback loop, they tell us what worked continues to work as the code evolves.
+4. Manual testing is a form of regression testing.
+5. FALSE: If we write enough automated tests, we can gain confidence that there are no bugs.

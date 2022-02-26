@@ -1,0 +1,133 @@
+							Design Benefits of TDD: Part II and Part III
+
+1. Tactical Design
+
+2. How to approach?
+
+3. Where to start?
+
+4. Canary test
+	
+	- for setting up testing environment that should return true. to see if tools are set up properly
+
+
+5. Principles, practices, and tasks
+
+	Practices:
+		- jot down tests that come to your mid
+		- pick the test that is fairly easy and quick to write
+		- pick a test that is value
+		- write a failing test first, then write minimum code to make that pass
+		- jot down positive, negative, and exception test
+		- listen to the whispers of your tests
+		- strive for simplicity; reduce and remove accidental complexity
+		- every test should have an assert
+		- do not write more than one independent assert per test
+		- keep tests isolated from each other
+		- tests have to be FAIR 
+			F-Fast
+			A-Automated
+			I-Independent
+			R-Repeatable
+		- When tests pass, take a look at the code to see if it can be simpler, can be refactor
+		- design decision have to be documented through tests cases
+
+	- Tasks
+		- game not won by anyone when the game starts
+		- pick the first player
+		- pick the second player
+		- first player places peg at some location
+		- second player places peg at some location
+		- place peg at an occupied position  // negative test
+		- place peg out of row range		//negative test
+		- place peg out of column range		//negative test
+		- set first peg should not be other than X and O
+		- win by row match
+		- no win by row match
+		- declare winner for row match
+		- win by column match
+		- declare winner for column match
+		- win by left diagonal match
+		- win by right diagonal match
+		- declare winner for diagonal match
+		- place peg after a game is won
+
+	- Principles
+		-YAGNI - You Aren't Gonna Need It (yet) - the class that you are thinking about
+		- Last responsible moment
+		- keep it DRY-Don't Repeat Yourself
+		- SRP - Single Responsibility Principle
+		- SLAP - Single Level of Abstraction Principle
+
+
+							Design Benefits of TDD: Part II and Part III
+
+1. Developing with tests
+
+2. Lessons learned
+
+3. Benefits revisited
+	
+	- act of design
+	- feedback
+	- sustainability
+	- documentation
+	- safety net
+
+4.Evolving with tests
+
+5. Tenets of TDD
+
+	- write/change code only if a test
+	- minimum code that works
+	- seek pragmatic and simple design
+	- eliminate duplication
+
+6. Red/Green/Refactor
+
+7. make it work, make it better real soon
+
+8. Untested code is unfinished code
+
+9. As a safety net
+
+10. Test on each platform
+
+11. Don't forget functional tests
+
+12. Who should write unit tests?
+
+	- programmers, as they are sitting down writing code.
+	- a little bit of test, little bit of code, little of test, little bit of the code
+
+13. When should we write unit tests?
+
+	- when you are writing the code
+
+14. Unit tests and legacy code
+
+
+
+
+
+
+									QUIZ QUESTION PART II:
+
+1. A tenet of TDD, write a failing test and then write minimum code to make that test to pass
+2. When in the middle of writing a test, we SHOULD NOT handle any refactoring ideas that come to mind
+3. When a test passes, it's a great opportunity to refactor the code, to make it simpler, expressive, easier to understand
+4. An exception test passes if the code fails appropriately by raising expected exceptions
+5. The YAGNI (acronum) principle prompts us to delay or postpone implementing some classes we considered in the strategic design
+
+
+
+									QUIZ QUESTION PART III:
+
+1. Tests serve as a design tool, a form of documentation, and safety-net when refactoring but NOT way to guarantee no bugs
+2. A mantra of TDD is red, green, refactor
+3. Options to get an object into a particular state for the purpose of testing are: Inject the necessary intial state, Invoke a small series of methods to get the object into that state
+4. We should have more tests at the bottom level and fewer tests at the top level
+5. TDD is more of an act of design than an act of verification
+
+
+									

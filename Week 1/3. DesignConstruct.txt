@@ -1,0 +1,256 @@
+						Design Constructs: Part 1 & 2
+1. Structure of programs
+	1. Expression
+		- evaluate and gives a result (ex: adding 2 values and getting result)
+	2. Statement
+		- performs an action (ex: printing something is a statement)
+	3. Compound block
+		- collection of statements and a collection of expression, we normally write in language like Java
+		  or C or C++ or C#. {...}
+	4. Conditions
+		- usually a branch, you basically say if something is true, do this, otherwise, else do something else
+	5. Loops
+		- perform a certain set of operations repeatedly or iteratively
+	6. Function 
+		- a free-standing function whereas a function that belongs to a class we normally call it as a method
+	7. Classes
+		- a collection of functions and class normally has a field it can have methods
+	8. Package / namespace
+		- a logical distinction, a namespace to be a lot more physical
+		- create modules and subsystem
+	
+2. Paradigms
+	
+
+3. OO Paradigm
+	- Object
+		- a collection or a grouping of certain amount of data behavior around that data
+
+4. Pillars of the paradigm
+	1. Abstraction
+		- a way to represent a certain idea, a concept, something that we want to represent in an application
+		- creating classes
+			- a grouping of certain behavior with implementation
+		- interface
+			- a collection of behavior without any specific implementations
+			- provide more extensibility then classes
+	
+	class Car {
+		private int distance;
+		public Car(int initialDistance) {
+			distance = initialDistance;
+		}
+		public void drive (int dist) {
+			System.out.println("driving...");
+			distance += dist;
+		}
+		public int getDistance() {return distance;}
+	}
+
+	public class Sample {
+		public static void main(String[] args) {
+			Car car = new Car(0);
+			Car car2 = new Car(0);
+
+			car.drive(10); 
+			car2.drive(20);
+			System.out.println(car.getDistance);
+			System.out.println(car2.getDistance);
+		}
+	}
+
+	2. Encapsulation
+		- to make sure that a particular implementation is kept separate from the interface, in
+		  other words, we want to keep what we do with an abstraction separate from how the abstraction
+		  actually implements
+		- gives an ability for us to vary the implementation without really affecting the interface of
+		  the abstraction.
+		- help the receiver or the user of the abstraction to be able to switch different implementations
+		  and it helps the implementer of the abstraction to evolve and modify the implementation of their
+		  abstraction as well
+
+	3. Inheritance 
+		- take an abstraction and build further on that abstraction by extending it
+
+		class Car {
+	                private int distance;
+        	        public Car(int initialDistance) {
+                		        distance = initialDistance;
+                	}
+	                public void drive (int dist) {
+        	                System.out.println("driving...");
+                	        distance += dist;
+                	}
+                	public int getDistance() {return distance;}
+        	}
+		
+		class SportCar extends Car {
+			public SportCar(int initialDistance) {
+				super(intialDistance);	
+			}
+		}
+		public class Sample {
+         	       public static void main(String[] args) {
+                        	Car car = new Car(0);
+                        	Car car2 = new Car(0);
+
+                        	car.drive(10);
+                        	car2.drive(20);
+                        	System.out.println(car.getDistance);
+                        	System.out.println(car2.getDistance);
+                	}
+        	}
+
+	
+	4. Polymorphism
+		- given an object or a reference to an object, the method that is called is not based on the 
+		  type of the reference but based on the real type of the object at one time.
+
+
+							Part 2:
+
+
+5. Functional Programming
+ 	1. Higher-Order Function
+	- Take an application and decompose it into the series of operations through functions
+	- Haskell is a statically typed language, extremely powerful and support full functional style of
+	  programming
+	- In a true honor functional programming, we honor immutability, you cannot modify a variable once
+	  you create it
+	2. Function Composition
+	3. Lazy Evaluation 
+		- Evaluate only on demand, this give us the ability to perform operations very effciently
+		- Efficiency comes from not doing things faster but efficiency comes from really not doing 
+		  things that you shouldn't do in the first place
+
+"""Haskell"""
+	----High-Order Functions----
+
+double value = value * 2
+add op1 op2 = op1 + op2
+
+main = do
+	print([1..10])    			 ->   [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+	print(filter even [1..10])     		 ->   [2, 4, 6, 8, 10]	
+
+	#map is a transformation function, it takes every single element in a collection and transforms it
+	 using a particular function.
+
+	print(map double [1..10])		 ->   [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+
+	#filter and map are functions. Filter and map take as parameter the collection we are interested in, 
+	 notice how filter and map also take even and double function inside. This is call Higher- Order Functions
+
+	#We can also perform reduce function
+	
+	print(foldl add 0 [1..10])		 ->   55
+
+	#this are called high-order function because they receive another function as a parameter, so rather 
+	 than creating objects and functions and passing objects, now we can take function and pass function as well
+ 
+
+
+	----Function Composition----
+
+	print(map double(filter even [1..10]))	 ->   [4, 8, 12, 16, 20]
+	print(foldl add 0( map double( filter even [1..10])))    ->   60
+
+	print(foldl add 0 . map double . filter even $ [1..10])  ->   60
+
+
+	""" Java Example """
+	import java.util.stream.IntStream;         -> get a range of values
+
+	System.out.println(
+		IntStream.rangeClosed(0, 10)
+			 .filter(value -> value % 2 == 0)
+			 .map(value -> value * 2)
+			 .reduce(0, Integer::sum)
+	) result  ->  60
+	
+	
+
+	----Lazy Evaluation----
+
+"""Haskell"""
+
+greetKid = print("Hello kiddo")
+greetAdult = print("Howdy")
+
+greet age greetKidfn greetAdultfn = 
+	if age < 15
+	then greetKidfn
+	else greetAdultfn
+
+main = do
+	greetKid 				->   "Hello kiddo"
+	greetAdult				->   "Howdy"
+
+
+	greet 13 greetKid greetAdult		-> "Hello kiddo"
+	greet 23 greetKid greetAdult		-> "Howdy"
+
+
+
+"""Java Example"""
+	public static boolean isEven(int number) {
+		System.out.println("isEven called for number);
+		return number % 2 == 0;
+	}
+	
+	public static int doubleValue(int number) {						Result/Output
+		System.out.println("doubleValue called for number");         ----->   isEven called for number
+		return number * 2;						      isEven called for number
+	}									      doubleValue called for number	
+										      4
+	System.out.println(
+		IntStream.rangeClosed(1, 10000)
+			 .filter(Sample::isEven)
+			 .map(Sample::doubleValue)
+			 .findFirst()
+			 .orElse(0));
+	) 
+
+	
+	#even though the program is calculating up to 10000, it does not made a lot of different computations
+	 because even and double value are functions that are evaluated "lazily". Example :
+
+	- Filter function say: 
+		- I will not apply the isEven function right away, i will do it lazily and just simply say 
+		  map whats up
+	- Map functions say:
+		- I will not apply doubleValue right now and i'll do it later and it say findFirst whats up
+	- findFirst function say:
+		- You guys better go do your work.
+
+	- Now filter and map does just enough work, so rather than going through the range of 10000, it goes to
+	  1 and if it's not even, it go to 2 and double the value and return the first find. 
+
+
+
+
+6. Principles
+7. Patterns
+
+
+						QUIZ QUESTION PART 1:
+1. Encapsulation separates what we do from how we do it.
+2. A function is more reusable if it depends on an interface than on a class
+3. Statements perform an action while expressions return a result
+4. Methods of an object control behavior and state transition
+5. Inheritance is not needed to substitute an instance of one class where an instance of another is expected
+
+
+
+
+
+
+						QUIZ QUESTION PART 2:
+1. The functions filter and map are examples of higher-order functions
+2. A better desgin does not uses more design patterns
+3. Experts cannot design software in one sitting
+4. Efficiency comes from not evaluating code faster, but from being lazy about its evaluation
+5. A good design pattern comes from experience and considering design principles. Not trying out random patterns 
+   eagerly applying many of them
+
+

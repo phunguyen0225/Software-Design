@@ -1,0 +1,58 @@
+									Test Driven Development (TDD)
+
+1. Driving the development using tests
+
+2. From user stories to tests
+
+	- 3Cs
+
+		C - Card
+		C - Conversation
+		C - Confirmatiom 
+
+
+4. INVEST
+
+	I - Independent  -  stories should be independent of each other
+	N - Negotiable   -  discuss and determine what the real feature should be
+	V - Valuable     -  bussiness value to the application
+	E - Estimable    -  stories should be fairly estimate in matter of fractions of time
+	S - Small        -  stories should be relatively small in size
+	T - Testable     -  stories should be testable
+
+
+5. Levels of tests
+
+	The unit test at the control of our service level and UI level we could have different type of tests and different granularity of test. So unit test is at the very low level of code. You can have functional test, acceptance test, UI level test and so on. 
+
+
+6. Who drives the tests?
+
+	Depends on the nature of these tests. A unit test is predominately by programmers. Functiona tests and acceptance test are predominately determined by business analysts and testers. The programmers have to support the business analysts and testers for them to be able to integrate and run these higher-level functuional and automated tests. 
+
+	Similiarly, their stairs have to support the programmers by writing automated test, so that when the programmers do evolve the code, fix errors are enhance and add features there can be a quick feedback loop that the code that work before continues to work now. That kind of feedback is extremely valuable.
+
+	Tools for testing:
+
+		- R-Spec 
+		- SpecFlow 
+		- Cucumber
+		- FIT
+		- FITNess
+
+
+7. Benefits from test driving
+
+	- regression
+	- design
+
+
+
+
+										QUIZ QUESTION
+
+1. Automated tests can help ensure that the code that worked before continues to work as we evolve code.
+2. The size of a story in a sprint should be relatively small.
+3. The T in INVEST stands for Testable
+4. Automating tests is the responsibility, and needs participation from programmers, business analysts and testers
+5. Unit tests are predominantly driven by programmers, while acceptance test are driven by business analysts and testers

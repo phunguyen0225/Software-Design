@@ -1,0 +1,247 @@
+											Modeling Relationship
+
+1. Packges
+
+2. Logical vs. physical grouping
+
+	Logical grouping is a placeholder, a context, a little frame in which you put these together. A package is a logical grouping. 
+
+	Physical groping is where does these classes physically reside. In the case of C++, we put them in libraries, share objects. Physical grouping like a jar, or an assembly, may potentially contain multiple packages or namespaces. 
+
+
+3. Classes and packges
+
+	Relationship between classes could exist within the package or they could exist across the packages. If relationships are going across packages, that's a little bit more stronger coupling than if they are internal, because any change would go across packages and that would consitute releasing and repling of the packages release.
+
+	Wheras dependecies within paclages often don't result in that kind of ripple effect, but that dones't mean we group everything into one package that leads to not only name collision but also lack of cohesion.
+
+	What goes into a package and what doesn't go into a package depends on cohesion. Cohesion is where like things are together, unlike things are apart, so we want to make sure that only like things are put together within a package, so that way when something has to change, result in change would result in changing most of the things in a package and as a result the frequency of change would be less when the package is cohesive.
+
+	If package is not very cohesive, then the reasons for that change becomes a lot more and that results in quite unstable system in general. 
+
+
+4. Associations
+
+	-relationships between two classes
+
+		two classes could have more than one relationship. Ex: a class Man and class Woman.
+
+
+5. Link
+	
+	- link is an instance of an association. Object is an instance of a class. Ex: you could draw a line between Joe and Susan and they have a marriage relationship, now Joe is an instance of a man and Susan is an instance of a woman, and this line between them is an instance, a link, which is an instance of this association. 
+
+	One association could have multiple instances, just like one classs can have multiple instances. So a link is an insntance of an association. An association often is in the class diagram, a link is often in the object diagram, an association is often represened in the class in the code. A link is what we normally traverse between objects at runtime. 
+
+
+6. Assoications often appear as verbs
+
+7. Names of the association 
+
+	We can give name for associations, espcially when there are multiple association.
+
+8. End points of associations
+
+9. Bi-directionals vs. unidirectional
+
+	All relationship are generally bi-directional unless otherwise stated. A bi-directional relationship is a relationship that go both ways. 
+
+
+10. Direction of navigation
+	
+	Generally, object modeling have relationships going back and forth, but in database, at relational database, you have generally the foreign key constraint. 
+
+
+11. One-to-one
+
+	One object has one other object. Optional is 1------> 0..1
+
+
+12. One-to-many
+	
+	0..*
+
+
+13. Many-to-many
+
+	A group of object with the relationships across back and forth.
+
+
+14. Ternary and higher order associations
+
+	- Binary. A binary relationship is a relationship between just two objects 
+	- Ternary. A ternary relationship is a relationship between 3 objects 
+	- n-ary. A n-ary relationship is a relationship between multiple objects
+		- complicated
+		- hard to implement
+		- better to avoid
+		- model as binary
+
+
+15. Cardinality of associations
+
+	- one-to-one
+	- optional
+	- zero or more
+	- one or more
+
+
+16. Examples of associations
+
+	Man --------------------  Women
+	\  1..*				 1..*   /
+	 \						   /
+	  \						  /
+	   \					 /
+		\					/
+		 \				   /
+		  \				  /
+		  	1..*		1..*
+		  	    Company	
+
+
+	A Man and Woman can work for mutliple company. As well as a company can have mutilple of Man and Woman
+
+
+17. Self Association
+
+18. Link Attributes and association classes
+
+	Link attriubutes are really part of this many-to-many relationship, they don't fit into either side of the object and you want to put them right in the middle. Oftentimes, we create join tables and database to put these infomation because it's really part of the realtionship rather than being any of these two objects.
+
+
+19. Qualifers
+
+	Qualifers are use when a collection of objects are being used, and a qualifier is useful to say that amone these objects, here is the way im gonna distinguish between the objects
+
+	- distinguishes among set of associated objetcs
+	- modeled as associate array, dictionaries
+
+	You can also have a hash map. Ex:
+
+	Map<Integer, Student> students;
+
+
+20. Association vs. aggregation 
+
+	Association is where two objects of equal stature are related to each other. ex:
+
+			  association
+		Man ---------------- Woman
+
+	Aggregation is typically a "has a " relationship or a "part hold" relationship, so you would not say a Man has wife, that's not a good way to say it. But you say they are married 
+
+			  association
+		Man ---------------- Woman
+
+						  ^	 - (diamond picture)
+						 /
+                        /
+                       /  aggregation
+                      /
+                    Purse
+
+    The diamond represent that it's a part hold relationship, the purs is a part of the Woamn, and the woman owns the purse. There is a owner relationship
+
+21. Aggregation vs. composition
+
+	A composition means that a particular object owns another object, but their lifetime is tied together, so a compostion simply means that you would destroy the owning object, you will destroy the 
+	owned object. You could not create the object separately. 
+
+--C++ Code---
+
+c;ass Brain{};
+class HeartP{};
+
+class Person {
+	Brain brain;
+};
+
+	Brain is contained within an object of Person. In C++, when you create an object of Person, you automatically create an object of Brain, you neve instaniate an object of Brain separely. There are seriouos consequences to doing this.
+
+	If you look at this in memory allocation, there's bytes for Person and the bytes of Brain is sitting insde in the case of C++ 
+
+--C++ Code---
+
+c;ass Brain{};
+class BetterBrain : public Brain {};
+class HeartP{};
+
+class Person {
+	Brain brain;
+};
+
+ 	The Person can't have a better Brain because of composition. Composition doesn't give us really good extensibility as aggregation gives us. 
+
+
+--C++ Code---
+
+c;ass Brain{};
+class BetterBrain : public Brain {};
+class HeartP{};
+
+class Person {
+	Brain brain;
+	Heart* pHeart;
+
+public:
+	Person() {
+		pHeart = new Heart();
+	}
+
+	void changeHeart(Heart* pHeart2) {
+		delete pHeart;
+		pHeart = pHear2;
+	}
+};
+
+	This code show in diagram:
+
+		       	 composition
+		Brain <<------------ Person
+
+						  ^	 - (diamond picture)
+						 /
+                        /
+                       /  aggregation
+                      /
+                    Heart
+
+    The Person owns the Heart and the Brain is composed to Person.
+
+    Associtaion - They're of the same stature.
+
+    Aggregation - There's a part hold relationship.
+
+    Composition - The worst of all, take ownership and live with it and die with it.
+
+
+--JAVA CODE---
+
+class Brain{}
+class BetterBrain extends Brain {}
+class Heart{}
+class GenerousHeart extends Heart{}
+
+class Person {
+	Brain brain = new Brain();  //this is a reference or pointer
+	Heart heart; //this is a reference
+
+	public Person(Heart* theHeart) {
+		heart = new Heart();
+		heart = theHeart;
+	}
+	//no methods to change brain.
+
+	public void changeHeart(...)
+}
+
+
+
+										QUIZ QUESTION
+
+1. The relationship between two object of equal stature is called Association
+2. A shaded diamond is used to represent composition
+3. A binary relationship is between two objects, while a ternary relationship is between three objetcs
+4. A link is to an association as an object is to a class
+5. Composition is the strongest and most likely the least desirable

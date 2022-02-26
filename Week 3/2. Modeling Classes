@@ -1,0 +1,145 @@
+										Modeling Classes
+
+1. Object Modeling
+
+	- What is it?
+
+		Modeling is a representation abstraction, an idea that we come up with and then we represent that in code, and it's a way to express our design ideas. 
+
+	- Static structure
+
+		A object model is a static structure. A sequence diagram shows the flow of a particular function through different objects and methods. A sequence diagram can be very helpful in an extreme complex situation but for most of what we create a sequence diagram is a ovevkill and a waste of time. 
+
+		Interaction diamgram show the interaction between objects not necessarily through the timeline of what methods are being called but which objects collaborate with other objects to get things done. 
+
+	- Objects, relationships
+
+
+2. What to show?
+
+	Show only the most detail in a class diagram, a class diagram is not a full representation of the system but the most essntial aspects. 
+
+
+3. Why use it?
+
+	We often use this diagram in two phases, during an initial design phase and strategic design possibly. We could draw these diagrams to brainstorm a certain idea and say well looks like this could be a class, looks like this could be connected to this particular other class. Maybe these are the attributes we would probably want in this class. 
+
+	We could use this as a communication tool, where you have a new memeber in the team or somebody who's been working on a different part of the system is coming back to look at the part of the system you are working on. So it's a nice communication tool to say well here's how things are related and this is the class that talks to this other class, here's a reponsibility of this class. This class receives that particular service and uses that information so it gives a nice way for us to describe the relationship of classes.
+
+
+4. Object
+	
+	- What's an object?
+
+		An object is something that represents an abstraction and stands in for something in the application, it could be something tangible but it does not always have to be tangible.
+
+	- Object decomposition
+
+		Objects have identity. Every object have a unique identity. Often in a database, we use primary keys as identifiers in the case of programs running the main memory location could be indentifiers but oftentimes our domain specific identifier is often used to distinguish one object from another.
+
+	- No single correct representation
+
+		There is no single correct representation of objects and object diagram and relationship. There is no single representation for those so we gotta pick and choose based on the context and the domain and the bouneded context. 
+
+
+5. Classes
+
+	A class is often a blue print of object, a description of an abstraction that you are dealing with
+
+	- How to recognize them?
+
+		A class should have a very clear representation of an abstrtaction, it's got a very specific meaning in the application, and you should be able to represent these classes in your system.
+
+		When creating a class, try to name them as nouns, so that you know that they represent something. So usually methods are verbs form, classes are nouns form. 
+
+	- Semantics, abstraction
+
+	- Interpretation varies
+
+		- depends on the application
+		- depends on the person modeling
+
+
+6. Instances
+
+	A classes can have many instances, thousands of instances.
+
+
+7. Singletons
+
+	Singletons could have one object or a very small set of number of objects in the application so that could be what a singleton has. 
+
+
+8. Abstract classes
+
+	Abstract class will have zero direct instances in the application, an abstract class is useful to model a certain concept that gets implemented and extended, but we woundl't have an object of that type as well.
+
+	Abstract classes are classes for which there wouldn't be any direct instances but there are other types often derived from them for us to use.
+
+
+9. Class diagam vs. object diagram
+
+	Class diagram is a diagram that shows classes and the interaction between classes.
+
+	Object diagram is a diagram that shows interaction between object. 
+
+	We often create class diagram but occasionally we would create object diagram as well
+
+
+10. Object Diagram
+
+	- objects and relationships
+	- useful to document test cases
+	- clarify complex behaviors or interactions
+
+
+11. Class diagram
+
+	- should be conise, easy to understand, practical
+	- keep it lightweight
+
+
+12. Representing a class
+
+13. Attributes
+
+	- data values
+	- may be different for different instances
+	- name is unique within a class
+	- adjectives often as enumerated attribute
+
+
+14. Values
+
+	- represent pure data values as attributes
+	- represent object values as relationships
+	- don't show internal identifiers
+	- don't show every single attribute
+	- visibility
+
+
+15. Derived attributes
+
+	- base attribute
+	- computed value
+
+
+16. Operations and methods
+
+	- opertaions
+	- methods is an implementation of an operation
+	- polymorphic methods
+	- query operation (constance)
+	- mutators
+	- command query separation
+
+
+
+
+								QUIZ QUESTION
+
+1. An abstract class has zero direct instances
+2. The methods of a class may internally use what are called helper method which are often private
+3. Even though every object has an identity, the identity should not be known in the UML class diagram
+4. A good desgin document should NOT include several class diagrams, sequence diagram, and interaction diagram for all parts of the application
+5. A minus symbol in front of an attribute means that it's visibility is private

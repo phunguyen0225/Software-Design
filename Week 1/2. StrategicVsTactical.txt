@@ -1,0 +1,106 @@
+						Strategic Design vs. Tactical Design
+Definition:
+
+Emergent Design - a design that emerges out of the code 
+Evolutionary design - what you put effort towards evolving. 
+Last responsible momemnt - a moment beyond which we possibly cannot make this decision and a moment before
+			   which we don't have to really make this decision, it's not like procrastination 
+			   where we have not made a decision we should have made a long time ago
+Observer effect - when somebody start observing or rather start using a piece of software they come up with
+		  a lot of question and suggestions as to how to improve it or in ways it's maybe inadequate.
+		  Our customers, our business analysts, our marketing people, whoever is involved in and 
+		  helping with developing the project
+
+1. Levels of Design
+	1. Strategic design
+		- give an idea about the direction that we would like to go knowing what we know right now
+	2. Tactical design
+		- Very low level design, we are interested in what are the specific of the classes what are
+		  their methods, how many methods we are going to have, what are the parameters the methods 
+		  are gonna take, how long is a method going to be and what are the fields, what are the 
+		  variable, whatare the properties
+	- Do the right level of design at the right time and not do it too soon but not to do it too early
+	  or too late also. Right level at the right time for the right degree for the right problem is 
+	  extremely important
+ 
+2. The knowns and the unknowns
+	1. Knowns 
+		- something we know but sometimes the unknowns also emerges
+		- it is very difficult for us to know all the detail upfront
+	2. Unknowns
+		- Observer effect
+
+	- Enough, minimum, Up Front Design
+
+3. Purpose of strategic design (evolve, context, change, draft)
+	- Coarse-grained design, very high-level design. A map that shows territories, you can look at the map
+	  and the detail and say where are things and where am I.
+	- Before implementation of a feature, we would like to get a sense of direction, what are the different 
+	  classes potentially we would be working with, what is the current design, are we gonna fit this into
+	  the existing design, are we going to evolve the existing design.
+	- A strategic design cannot be correct in almost any non-trivial project. A strategic design is a design
+	  that deserves to be enhanced and maintained and evolved so a good designer creates a draft of a design 
+	  rather than creating a design that stairs sat on stone. 
+	- When creating a strategic design, do create a design suggesting classes, suggesting these relationship 
+	  but say this is what we know. Based on what we know so far, this is what we have created but this is 
+  	  something we're gonna evolve and as you go through the tactical design, as you go through other designs
+	  of other feature, come back to evolve the strategic design.
+	- Feel free to add, modify, evolve it, change it, throw it away if that doesn't make sense and recreated
+	  and hopefully more so in the initial time then later, but evolve this as you go along. So strategic design
+	  is a coarse grain, very high-level design. 
+
+
+4. Purpose of tactical design
+	- Low-level detail
+	- What are we gonna name this method, how many parameters this method is gonna take, what are the different
+	  parameter, what are their types, what should i give a name for this variable, what should i name this class
+	  should i keep it consistent with what's in the start a stratefic design or should I change it, should i 
+	  include a new class, should i eliminate a class, maybe i should ass a new class that we never thought about.
+	- Discuss these design concerns and start implementing it.
+	- As we are coding, we should think about if this name make sense for these parameters....etc
+	- Make descision, modifying, evolving. What are the consequences from the maintainablty POV, does this 
+	  particular decision increase the maintenance cost or does it decrease it if we write this code this way.
+  	  Is it easier for somebody to understand this code later on, it could be ourselves in the future.
+	- Is the code easy to understand and maintain?
+	- Refine the strategic design, make it relevant. Aligning forming the strategic design to the realities of 
+	  the world we are now living in.
+	- Take the strategic design to implement it or to evolve it based on the realities of the provlem we have
+	  in front of us as the realities emerge it is also filling in more thorough details, low level detail
+	  and making very small tactical decisions along the way so while strategic design gives us a guidance 
+	  towards a direction, a tactical design keep us all realigned and more revelant to the problem we are 
+	  dealing with
+	- A tactical design in the beginning can also help us to know if the strategic design is really helping us
+	  point in the right direction, it's a feedback loop, so this tell us what give us a feedback to say what we
+	  are pointing to is the direction we should be really heading or not.
+
+5. From requirement to design
+	- Requirement start with strategic design, for those requirments in the beginning of a sprint or a iteration
+	  and then go through a tactical design as you sit down to implement by writing a series of test cases along
+	  the way
+
+	- In older time we would us Use cases, and use cases are a form of capturing the requirements are using the 
+	  requirments and expressing them.
+	- In agile projects we often use what are called user stories. Given a bunch of user stories, break down the
+	  user stories into manageable pieces into the right sizes, and in the beginning of the sprint, go through a 
+	  strategic design or even a lttle bit earlier than the sprint you can do a strategic design on the storries
+	  you are considering for the next sprint, and once you have the strategic design, see if the strategic design
+	  for this particular group of user stories aligns with your strategic design that you have created so far,
+	  and evolve the design for that. 
+	- As you go through implementing these user stories for the project, the fetures, then go through the tactical
+	  design, write automated test cases, make these design decisions, the test case we write should really help us
+	  to make these design decisions, if the automated test you are writing does not help influence the design, 
+	  we're not making good use of the test cases as a design tool.
+
+6. Architecture
+
+
+
+
+
+
+						QUIZ QUESTIONS
+1. Test driven design is an activity that's part of tactical design
+2. Strategic design has to be high level and evolve
+3. A strategic design is coarse grained while a tactical design is fine grained
+4. A good design is lightweight, relevant, at the right level, and create at the right time
+5. A strategic design should be validated during tactical design and implementation

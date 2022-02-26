@@ -1,0 +1,375 @@
+								Design by Contract vs. Design by Capability
+
+Statically languages oftean lead us towards design by contract. Dynaically typed langauges often lead us towards designed by capability.
+
+1. Interfaces
+
+	Interface is an abstraction, but it's a collection of methods. Interface often don't allow any implementation in them. 
+
+	Interfaces have bunch of things we can do, but interface itself doesn't do any of those things. It's for the implementer of the interface to really implement that.
+
+	When a class inherits from an entity, an abstraction, we call it inheritance. But when a class inherits from any interface, we call it interface based inheritance. A class can inherit can inherit multiples interfaces, but can only inherit from one class
+
+
+2. Design by contract
+	
+	With design by contract, the compilers can verify that a piece of code meets a certain expectations. 
+
+3. Benefit of contracts
+
+---JAVA CODE---
+
+importjavax.swing.*;
+
+public class Main extends JFrame {
+	private JButton button;
+
+	@Override
+	protect void frameInit() {
+		super.frameInit();
+		button = new JButton("click");
+		getContentPane().add(button);
+
+		button.addMouseListener(new HandleMouse());
+	}
+	public static void main(String[] args) {
+		JFrame frame = new Main();
+		frame.setSize(100, 100);
+		frame.setVisible(true);
+	}
+
+	private class HandleMouse implements MouseListener { //or we can do extends so we do not specify blank 														//methods
+		@Override
+		public void mouseClicked(MouseEvent mouseEvent) {
+			JOptionPane.showMessageDialog(mouseEvent.getComponent(), "You clicked");
+		}
+
+		@Override
+		public void mousePressed(MouseEvent mouseEvent) {
+
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent mouseEvent) {
+
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent mouseEvent) {
+		
+		}
+
+		@Override
+		public void mouseExited(MouseEvent mouseEvent) {
+		
+		}
+	}
+}
+
+	The benefits of design by contract is tools can verify, the compiler can verify, the tools can assist in putting two parties together, and so they can lock in and work with a certain expected pre-defined contract. The complier can verify and make sure their endpoints are meeting properly so you don't get a compilation, you don't get a runtime error, you can verify at compile time.
+
+	Design by contract is very powerful for compile time verification, it's very useful for tools to figure out what the contract is, and help us to implement the code. It also becomes very easy for programmers to communicate with each other and dictate these contracts across
+
+
+4. The burden of contracts
+
+---JAVA CODE---
+
+class Man {
+	public void help() {
+		sout("man helping..");
+	}
+}
+
+class Woman {
+	public void help() {
+		sout("Woman helping..");
+	}
+}
+															
+public class Main {					//ERROR
+	public static void seekHelpFrom(Man helper) {
+		helper.help();
+	}
+	public static void main(String[] args) {
+		Man bob = new Man();
+		seekHelpFrom(bob);
+
+		Woman sara = new Woman();
+		seekHelpFrom(sara);
+	}
+}
+
+	The code above have an error because you cannot send a Woman object into a seekHelpFrom() function, because it only suppose to take a Man object.
+
+
+---JAVA CODE---
+abstract class Human {
+	abstract public void help();
+}
+
+class Man extends Human{
+	public void help() {
+		sout("man helping..");
+	}
+}
+
+class Woman extends Human{
+	public void help() {
+		sout("Woman helping..");
+	}
+}
+															
+public class Main {
+	public static void seekHelpFrom(Human helper) {
+		helper.help();
+	}
+	public static void main(String[] args) {
+		Man bob = new Man();
+		seekHelpFrom(bob);
+
+		Woman sara = new Woman();
+		seekHelpFrom(sara);
+	}
+}
+
+	This code will work because when we make a class Woman, we have to raise the level of abstraction to a Human and we have our seekHelpFrom() depend on a human rather than depending on a man or a women because we could use them interchangeably. 
+
+
+---JAVA CODE---
+abstract class Human {
+	abstract public void help();
+}
+
+class Man extends Human{
+	public void help() {
+		sout("man helping..");
+	}
+}
+
+class Woman extends Human{
+	public void help() {
+		sout("Woman helping..");
+	}
+}
+
+class Elephant {    //ERROR
+	public void help() {
+		sout("elephant can help quite a bit");
+	}
+}
+															
+public class Main {
+	public static void seekHelpFrom(Human helper) {
+		helper.help();
+	}
+	public static void main(String[] args) {
+		Man bob = new Man();
+		seekHelpFrom(bob);
+
+		Woman sara = new Woman();
+		seekHelpFrom(sara);
+
+		Elephant elephant = new Elephant();
+		seekHelpFrom(elephant);
+	}
+}
+
+
+	The code above have error because seekHelpFrom() is expecting a Human, we can extends Human to Elephant but that would not make sense, now we are back to square one. To fix this we can make a interface.
+
+
+---JAVA CODE---
+
+interface Helper {
+	public void help();
+}
+
+class Man implements Helper{
+	public void help() {
+		sout("man helping..");
+	}
+}
+
+class Woman implements Helper{
+	public void help() {
+		sout("Woman helping..");
+	}
+}
+
+class Elephant implements Helper{
+	public void help() {
+		sout("elephant can help quite a bit");
+	}
+}
+															
+public class Main {
+	public static void seekHelpFrom(Helper helper) {
+		helper.help();
+	}
+	public static void main(String[] args) {
+		Man bob = new Man();
+		seekHelpFrom(bob);
+
+		Woman sara = new Woman();
+		seekHelpFrom(sara);
+
+		Elephant elephant = new Elephant();
+		seekHelpFrom(elephant);
+	}
+}
+
+	Interface gives us flexibility but it's got to be the right interface as well, and we don't want an application where there are way too many interfaces that are completely unnecessary, especially if the only object you know you will be dealing with.
+
+	While design by contract is extremely beneficial, there are times when a contract becomes a hindrance, where we have to create a monstrous hierarchy of things just to get things moving. 
+
+
+5. Design by Capability
+
+---groovy code---
+class Man {
+	def help() {
+		println "man helping..."
+	}
+}
+
+class Woman {
+	def help() {
+	println "woman helping..."
+	}
+}
+
+class Elephant {
+	def help() {
+		println "elephant likes to help also.."
+	}
+}
+
+public void seekHelpFrom(helper) {
+	helper.help();
+}
+
+def bob = new Man()
+seekHelpFrom(bob)
+
+def sara = new Woman()
+seekHelpFrom(sara)
+
+def elephant = new Elephant()
+seekHelpFrom(elephant)
+
+
+
+	The code above produce output abd we didn't have to introduce an abstraction or hierarchy and that's because our seekHelpFrom() says "I will work with any object you provide as long as that object contains our help() method".
+
+
+
+---groovy code---
+class Man {
+	def help() {
+		println "man helping..."
+	}
+}
+
+class Woman {
+	def help() {
+	println "woman helping..."
+	}
+}
+
+class Elephant {
+	def help() {
+		println "elephant likes to help also.."
+	}
+}
+
+class Fox {
+			//ERROR
+}
+public void seekHelpFrom(helper) {
+	helper.help();
+}
+
+def bob = new Man()
+seekHelpFrom(bob)
+
+def sara = new Woman()
+seekHelpFrom(sara)
+
+def elephant = new Elephant()
+seekHelpFrom(elephant)
+
+seekHelpFrom(new Fox())
+
+		
+	The code above have error because the class Fox doesn't have a help() method, as a result the code failed. 
+
+
+
+---groovy code---
+class Man {
+	def help() {
+		println "man helping..."
+	}
+}
+
+class Woman {
+	def help() {
+	println "woman helping..."
+	}
+}
+
+class Elephant {
+	def help() {
+		println "elephant likes to help also.."
+	}
+}
+
+class Fox {
+			//ERROR
+}
+public void seekHelpFrom(helper) {
+	if (helper.respondsTo('help'))
+		helper.help();
+	else
+		println "are you kidding..."
+}
+
+def bob = new Man()
+seekHelpFrom(bob)
+
+def sara = new Woman()
+seekHelpFrom(sara)
+
+def elephant = new Elephant()
+seekHelpFrom(elephant)
+
+seekHelpFrom(new Fox())
+
+
+
+6. The benefit of such design
+
+	The benefits of design by capability is the design is very lightweight, you don't have to really build up complex hierarchy so in general in dynamic type languages, we can use design by capability instead of design by contract and the hierarchy seems to be a lot more flat in general rather than a deep hierarchy that often arises when we use design by contract operation
+
+	It is also easier to evolve the design in a design by capability
+
+
+7. The downside to this approach
+	
+	The is no compiler to verify or the compiler is very lenient and as a result, it's our repsonsibility to make sure that we send the right things. One way to ensure that is a proper clarity and design where objects that do make sense to be around or available within the reach, so we could do a better design to make better use of design by capability.
+
+	We also need extensive amount of automated testing because we don't even know the code is wrong until you actually run the code
+
+
+
+
+
+
+									QUIZ QUESTION:
+
+1. We often use interfaces and abstract classes when programming with design by contract
+2. Desgin by capability is mostly prevalen in languages that are dynamically typed
+3. Tools can easily generate methods when we use design by contract
+4. Since there's not much compiler support, desgin by capability requires more rigorous testing
+5. Design by contract is mostly prevalent in languages that are statically typed

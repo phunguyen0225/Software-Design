@@ -1,0 +1,91 @@
+							Testing with Dependencies: Part I:
+
+1. Benefits of unit testing revisited
+
+	- regression, we get a good confident that the code that work yesterday will continue to work today.
+
+	- design benefit, it serve as a safety net when refactoring, it is a form of documentation for us to look at how the code is being used and what its behavior is. It gives us an ability for us to make the code modular. It gives the early warning sign when the code is not cohesive or fails on a single level of abstraction or single response principle.
+
+
+2. unit testing is easy when...
+
+	it is easy to test when the code has no dependencies. 
+
+
+3. unit testing is hard when...
+
+	it is hard to test when the code has dependencies
+
+
+		Some code
+		   /  \
+		 /      \
+	Hard          Easy
+		 \      /
+		   \  /
+		  Some code
+
+
+4. Automation is key
+
+	Import for us to maintain and sustain agility. Dependecies makes it harder to write automated testing or automated verification.
+
+
+5. What's a mock?
+
+	A mock object a an object that stands in for a real object. You don't want to grow this mock object and make it expensive and hard to maintain
+
+
+6. Stub vs. Mock
+
+	A fake is simple a service that takes a shortcut and may provide you a fake response and may not be used in real production 
+
+	A stub is an object that stands in for another object but it simply returns responses that you key in. 
+
+	A mock will tattletale while a stub simply returns this response. It mock says "the call was suppose to make 3 times but i really found the call was made only twice, did you know this?". The mock keeps track of the specific interaction between the code being tested and the code you depend on in this case replace by this mock
+
+	A stub is useful for testing the state of an object after an interaction.
+
+	Mock on the other hand is useful for behavior and interactions. You are just not interested in makjing sure your object is in the proper state but you are also interested in making sure your object has the right interaction with the object you depend on so that interaction or the dialogue between the code you are testing and the dependent object is being test using the Mock.
+
+	A spy is an object that stands in for a real object and in fact it lets you talk to the real obejct except it takes away some of the methods of the real object. So rather than completely replacing an object you depend on, it simply proxies in front of an object you depend on let's some calls pass through and block other calls and provide a fake response to you. So a spy can be very useful to talk to an object which is very complex, but you only want to really take a seclect set of methods and alter its behavior or the response and fake away those  responses alone. 
+
+
+7. Dependency inversion and mocks
+
+	We can solve almost any problem by introducing a level of indirection.
+
+	During automated testing, we can take an objectof the Mock connected to the objetc we are testing and run the test cases. So now when the test request comes in, the class makes a request to the object it depends on but it doesn't know it actually talking to a Mock and the mock is going to return back a fake response, a real response we have cooked up and it's going to return that response and it returns the response back to you for your test to pass. 
+
+	In integration tests or rather in production setting, the code that we really want to depend on, we're gonna connect it to the object, now when you run a real code, it makes a request like you did before but those request code is a real object rather than going to the mock object. So we can easily test our code automated. 
+
+	What are the benefits?
+		- the first benefit is that the test can be fast, it no longer has to talk to this complex object it dependent on, it can talk to a a mock which is relatively fast.
+		- the test can becomes more predictable, we can set up the mock who tell the lies we wanted to tell, to cook up result we wanted to cook up, and as a result, we get back the predictable results.
+
+	Adapter pattern can be very useful when you don't have the ability to modify the class you depend on. 
+
+
+	code  ----------->   Interface
+						/		  \
+				   	   /		   \
+				  	  /			    \
+				  	 /		   		 \
+				mock	          Adapter ----> Dependent code
+
+
+8. What can mocks do for you?
+
+	- behavior
+	- ill-behavior
+
+
+
+								QUIZ QUESTION
+
+1. When testing with dependencies, we can use a fake, a mock, a spy or a stub to facilitate automated testing
+2. A fake is a class or service that is like the real one for all practical purposes, but used for testing and not usable in production, for example, like an in-memory databse.
+3. When we say a spy, we're not talking about a secret operative but an object that forwards call to another object but can replace select methods.
+4. The more dependencies a code has, the harder it is to write automated test on it
+5. A stub stands in for a real object and returns a canned or cooked up response, while a mock also keeps track of the interactions and will tattletale.
+

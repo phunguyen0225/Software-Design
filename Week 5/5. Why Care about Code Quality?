@@ -1,0 +1,34 @@
+								Why Care about Code Quality?
+
+1. Code Quality
+
+	The ability for us to be able to understand and maintain the code that we have to develop in applications
+
+
+2. What's Quality?
+
+	Quality is a measure. It is a degree of excellence of some level of standard that we expect. In term of code quality, we are talking about quality as a way to measure our ability to understand the code. Whether it is maintainable, it is something that we are able to work with as we mvoe forward in evolving the design, fixing bugs and making enhancements.
+
+
+3. Why care about code quality?
+
+	We care about code quality because we really cannot be agile if our code sucks. 
+
+
+4. Maintainability?
+
+	"Programs myst be wrriten for people to read, and only incidentally for machines to excute." - Abelson and Sussman
+
+	In other words programs read more often than being written. We are very eager to write code often, but we have to pause for a minute and think about not just writing this code but what's gonna happen when others have to read this code. If you think like that, that would want you to name the variables as K and W or we can give meaningful name. 
+
+
+5. Consequences
+
+
+								QUIZ QUESTION:
+
+1. Testability is a consideration when measuring quality of code/design.
+2. Quality has a significant economic impact
+3. Quality is as critical as speed of developement
+4. Sustainable speed is hard without good quality
+5. The cost of poor quality is huge in our industry

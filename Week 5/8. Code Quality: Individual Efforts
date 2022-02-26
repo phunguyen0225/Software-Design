@@ -1,0 +1,35 @@
+								Code Quality: Individual Efforts
+
+1. What can we do?
+
+2. Care about design
+
+	- Good variable names
+	- Short methods
+	- Smaller classes
+	- Learn by reading good code
+
+3. KISS
+
+	- keep it simple and stupid
+
+4. Automated Tests with high coverage
+
+5. Run tests before checkin
+
+6. Avoid cargo cult
+
+	Where we follow a practice because we see that it's somebody else has used it and they're relatively successful so whatever they do should be useful for us but instead only use practice that you understand and apply practices that will directly benefit for our own project
+
+7. court feedback and criticism
+
+8. checkin frequently
+
+			
+								Quiz Question
+
+1. Quality is a professional responsibility of each individual
+2. Consider untested code as  code
+3. Make sure tests  before checking in code
+4. Keep it simple, stupid
+5. Checking in code frequently can help reduce stress, get feedback, reduce fear, and gives us courage to make change.

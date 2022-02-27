@@ -1,0 +1,24 @@
+									Code Quality: Team Efforts
+
+1. What can we do as a team?
+
+2. Avoid shortcuts
+
+	We take shortcuts a lot of times and usually the shortcuts actually lengthen the time or disrupt other things and cause problems, and we really don't to take these shortcuts as much as possbile, we want to avoid shortcuts.
+
+
+3. Take collective ownership
+
+	If you want the code to be maintainable by somebody else in the team ever, it's important to have collective ownership.
+
+	The truck factor is the number of people on the team who should be run over by a truck for this project to fail and if one person does only one thing all the time, the chances are when that person quits nobody else will be able to maintain that code and that becomes really a problem. So we want to avoid track factor. 
+
+	Collector ownership actually promotes a better quality of code mainly because number of people are looking at the code and maintaining it, and it improves readability of the code because other people are reading it.
+
+
+4. Promote positive interactions
+
+	The team has to be interested in improving the quality of code, focus on the code and the quality rather than the individual who is writing the code. 
+
+
+5. Provide constructive feedback

@@ -1,0 +1,17 @@
+									Treat Warnings as Error
+
+1. Errors
+
+	When compilers finds something syntactically incorrect
+
+2. Views on warnings
+
+	There might be very bad hidden errors behind warnings. Logic wise also.
+
+3. When and how
+
+	If we care about good quality of code, we got to eliminate warnings as much as we eliminate erros. Erros we are forced to eliminate, warnings we should have the discipline to eliminate.
+
+	The first thing to do is to turn on the flags on the compiler that treats warnings as errors. 
+
+4. Deal with it pragmatically

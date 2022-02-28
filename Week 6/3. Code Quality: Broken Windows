@@ -1,0 +1,13 @@
+									Code Quality: Broken Windows
+
+1. broken windows theory
+
+2. how code deteriorates
+
+	code deteriorates when it first falls apart and nobody cares about it falling apart
+
+3. how to avoid that?
+
+	make sure that the code is healthy and working at all time
+
+4. keep it releasable

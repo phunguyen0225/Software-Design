@@ -1,0 +1,32 @@
+									Code Quality: Code Reviews
+
+1. Did you say code review?
+
+2. What generally goes wrong?
+
+	The team doesn't want to do code reviews, there will be disagreement and fights.
+
+	"Rigorous inspection can remove up to 90% of errors before the first test case is run" - Robert Glass.
+
+	The person reviewing the code should be an active developer on the code base, don't bring in people who don't write code in the project you're working on and have them review it. That is an example of priestood-based code review. Priesthood-based code review are very dangerous, you have these people coming in and sit there and they tell you where your semicolons and curly braces should be and what your variable name should be
+
+
+3. What's worked in effective teams?
+
+	- How?
+		Tatical code reviews are code reviews where you don't bring a team of people into a room and ask them to review the code. One person write the code and immediately soon after that another person reviews it
+
+	- When?
+		Code reviews is done as soon as a task is completed. The quality of review is inversely proportional to the amount of code that has to be reviewed
+
+	- What?
+		Not only reviewing the code but review the test for it as well
+
+		"Reviews are both technical and sociological, and both factors must be accommodated" - Robert Glass.
+
+
+4. A good code review includes...
+
+	- What do I like...
+	- What needs to be improved...
+	- Questions/suggestions...

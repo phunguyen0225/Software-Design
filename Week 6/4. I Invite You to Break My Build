@@ -1,0 +1,22 @@
+									I Invite You to Break My Build
+
+1. the value of continupus integration
+
+	The code that worked yesterday continues to work, we can monitor the health of the application, we make sure that developers have not checked in code and completely ruined the progress of the project and we ensure that the things are actually working and progressing along the way, and it gives a sense of confidence that things actually are moving forward. It also gives us an ability to make sure not only the code worked on one platform but it worked on various different platforms or configurations.
+
+
+2. be pragmatic not dogmatic
+
+3. don't practice Threat Driven Development
+
+	Threating the developers and telling them they cannot really break the builts
+
+4. reduces speed unnecessarily due to over verification
+
+5. fear kills innovation
+
+6. build breaking is not a bad thing
+
+7. good reasons why that may happen
+
+8. so, focus on what's important

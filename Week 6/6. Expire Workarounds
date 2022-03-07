@@ -1,0 +1,17 @@
+										Expire Workarounds
+
+1. Workarounds
+
+	If you have to write a workaround, make sure to documented in some type of way so when a person looking at a code they will understand how the code works.
+
+2. Effect on quality
+
+	Workarounds often diminish quality of software. It's a burden we carry with us, it's a burden we have to carry along for a very long time and if we don't provide enough support around the workaround then that burden becomes much more increasing turns into a technical debt.
+
+3. Putting an expiration label
+
+	If we know there's a particular problem that we need to work around it. We can put a label to come and revisit the problem. 
+
+4. How to do that?
+
+	It depends on a specific problem we are trying to solve and the manifestation of it

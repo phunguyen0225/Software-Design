@@ -1,0 +1,34 @@
+										Code Smell
+
+1. The Metaphor
+
+	When you walk in a room you might smell something but after a while you get use to it. That is the same with coding, when you start a project you might seem confused with all the code and you don't like how it's written but after maybe about 6 months, you get used to the team practice and the code.
+
+2. How it applies 
+
+	Code smell is rather instinctive, it's something that we immediately sense but we may need a little bit more time and effort to really pinpoint to what it is.
+
+3. Examples
+
+	- Duplication of code
+	- Unnecessary complexity
+	- useless / misleading comments
+	- long classes
+	- long methods
+	- poor naming (classes, variables, etc..)
+	- unused code
+	- poor inheritance
+	- complex logic
+	- convoluted code
+	- tight coupling
+	- poor cohesion
+	- over abstraction
+	- overuse of design patterns
+	- clever code
+
+4. How to deal with it
+
+	- keep an eye on it (or nose :D)
+	- actively refactor
+	- pay technical debt
+	- put effort to deodorize

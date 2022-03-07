@@ -1,0 +1,57 @@
+									Self Documenting Code
+
+1. Comments for readability?
+
+	Readability is abbout the ability of a programmer to understand what a piece of code does correctly within a shortest amount of time. 
+
+2. Self documenting code
+
+3. Clear instead of clever
+
+	Clever code makes us feel good, at least temporarily, it make us feel proud about what we have done. Clever code is really hard to understand and is tricky. Clear code often is easier to follow so when it comes to self documenting code, a cleaer code ends up being self-documented. 
+
+	Clever code often hides details and leaves out things to be solved, things to be discovered, things to be identified. Clever code is not transparent but clear code is. 
+
+	"I never make stupid mistakes. Only very, very clever ones." - John Peel
+
+4. No rush
+
+	"Haste is Waste"
+
+	"Act in haste and repent in leisure: Code too soon and debug forever"
+
+	- read
+	- review
+	- write automated tests
+	- code defensively
+
+5. Tests as documentation
+
+6. Comments should not be used to cover up bad code
+
+	We should not comment bad code but refactor bad code to better quality code
+
+7. Comment why Not what - violoates DRY
+
+8. Keep the documentation in code
+
+	- Purpose
+	- Requirements
+	- Promises
+	- Exceptions
+
+	- tools: javadoc, doxygen, ndoc, ...
+	- at least provide a pointer to where it is
+
+9. Variables names?
+
+	- not too long, but not cryptice eitehr
+	- avoid magic numbers
+
+10. Assertions for assumptions
+
+11. Document unique, special, unexpected condtions
+
+12. What if comments become redundant, totally?
+
+13. Fix a smell instead of commenting it

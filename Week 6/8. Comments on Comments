@@ -1,0 +1,31 @@
+									Comments on Comments
+
+1. Comments
+
+2. Oh those comments
+
+	//todo: Implement  - this is call IDE vomit
+
+	IDE vomit are really comments that auto generate when people use IDE shortcuts to create parts of code. Almost every IDE that synthesizes code for you on a keyboard shortcut unfortunately also has a engine that constantly vomits on the code.
+
+	i++; //increment
+
+	Car() //constructor
+
+3. Problems with comments
+
+	Sometimes the comment does not explain with the code. The code might be doing something and the comments means another. 
+
+4. Comments vs. readability
+
+	Never make a comment to make the code readable. A good code is a like a good joke, you just lay it down and you walk away. A good joke doesn't require explanation to understand. A good code doesnt require any description, it should be very self readable.
+
+5. When to comment?
+
+	When there are very different gnarly situations or very special cases that are very easy to miss and a few lines of comments to warn the programmer about a certain particular situation or condition is worthwhile. If there is a code that's going to work only when certain starts are aligned, i would like to at least see  a couple lines of comment describing why that is the case. 
+
+	You want to comment WHY and not WHAT the code is doing.
+
+6. What to comment?
+
+	Comment the purpose of the code. Why does this method or function exist? What are the parameters in terms of the preconditions? What are the expectations on the parameters?

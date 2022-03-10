@@ -1,0 +1,53 @@
+									Creating Evolutionary Design and Architecture: Part 1
+
+1. What's architecture?
+
+	Higher level of design, we're talking about components, components with potentiallu interfaces. A collection of classes that are cohesive.
+
+	Architecture is a representation, is a rather high level at the system level, how major pieces are communicating between each other and what components responsibilities are and what their interfaces are.
+
+2. Why evolutionary architecture?
+
+	We usually come up with an architecture early in the beginning of the project, this is high risk because the beginning of the project is where we have the least knowledge about the project. As time goes on, the amount of knowledge on the project increases. So...
+
+	It is important to come up with an architecture, however we have to have the courage, we have to have the professional discipline to label that not as an architecture but to label that as an architectural draft.
+
+	There are a couple of things that a good architect should do. The first thing is the architect should not create the architecture but should facilitate the creation of architecture by with the collaboration of the team. Create an architecture that actually evolves and the job of the architect is not to deliver an architecture but to create faciliate the creation of an architectural draft in the beginning
+
+	If we can create an architectural draft in the beginning, then through the sprints or the iterations of the project, we can evolve that architecture. We can then come back and see if the decisions we are making along the way concur with the initial suggestions that we have created in the architectural draft
+
+	SUGGESTION NOT DECISION
+
+	Martin Fowler - "Who Needs an Architect"  - an really good article 
+
+3. The risk of not evolving
+
+	The risk of not evolving the architecture is that the architecture and the design end up being disconnected from the realities of the application, and when the architecture and the design are disconnected from the realities of the application, as the application reality evolves, when we make certain change to the application, it becomes incredibly difficult. The net effect of this is the economic impact. It can also have a market impact
+
+4. The risk of evolving
+
+5. how to deal with that?
+	
+	- prioritize on value and architectural
+
+
+
+									Quiz Question: Part 1
+
+1. Evolutionary development should be a deliberate effort.
+2. Design should be minimalistic, simple and easier to extend
+3. We should develop architectural layers in vertical slices, driven by user stories, by application needs
+4. A good architect is a good mentor and involves the team to create the architecture. They are not solely responsible to deliever architecture or make all the architectural decisions.
+5. An architecture that does not evolve has the risk of being disconnected from the realities, it could become irrelevant and it could be hard to maintain. It is not stable and desirable.
+
+
+
+									Creating Evolutionary Design and Architecture: Part 2
+
+6. evolutionary should be a deliberate effect
+
+7. Keep it simple
+
+8. refactor
+
+9. reversibility

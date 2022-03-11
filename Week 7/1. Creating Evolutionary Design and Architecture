@@ -83,19 +83,79 @@
 
 11. YAGNI
 
+	"You Aren't Gonna Need It (yet)"
+
+	When you are building application try to think of YAGNI. When working through tactical design or even at the architectural level about a messaging component or a tear, ask yourself if you really need this right now, and if not just postpone it. 
+
+	$now 				$later
+				>					postpone
+			    ==					postpone
+			    <					? - what is the probablity of you needing it. If probability is high, go a build it now
+
+	The code that you did not write has the fewst bugs in it, os it's better to really postpone those decisions and avoid writing it and only develop minimum code that actually meets the expectation of the application and delivers value.
+
 12. Tracer bullet
+
+	Experiement and use the feedbackloop to go back and evovle.
 
 13. extensible
 
+	To have good software extensibility, the first place to start looking at is not that technology but the first place to look is how your teams are organized. If the teams are organized across a technology stack, that is a big disadvantage, it increases the cost of development. Some times you do really need these kinds of team but what if you have a cross-functional team where your project has people committed to your project but htey got access to these different layers and somebody could be coordinating through those layers. 
+
 14. what about extensibility?
+
+	One reason extensibility becomes really hard is that we often end up violating the DRY principle "Dont Repeat Yourself". DRY simply say that in your system, you don't want to really have decisions being made at multiple different levels. DRY is not duplication of code, but it's a duplication of effort. 
+
+	If we can minimize the impace of change, it would be a lot better and easier to make the code extensible.
 
 15. triangulate
 
+				3. Base
+	1. Class1 				2. Class2
+
+	Take what's common in class1 and class2 and move it up to Base. If you realize that Base is not really needed, you wouldn't create it, if you feel that the base needs only these minimum things then your base is going to be really minimum and the derived classes can do their own stuff. 
+
+	When it comes to building a hierarchy, do not start with the hierarchy but end with the hierarchy. If you start with a hierarchy, you possibly have a monster and complexity. If you end with a hierarchy, that hierarchy is very practical and serves your need.
+
 16. reuse?
+
+	Usable has to be specific
+
+	Re-useable it has to be general
+
+	Successful libraries and frameworks did not come from creating a library framework, they came from application and use and extraction from it.
+
+	Standardization after Innovation is extremely important rather than the other way around. 
+
+	Don't start out to create something reusable, start something that is usable and use it several times and then extract something that's reusable from it.
+
+
+
+									Quiz Question: Part 3:
+
+1. YAGNI is an acronym that stands for you're not going to need it
+2. Duplication negatively impacts the ability to extend software
+3. Start with use in mind, the reuse will automatically fall in place
+4. Tracer bullet is a practice that can help us ensure the design we have in mind is practical and relevant
+5. Instead of starting with a base class or interface, we should triangulate, that is, refactor that out of the classes
+
+
+
+									Creating Evolutionary Design and Architecture: Part 4
 
 17. parsimony
 
 18. minimize libraries and frameworks
+
+19. Postel's law
+
+20. testable
+
+21. Conway's law
+
+22. Integrate early, Integrate often
+
+23. Summary
 
 
 

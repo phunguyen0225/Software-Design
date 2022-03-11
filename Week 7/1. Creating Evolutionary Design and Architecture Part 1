@@ -2,7 +2,7 @@
 
 1. What's architecture?
 
-	Higher level of design, we're talking about components, components with potentiallu interfaces. A collection of classes that are cohesive.
+	Higher level of design, we're talking about components, components with potentially interfaces. A collection of classes that are cohesive.
 
 	Architecture is a representation, is a rather high level at the system level, how major pieces are communicating between each other and what components responsibilities are and what their interfaces are.
 
@@ -30,6 +30,8 @@
 	
 	- prioritize on value and architectural
 
+6. evolutionary should be a deliberate effect
+
 
 
 									Quiz Question: Part 1
@@ -44,10 +46,62 @@
 
 									Creating Evolutionary Design and Architecture: Part 2
 
-6. evolutionary should be a deliberate effect
-
 7. Keep it simple
+
+	It takes more effort to create things that are simple. A simple solution is a solution that focuses on the real problem, fails less, keep our focus, it help us to know what we are focusing on and it is easier to maintain, easier to evolve as well. 
 
 8. refactor
 
 9. reversibility
+
+	The ability to back out of a decision that we have made. Reversibility is really important, however, languages decisions are not reversible but that doesn't mean if you're developing in C# you cannot develop componenets in F#. We reverse something by maybe changing the library, maybe there's a better library in the market place and the one we are using is not being maintain by the company, in this case it would be better to reverse out and use a library that best fit for the project. Also since we have automated test, the cost of reversing is lower because we have the quick feedbackloop.
+
+	Don't assume an application is actually reversible, the question is have we really developed it in a way it is reversible. So there's reversibility in concept and reversibility in reality. 
+
+	Don't make everything reversible, ask if something should be reversible or not and if something is useful and important to make reversible, then make sure it's implemented as reversible at the architecture and the design level. Just because something could be reversed doesn't mean we want to make it reversible and just because something is reversible doesn't mean it's been implemeted in a reversible manner as well.
+
+10. last responsible moment
+
+	Postpone decisions can beck says that courage is postponing the decisions of tmr to tmr. 
+
+	One of the most important decision is what to decided and when to decide.
+
+
+
+									Quiz Question: Part 2:
+
+1. The ability to back out of a decision, called reversibility, is an important consideration in evolutionary design.
+2. In order to be reversible, we should design for it and actively decouple.
+3. Combining independent things can make code complex not simple.
+4. It's better to move decisions to the last responsible moment because we may know more later than now
+5. Not every single decision in software development should be reversible because that's not practical and may be cost prohibitive
+
+
+
+									Creating Evolutionary Design and Architecture: Part 3
+
+
+11. YAGNI
+
+12. Tracer bullet
+
+13. extensible
+
+14. what about extensibility?
+
+15. triangulate
+
+16. reuse?
+
+17. parsimony
+
+18. minimize libraries and frameworks
+
+
+
+
+
+
+
+
+

@@ -34,7 +34,7 @@
 
 
 
-									Quiz Question: Part 1
+									Quiz Question: Part 1:
 
 1. Evolutionary development should be a deliberate effort.
 2. Design should be minimalistic, simple and easier to extend
@@ -145,13 +145,34 @@
 
 17. parsimony
 
+	Parsimony is minimalism, do the minimum you can and postpone things you don't need right now and try to really minimze and keep everything you do as small as possible.
+
 18. minimize libraries and frameworks
+
+	Only bring in libraries when you feel that your effort to implement it outweighs the effort in using the library on the project. Try to minize libraries and framework as possible because if you need to upgrade your application, and the library is not being maintain anymore it would take a lot of time to fix the application.
+
+	RDD - Resume Driven Development. Don't be Infatuated to technology, use libraries and framework only if you absolutely need them. 
 
 19. Postel's law
 
+	When you are interacting with system, be very conservative in what you send out and be very flexible in what you receive.
+
+	class MyCLass {
+		receive(ArrayList<CD> values) {
+
+		}
+		receive2(List<Media> values) { //this is more flexible because we can receive any type of List and Media format
+
+		}
+	}
+
 20. testable
 
+	When architect for testability, your componenets and classes become more modular, they become smaller and more cohesive and they also end up being decoupled. 
+
 21. Conway's law
+
+	If a company is organized in a certain way, then the product layers fit into those tiers as well.
 
 22. Integrate early, Integrate often
 
@@ -160,8 +181,10 @@
 
 
 
+									Quiz Question: Part 4:
 
-
-
-
-
+1. Consider reversibility when it comes to using external libraries to minimize maintenance risk.
+2. Testability has an impact on modularity and coupling.
+3. Buy vs. build is a significant decision we have to be careful when making.
+4. Parsimony is a practice where we try to keep things minimal.
+5. A system designed for testability shapes differently than the one that's not designed with that in mind.

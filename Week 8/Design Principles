@@ -92,6 +92,58 @@
 
 
 
+									Design Principles: Part 2
+
+Stability - no reason to change
+	Interface
+
+Rigidity - there is reason to change, but we are extremely reluctant to change (afraid to make changes)
+
+
+1. Bad Design
+
+	- Rigidity - Hard to change, results in cascade of changes
+
+		You know whether it is stability or rigidity by looking whether that is a class or an interface. If it is an interface it contributes to stability, if it's a class with dependecies it contributes to rigidity. 
+
+	- Fragility - Breaks easily and often
+
+		Low cohesion and high coupling causes fragility
+
+	- Immobility - Hard to reuse (due to coupling)
+
+		The reuse is inversely proportional to the level of coupling. The more the coupling, less the reuses, less the coupling, the more reusable the code can become.
+
+	- Viscosity - Easy to do wrong things, hard to do right things
+	- Needless Complexity - Complicated class design, overly generalized
+	- Needless Repetition - Copy and Paste away
+	- Opacity - Hard to understand
+
+2. Principles
+
+	Guiding Principles that help develope better systems
+
+	Use principles only where they apply
+
+	You must see the symptoms to apply them
+
+	If you apply arbitrarily, the code ends up with Needless Complexity
+
+
+
+									Quiz Part 2
+
+1. Creating cryptic variables and terse code leads to opacity, a peril of bad design.
+2. In desgin, tight coupling makes reuse hard not easy.
+3. Fragility is proportional to coupling and inversely proportional to cohesion.
+4. In desgin, in-coming dependencies lead to rigidity.
+5. The ability to reuse is inversely proportional to coupling.
+
+
+
+
+									Design Principles: Part 3
+
 
 
 

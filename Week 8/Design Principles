@@ -144,6 +144,54 @@ Rigidity - there is reason to change, but we are extremely reluctant to change (
 
 									Design Principles: Part 3
 
+1. YAGNI Principles
+
+	"You Aren't Going to Need It (yet)"
+
+	You are looking out for extensibility
+	You are not sure if a certain functionality is needed
+	Designing what you do not know full leads to unnecessary complexity and heavy weight desgin
+	If you really need it, design it at that time
+
+2. DRY Principles
+
+	"Don't Repeat Yourself"
+
+	Every piece of knowledge must have a single, unambiguous, authoritative representation within a system.
+	It is not just about duplication of code, it's about duplication of effort as well. 
+	One of the most diffituclt, bust most seen
+
+	Some time it is hard to realize we are violating the DRY principle
+	It is much easier to copy, paste and modify code to get it working the way you wan it, but that's not the right way to do.
+	Duplicating code results in poor maintainability, expensive to fix bugs/errors and hard to keep up with change.
+
+3. SRP Principle
+
+	"Single-Responsibility Principle" another name is cohesion
+
+	A class should have only one reason to change
+
+	SRP affects Reuse
+		Lower cohesion results in poor reuse
+		Tight coupling 
+		Poor Cohesion
+		Bad for reuse
+
+
+
+
+									Quiz Part 3
+
+1. Violating the DRY principles often may increase the cost of maintenance.
+2. SRP can influence ease of code change, reduced cost of maintenance, readability and understandability.
+3. DRY is not mainly about duplication of code but duplication of effort as well.
+4. According to the DRY principle, we have to avoid duplicating code and effort.
+5. The main concept or metric behind SRP is cohesion.
+
+
+
+
+
 
 
 

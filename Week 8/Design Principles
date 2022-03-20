@@ -1,0 +1,98 @@
+									Design Principles: Part 1
+
+1. Measuring Quality of Design
+	
+	An incremental, iterative process
+
+	Difficult to design right the first time, good design have to evolve and not done in one sitting.
+
+2. Metrics for class design
+
+	- Coupling
+
+		Inheritance vs. coupling
+			- inheritance increase coupling
+		Strong coupling complicates a system
+		design for weakest possible coupling
+
+		if we do have to couple, it's better to couple to an interface rather than coupling to a implementation, this is mainly centered around statically type languages. In dynamically typed languages, we don;t really care so much about interface.
+
+		High coupling is evil, means your code depends on a lot of things and it also depends on very strong dependecy on things, whereas low coupling means you depend on fewer number of things but also the things you depend on are much more lightweight dependecy like an interface rather than a concrete class. 
+
+	- Cohesion
+
+		Degree of connectivity among the elements of a single module or class. In other words, cohesion is talking about how much the different parts of an abstraction are related and work with each other. Cohesion makes a class very narrow and focused. Another term for cohesion is Single Responsibility Principle (SRP). 
+
+		High cohesion is when it really becomes small and focused, does one thing and one thing well. Low cohesion is when it dilutes and bloats up and then just kind of spreads around like a blotting paper. It tries to do a lot of stuff, takes a lot of surface area. 
+
+		Coincidental cohesion: all elements related undesirable
+		Functional cohesion: work together to provide well-bounded behavior
+
+
+	A good design have high cohesion and low coupling. 
+
+	- Suffiency
+
+		Implies minimal interface
+		Captures enough characteristics for meaningful and efficent interaction
+
+	- Completeness
+
+		Interface captures all meaningful chracteristics of an abstraction
+		Implies covering all aspects of an abstraction
+
+	- Primitiveness (of operations/interface)
+
+		Efficient implementation requires access to underlying representation.
+
+		The methods, the operations we provide on an interface, on a class are really very small and basic implementation and they are really focues towards providing efficient implementation for whatever functionality we want.
+
+		When it comes to functions, always try to provide minimum number of functions and also functions that are primitive.
+
+3. Law of Demeter
+
+	"Methods of a class should not depend in any way on the internal structure of any class, except the immediate structure of their own class. Further, each method should send messages to objects belonging to a very limited set of classes only."
+
+	First part talks about encapsulation and cohesion. Second part talks about low coupling. 
+
+4. Tell Don't Ask principle
+
+	"Procedural code gets information and then makes decisions. OO code tells objects to do things" Alec Sharp in Smalltalk by Example.
+
+	Objects should take limited responsibility and rely on others to provide appropraite service
+
+	Command-Query Sepration: categorize methods as command or query
+
+5. Train Wreck Coding
+
+	You may find code that continues to call on objects return by methods in sequence
+
+	customer.getAddress().getCity().getCounty()...
+
+	This indicates that you are interest in working with objects that are farther away than those that are your close friend
+
+	Hard to understand
+
+	Hard to debug
+
+	Lacks Cohesion
+
+	Good candidate for refactoring
+
+
+
+									Quiz Part 1
+
+1. Design for high cohesion and low coupling.
+2. A code that's narrow, focused, and does one thing well is considered to be cohesive.
+3. A good design has to evolve.
+4. Depending on an interface instead of a class can lead to loose coupling.
+5. To create a good design we have to constantly evaluate the quality, evolve it and be consicous of our design activities not just get it working.
+
+
+
+
+
+
+
+

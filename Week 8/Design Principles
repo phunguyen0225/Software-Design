@@ -239,6 +239,60 @@ Rigidity - there is reason to change, but we are extremely reluctant to change (
 
 
 
+									Design Principles: Part 5
+
+1. OCP
+
+	Strategic Closure:
+
+		No program can be 100% closed
+
+		There will always be changes against which the module is not closed
+
+		Closure is not complete - it is strategic
+
+		Designer must decide what kinds of changes to close the desgin for.
+
+		This is where the experience and problem domain knowledge of the designer comes in
+
+		To have good extensibility design we need both knowledge in the domain and software development
+
+	Heuristics and Conventions that arise from OCP:
+
+		Make all member variables private
+
+		Encapsulation: All classes/code that depend on my class are closed from change to the variable names or their implementation within my class. Member functions of my class are never closed from these changes
+
+		Further, if this were public, no class will be closed against improper changes made by any other class.
+
+		No global variables
+
+		Run-time type identification (RTTI) is ugly and dangerous 
+		C++ - RTTI dynamic_cast
+		Java - instanceof
+		C# - is
+
+		EXAMPLE: if (other.engine instanceof ...)  // this is bad and dangerous. What is wrong with this is that every time you introduce a new type of object, you would have to come back and change the code. We can prevent this by using polymorphism
+
+		If a module tries to dynamically cast a base class pointer to several derived classes, any time you extend the inheritance hierarchy, you need to change the moduel.
+
+		Not all these situation violate OCP all the time.
+
+
+
+
+
+
+									Quiz Part 5
+
+1. Closure is not complete, it's strategic
+2. If we design a class for extensibility, the class sometimes have to change for any requirements change.
+3. The use of Runtime Type Identification (RTTI) is NOT always a bad idea
+4. Dependencies can be on both interface and class
+5. Following the Open-Closed Principle can help us create code that is maintainable, more extensible, more decoupled and easier to change
+
+
+
 
 
 

@@ -296,18 +296,80 @@ Rigidity - there is reason to change, but we are extremely reluctant to change (
 
 
 
+									Design Principles: Part 6
+
+1. Liskov's Substitution Principle
+
+	Inheritance is used to realize and reuse Abstraction, and polymorphism which are key to OCP
+
+	How do we measure the quality of inheritance?
+
+	LSP:
+
+		"Functions that use pointers or references to base classes must be able to use objects of derived classes without knowing it"
+
+2. Design by Contract
+
+	Advertised Behavior of the Derived class is Substittutable for that of the Base class
+
+	Substitutability: Dervied class Services Require no more and promise no less than the specification of the corresponding services in the base class. 
+
+	---JAVA CODE---
+
+	class Randomizer {
+		public int nextRand(int from, int to) {
+			verifyPreCondition(from, to);
+
+			return from;
+		}
+		protected void verifyPreCondition(int from, int to) {
+			if (from < 0 || to < from) {
+				throw new RuntimeException("Error")
+			}
+		}
+	}
+
+	class EfficientRandomizer extends Randomizer {
+	//this is efficient if to >= 2 * from. Otherwise, it is only as efficient as the base
+
+
+	//doing it this way would not violate LSP
+
+		@Override
+		public int nextRand(int from, int to) {
+			verifyPreCondition(from, to);    //require no more but promise no less than the base
+ 
+			if(to >= 2 * from)
+				//do efficient algorithm
+				return from + 1;
+			else
+				return super.nextRand(from, to);       
+		}	
+	}
+
+	public class Main {
+		public static void use(Randomizer randomizer) {
+			System.out.printlm(randomizer.nextRand(2, 3))
+		}
+
+		public static void main(String[] args) {
+			Randomizer randomizer = new Randomizer();
+			use(randomizer);
+
+			EfficientRandomizer efficientRandomizer = new EfficientRandomizer();
+			user(efficientRandomizer);
+		}
+	}
 
 
 
 
 
+									Quiz Part 6
 
-
-
-
-
-
-
-
-
+1. LSP says we have to ensure that while a derived class may provide alternate implementations, it should preserve the advertised behavior of the base.
+2. The LSP principle applies only to compile time checks and not runtime verifications. - NO
+3. The LSP principle directly addresses issues with Inheritance
+4. Suppose a base method, which takes an int, will only accept even numbers; the derived overriding method wants to accept any int, even or odd. Is this a violation of LSP? - NO
+5. Compilers are not really good at identifying violations of LSP
 

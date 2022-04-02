@@ -373,3 +373,239 @@ Rigidity - there is reason to change, but we are extremely reluctant to change (
 4. Suppose a base method, which takes an int, will only accept even numbers; the derived overriding method wants to accept any int, even or odd. Is this a violation of LSP? - NO
 5. Compilers are not really good at identifying violations of LSP
 
+
+
+
+
+
+
+									Design Principles: Part 7
+
+1. LSP
+
+	"Any Derived class object must be substitutable where ever a Base class object is used, without the need for the user to know the difference"
+
+
+	---JAVA CODE---
+
+	class Bird {
+		public void showBeak() {
+			System.out.println("Showing beak");
+		}
+		public void fly() {
+			System.out.println("flying...");
+		}
+	}
+
+	class Eagle extends Bird {
+		@Override
+		public void showBeak() {
+			System.out.println("Show that excellent beak");
+		}
+
+		@Override
+		public void fly() {
+			System.out.println("flying like an eagle");
+		}
+	}
+
+	class Parrot extends Bird() {
+		@Override
+		public void showBeak() {
+			System.out.println("Show the parrot's beak");
+		}
+	}
+
+	class Penguine extends Bird {
+		@Override
+		public void showBeak() {
+			System.out.println("Show the penguine's beak");
+		}
+
+		@Override
+		public void fly() {
+			throw new RuntimeException("Sorry, penguine's don't fly...")
+		}
+	}
+ 
+	class Performer {
+		public static void showBird(Bird bird) {
+			bird.showBeak();
+			bird.fly();
+		}
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			Performer performer = new Performer ();
+
+			performer.showBird(new Eagle());
+
+			performer.showBird(new Parrot());
+
+			performer.showBird(new Penguine());
+		}
+	}
+
+
+	//The code above violate LSP because in Class Penguine it say that the bird cannot fly but in the Base class it say that a Bird can fly. The derived class did not promise the base that the bird can fly, therefore violating LSP. It made a contract instead of a promise. One of the wrong way to do when fixing is:
+
+
+	class Performer {
+		public static void showBird(Bird bird) { //also violate LSP because now the user of a base class 
+			bird.showBeak();                     //need to know if an instance is of a dervived class
+			if (!(bird instanceof Penguine))   //violates Open Close Principle
+				bird.fly(); 
+		}
+	}
+
+
+
+
+	We can fix this by refactoring the code
+
+
+	---JAVA CODE---
+
+	class Bird {
+		public void showBeak() {
+			System.out.println("Showing beak");
+		}
+	}
+
+	class FlyingBird extends Bird {
+		public void fly() {
+			System.out.println("flying...");
+		}
+	}
+
+	class Eagle extends FlyingBird {
+		@Override
+		public void showBeak() {
+			System.out.println("Show that excellent beak");
+		}
+
+		@Override
+		public void fly() {
+			System.out.println("flying like an eagle");
+		}
+	}
+
+	class Parrot extends FlyingBird() {
+		@Override
+		public void showBeak() {
+			System.out.println("Show the parrot's beak");
+		}
+	}
+
+	class Penguine extends Bird {
+		@Override
+		public void showBeak() {
+			System.out.println("Show the penguine's beak");
+		}
+	}
+ 
+	class Performer {
+		public static void showBird(Bird bird) {
+			bird.showBeak();
+		}
+
+		public void flyBird(FlyingBird bird) {
+			bird.fly();
+		}
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			Performer performer = new Performer ();
+
+			Eagle eagle = new Eagle();
+			performer.showBird(eagle);
+			performer.flyBird(eagle);
+
+			Parrot parrot = new Parrot();
+			performer.showBird(parrot);
+			performer.flyBird(parrot);
+
+			Penguine penguine = new Penguine();
+			performer.showBird(penguine);
+			performer.flyBird(penguine); // ERROR!! Not a FlyingBird
+		}
+	}
+
+
+2. LSP in Java?
+
+	LSP is being used in Java at least in two places
+
+	Overriding methods cannot throw new unrelated exceptions
+
+	Overriding method's access can't be more restrictive than the overriddent method. For instance, yuo can't override a public method as protected or private in derived class
+
+
+	---JAVA CODE---
+
+	class Bird {
+		public void showBeak() {
+			System.out.println("Showing beak");
+		}
+	}
+
+	class Parrot extends Bird() {
+		protected void showBeak() { //VIOLATE LSP. it does not give more but promise less. it have to EXTENDS
+
+		}
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+		}
+	}
+
+	//the above code is error, but the error is from the compiler following the LSP. Java help protect LSP to a certain extends. The code below is another example but Java compiler could not detect it
+
+
+	---JAVA CODE---
+
+	import java.util.Stack;
+
+	public class Main {
+		public static void main(String[] args) {
+			Stack<Integer> stack = new Stack<Integer>();
+			//LIFO
+
+			stack.push(1);
+			stack.push(2);
+			System.out.println(stack.pop());
+			System.out.println(stack.pop());
+		}
+	}
+
+	//Stack is a derive class from Vector<>, this is a example of poor design and a violation of LSP. Because a Stack cannot be treated as a Vector. It's LIFO, Last in First out. A better design was to use delegation and not inheritance. They should have said a stack contains a vector to hold the data and the push and pop of the stack should have internally used a vector rather than inheriting from a vector. 
+
+	LSP is all about inheritance and substitutability
+
+	Should I inherit from a class? 
+		- If you want your instance to reuse a class, then use delegation.
+		- If you want your instance to be used as a class, then use inheritance, and ensure that it is really substitutable
+
+
+
+
+
+									Quiz Part 7
+
+1. Inheritance is not as simple as extending a class, it takes more effort not to violate good design principles.
+2. Checked exceptions does not fully ensure that we don't violate LSP when it comes to throwing exceptions.
+3. From the pure reuse point of view, delegation may be a better choice than inheritance, if we don't desire substitutability.
+4. If you want to reuse a class, then use delegation. If you want an instance to be used in place of another, then use inheritance, but ensure substitutability in that case.
+5. Throwing arbitrary exceptions from an overriding method could potentially violate LSP.
+
+
+
+
+
+
+
+
+

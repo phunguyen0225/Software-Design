@@ -926,6 +926,43 @@ DYSOLD - DRY
 
 
 
+									Design Principles: Part 11
+
+1. Stable Dependecy Principle
+
+	"Dependencies between released components must run in the direction of stability. The dependee must be more stable than the depender". A component can never be more stable than the one it depends upon
+
+	Instability ->  I = Ce / (Ca + Ce) where
+	Ca - # of classes outside that depend upon this class
+	Ce - # of classes outisde that this class depends upon
+	0 <= I <= 1
+	0 - ultimately stable; 1 - untilmately unstable
+
+	Components should be arranged such that components with a high I metrics should depend upon component with low I metrics.
+
+2. Stable Abstraction Principle
+
+	"The more stable a component is, the more it must consist of abstract classes. A completely stable category should consist of nothing but abstract classes."
+
+	Implementation of methods change more often than the interface. Interfaces have more intrinsic stability than executable code.
+
+	Abstraction of a component:
+
+		A = (# of interface) / (# of classes + # of interface)
+		0 <= A <= 1
+		0 - no abstract classes; 1 - all abstract classes
+
+
+
+
+
+									Quiz Part 11
+
+1. The value of metric I equals 1 means the package is ultimately unstable
+2. If an abstraction has no reason to change, we say it is stable, but if it can't change, we say it is rigid
+3. If more classes depend on your class than it depending on other classes, then the class will be more rigid
+4. The value of A equals 1 means the component is full of interfaces
+5. Dependencies running into an interface (instead of a class) result in stability instead of rigidity.
 
 
 

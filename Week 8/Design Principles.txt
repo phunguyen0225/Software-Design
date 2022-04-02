@@ -696,4 +696,211 @@ Rigidity - there is reason to change, but we are extremely reluctant to change (
 
 
 
+									Design Principles: Part 9
+
+Continue from the code above
+
+
+---JAVA CODE---
+
+	interface Appliance {
+		int getCurrentValue();
+		void setCurrentValue(int value);
+	}
+
+	class TV implements Appliance{
+		private int volume;
+		public in getVolume() {return volume;}
+		public void setVolue(int newVolume) {
+			volume = newVolume;
+		}
+
+		@Override
+		public int getCurrentValue() {
+			return getVolume();
+		}
+
+		@Override
+		public void setCurrentValue(int value) {
+			setVolume(value);
+		}
+	}
+
+	class Fan implements Appliance{
+		private int speed;
+		public int getSpeed() {return speed;}
+
+		public void setSpeed(int newSpeed) {
+			speed = newSpeed;
+		}
+
+		@Override
+		public int getCurrentValue() {
+			return getSpeed();
+		}
+
+		@Override
+		public void setCurrentValue(int value) {
+			setSpeed(value);
+		}
+	}
+
+	class Remote {
+		private Appliance appliance;
+
+		pbulic Remote(Appliance anAppliance) {
+			appliance = anAppliance;
+		}
+
+		public void increase() {
+			appliance.setCurrentValue(appliance.getCurrentValue() + 1);
+		}
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			System.out.println("TV");
+			TV tv1 = new TV();
+
+			Remote remote1 = new Remote(tv1);
+			System.out.println(tv1.getVolume());
+
+			remote1.increase();
+			System.out.println(tv1.getVolume());
+
+			System.out.println("Fan")
+			Fan fan1 = new Fan();
+			System.out.println(fan1.getSpeed());
+
+			Remote remote2 = new Remote(fan1);
+			remote2.increase();
+		}
+	}
+			depends         <interface>
+	Remote ----------------> Appliance
+
+			<realize>
+	TV - - - - - - - - - -> Appliance
+
+			<realize>
+	Fan - - - - - - - - - -> Appliance
+
+
+
+
+//alternate design
+
+	---JAVA CODE---
+
+	class TV {
+		private int volume;
+		public in getVolume() {return volume;}
+		public void setVolue(int newVolume) {
+			volume = newVolume;
+		}
+
+		public Remote getRemote() {
+			return new Remote() { //creating anonymouys inner class
+				@Override 
+				public void increase() {
+					volume++;
+				}
+			}
+		}
+	}
+
+	class Fan {
+		private int speed;
+		public int getSpeed() {return speed;}
+
+		public void setSpeed(int newSpeed) {
+			speed = newSpeed;
+		}
+
+		public Fan getRemote() {
+			return new Remote() {
+				@Override
+				public void increase() {
+					speed++;
+				}
+			}
+		}
+	}
+
+	interface Remote {
+		public void increase();
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			System.out.println("TV");
+			TV tv1 = new TV();
+
+			Remote remote1 = tv1.getRemote();
+			System.out.println(tv1.getVolume());
+
+			remote1.increase();
+			System.out.println(tv1.getVolume());
+
+
+			System.out.println("Fan")
+			Fan fan1 = new Fan();
+			System.out.println(fan1.getSpeed());
+
+			Remote remote2 = fan1.getRemote();
+			remote2.increase();
+		}
+	}
+
+
+1. Fundamental Principles 
+
+SOLID - SRP
+	  - OCP
+	  - LSP
+	  - Interface Segregation Principle
+	  - DIP
+
+DYSOLD - DRY
+	   - YAGNI
+	   - SRP
+	   - OCP
+	   - LSP
+	   - DIP
+
+
+
+
+
+									Quiz Part 9
+
+1. The design principles are most useful during tactical design
+2. The words that relate to DIP and the solution it offers are extensibility, inheritance and interfaces
+3. The O in SOLID principles stands for the acronym OCP
+4. DIP is usefull for making the code have loose coupling, extensibile and testable
+5. The implementation of iterators in Java and C# rely on inner classes or nested classes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

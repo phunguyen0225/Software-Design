@@ -607,5 +607,93 @@ Rigidity - there is reason to change, but we are extremely reluctant to change (
 
 
 
+									Design Principles: Part 8
+
+1. Nature of Bad Design
+
+	- Rigid - hard to change since changes affect too many parts
+	- Fragile - unexpected parts break upon change
+	- Immobile - hard to separate from current application for reuse in another
+
+2. DIP - Dependency Inversion Principle
+
+	"High level modules should not depend upon low level modules. Both should depend upon abstractions". Concrete class should not depend on concrete class instead both should depend on interfaces. 
+
+	"Abstractions should not depend up detail. Details should depend upon abstractions"
+
+	---JAVA CODE---
+
+	class TV {
+		private int volume;
+		public in getVolume() {return volume;}
+		public void setVolue(int newVolume) {
+			volume = newVolume;
+		}
+	}
+
+	class Fan {
+		private int speed;
+		public int getSpeed() {return speed;}
+
+		public void setSpeed(int newSpeed) {
+			speed = newSpeed;
+		}
+	}
+
+	class Remote {
+		private TV tv;
+
+		pbulic Remote(TV theTV) {
+			tv = theTV;
+		}
+
+		public void increase() {
+			tv.setVolume(tv.getVolume() + 1);
+		}
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			System.out.println("TV");
+			TV tv1 = new TV();
+
+			Remote remote1 = new Remote(tv1);
+			System.out.println(tv1.getVolume());
+
+			remote1.increase();
+			System.out.println(tv1.getVolume());
+
+			System.out.println("Fan")
+			Fan fan1 = new Fan();
+			System.out.println(fan1.getSpeed());
+
+			Remote remote2 = new Remote(fan1); //ERROR! this remote expect a TV not a Fan
+			remote2.increase();
+		}
+	}
+
+	//the code above is a concrete class Remote depends on a concrete class TV
+
+	REMOTE---------------->TV
+
+	//to fix this problem we can abstract out the remote, make it an interface and let the concrete class implements from it.
+
+
+
+
+
+									Quiz Part 8
+
+1. The hiehger level modules should not depend on lower level modules, both should depend on abstractions.
+2. A violation of OCP may be fixed by applying DIP.
+3. FALSE: A class should never depend on another class, it should only depend on an interface.
+4. Blindly applying DIP will result in unnecessary complexity and unnecessarily more code.
+5. When extensibiliy is needed, instead of a class depending on another class, it should depend instead on an interface or abstraction.
+
+
+
+
+
+
 
 

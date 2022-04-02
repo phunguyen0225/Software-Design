@@ -970,6 +970,37 @@ DYSOLD - DRY
 
 
 
+									Design Principles: Part 12
+
+1. Distance from the main sequence
+
+	D = | (A + I - 1) / sqrt(2) |
+
+	0 <= D <= 0.707; Desirable value of D is closed to 0
+
+	normalized form D' = | (A + I - 1) |
+
+	Calculate D value for each component
+
+	Component whose D value is not near Zero can be reexamined and restrctured.
+
+
+
+
+
+									Quiz Part 12
+
+1. We should keep refactoring even when the D' value reaches zero
+2. We can't eliminate change, we can only try to minimize the change and make the system resilient to change
+3. For any practical system, we need a balance between stability and flexibility
+4. An example of a package with A equals 0 and I equals 0 is Utility library
+5. A component is a candidate for refactoring if its D' value is 0.5, 0.75 and 1
+
+
+
+
+
+
 
 
 

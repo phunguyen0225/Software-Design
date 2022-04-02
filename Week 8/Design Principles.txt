@@ -886,6 +886,41 @@ DYSOLD - DRY
 
 
 
+									Design Principles: Part 10
+
+1. Acylic Dependency Principle
+
+	"The dependency structure for released component must be a Directed Acyclic Graph. There can be no cycles"
+
+	If there are cycles, it becomes hard to maintain. Change ripple through. Can't release components in small increments
+
+2. Breaking cyclic dependencies
+
+	1. Move classes
+		- keep an eye on cohesion
+
+	2. Introduce a new package/namspace and move a class to the new package
+		- new package may be too small and sticking out
+
+	3. Introduce an interface or abstraction
+		 - make the offending class implement that interface
+		 - move the interface either to the first package or to a new package
+
+	4. Remove the dependency
+
+
+
+
+
+									Quiz Part 10
+
+1. Dependencies between components should not form cycles
+2. Some options to deal with cyclic dependencies is to move classes around, move classes to new packages and introduce an interface
+3. The dependency structure for release components must be a directed acyclic graph
+4. If there are cycles, then releasing components in small increments becomes hard
+5. Inter-package dependencies are more painful than intra-package dependencies
+
+
 
 
 

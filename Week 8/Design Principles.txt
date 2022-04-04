@@ -1002,8 +1002,77 @@ DYSOLD - DRY
 
 
 
+									Design Principles: Part 13
+
+1. CurrentExchange example
+	
+	Design Option 1:
+	exchage:
+	A = (#I) / (#I + #C) = 0 / 1 = 0
+	I = (Fout) / (Fin + Fout) = 1 / 1 = 1
+	D' = |A + I - 1| = 0
+
+	service:
+	A = 0
+	I = 0 / (1 + 0) = 0
+	D' = 1
+
+	Overall D' = (0 + 1) / 2 = 0.5
+
+
+	Design Option 2:
+	exchange:
+	A = 0
+	I = 1
+
+	serivce:
+	A = 0.5
+	I = 0
+	D' = 0.5
+
+	Overall D' = 0.5 / 2 = 0.25
+
+
+	Design Option 3:
+	exchange:
+	A = 0.5
+	I = 0 / 1 + 0 = 0
+	D' = 0.5
+
+	service:
+	A = 0
+	I = 1 / 1 = 1
+	D' = 0
+
+	Overall D' = 0.5 / 2 = 0.25
+
+
+	Design Option 4:
+	exchange:
+	A = 0
+	I = 1 / 1 = 1
+	D' = 0
+
+	service:
+	A = 1
+	I = 0 / 2 = 0
+	D' = 0
+
+	serviceImplementation:
+	A = 0
+	I = 1 / 1 = 1
+	D' = 0
+
+	Overrall D' = 0
 
 
 
 
 
+									Quiz Part 13
+
+1. In addition to a lowering the D' value, we must be able to argue why a design is better
+2. Afferent coupling is fan in
+3. We should consider design principles when we decide to redesign.
+4. If the value of D' is greater than 0.25, it's most likely an opportunity to redesign.
+5. In the final design we used the principle OCP, DIP, Stable abstraction principle and stable dependecy principles

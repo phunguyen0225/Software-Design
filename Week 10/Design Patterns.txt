@@ -1,0 +1,132 @@
+									Design Patterns
+
+1. How do they help?
+
+	A great communication tool
+
+	Help zero in on a design idea that our efforts evolve to
+
+2. What's the problem in using?
+
+	Quite risky to applypatterns blindly
+
+	Not a good tool to pick design ideas
+
+	Pattersn have to emerge, hatch, from other forces in design
+
+	Incorrect use may lead to heavyweight, bloated, overused design
+
+	Use caution
+
+3. How to Effectively Apply?
+
+	First learn the patterns, what they solve
+
+	Don't be infatuated
+
+	Avoid temptation to blindly use them
+
+	Let your design evolve and fall in place
+
+	Then identify the nearly applicable pattern
+
+	Use that zero in and to communicate
+
+4. How to apply Patterns
+
+	It's more helpful to view a pattern in the context of design principles
+
+	Asking why we want to apply a pattern rather than simply looking at using a pattern as a solution tool
+
+5. Design Patterns Need
+
+	Very hard to design reusable OO Software
+
+	Design must be specific to problem on hand
+
+	Design must be general enough to address future problems and requirements
+
+	Almost impossible to do it right the first time
+
+	Experienced designers dont reinvent the wheel. They use good solutions again and again
+
+	Find and use recurring patterns of classes and communicating objects
+
+6. Design Patterns Benefits
+
+	Design Pattern systematically in the names and explains the problem that the pattern actually solve
+
+	Evaluates an important recurring design
+
+	Easier to reuse successful designs and architectures
+
+	More accessible to developers of new systems
+
+7. But, What is a Design Pattern?
+
+	"Each patterrn describes a problem which occurs over and over again in our environment, and then describes the core of the solution to that problem, in such a way that you can use this solution a million times over, without even doing it the same way twice"
+
+8. Design Pattern?
+
+	Description of communicating objects and classes that are customized to solve a general design problem in a particular context
+
+	Pattern has four essential elements:
+
+		Pattern Name
+		Problem
+		Solution
+		Consequences
+
+9. Classification
+
+	Several Design Patterns have been identified and more will be identified. Classification helps to group these. Helps to understand the related patterns.
+
+	Purpose:
+
+		- Creational - concerns process of object creation
+		- Structural - concerns composition of classes of objects
+		- Behavioral - concerns way in which classes or objects interact and distribute responsibilities
+
+	Scope:
+
+		- Class - deals with relationship between classes and their subclasses - static
+		- Object - deals with relationship between objects - dynamic
+
+10. Forethoughts/Afterthoughts
+
+	Using some patterns require forethoughts
+
+	You have to plan to apply them and prepare the design to make sure of them
+
+	Some patterns are useful as an afterthought
+
+	They are useful to adjust the design and connect various parts that may have independently evolved
+
+11. Common Occurences
+
+	- Factories
+	- Singleton
+	- Adapter
+	- Iterator
+
+12. Language Influences
+
+	Whether a pattern is useful depends on the problem on hand and the language we use to program
+
+	As languages evolve, so do usage of pattern
+
+	Most languages today support lambda expressions
+
+	This brings an interesting flavor of patterns to the table
+
+
+
+
+
+									Quiz Questions
+
+1. Patterns are not a collection of code libraries that solve commonly recursing problems.
+2. Patterns that belong to object scope use association as the main design tool or idea
+3. Design pattersn should not be methodically and thoroughly used when creating design
+4. The essential parts of a patttern are its name, description of the core problem, a solution and discussion of consequences
+5. The goal is not to use patterns that come to our mind, but let patterns emerge from the evolving design

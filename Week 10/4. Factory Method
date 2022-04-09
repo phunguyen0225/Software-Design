@@ -1,0 +1,45 @@
+									Factory Method
+
+1. Factory Method
+
+	Define an interface for creating an object, but let subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to subclasses.
+
+	Also known as Virtual Constructor
+
+2. Example that would benefit from Factory Method
+
+	We want to develop a framework of a Computer that has memory, CPU and Modem. The actual memory, CPU, and Modem that is used depends on the actual computer model being used. We want to provide a configure function that will configure any computer with appropriate parts. This function must be written such that it does not depend on the specifcs of a computer model or the components.
+
+3. When to use Factory Method?
+
+	A class can't anticipate the class of objects it must create
+
+	A class wants its subclasses to specify the objects it creates
+
+	Classes delegate responsibility to one of several helper subclasses, and you want to localize the knowledge of which helper subclass is the delegate
+
+4. Consequences of using Factory Method
+
+	Provides hooks for subclasses
+
+	Connects parallel class hierarchies
+
+5. Factory Method Vs. Other Pattern
+
+	Abstract Factory often implemented with Factory Method
+
+	Factory Methods usually called within Template Methods
+
+	Prototypes don't require subclassing the Creator. However, they oftern require initialize operation on the Product class. Factory Method doesn't require such as operation
+
+	Proliferation of subclasses - a negative you could run into
+
+
+									
+									Quiz Question
+
+1. Final or sealed classes are not useful to implement the factory method pattern
+2. The main technique used in factory method is Inheritance not association
+3. Given inheritance and asociation, abstract factory relies more on association while factory method relies more on inheritance
+4. The factory method pattern connects paralell class hierarchies
+5. Factiry method does not aften uses abstract factory in its implementation

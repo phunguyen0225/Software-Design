@@ -1,0 +1,44 @@
+									Abstract Factory 
+
+1. Creational Patterns
+
+	Abstracts instantiation process
+
+	Makes system independent of how its objects are created, composed, represented
+
+	Encapsulates knowledge about which concrete classes the system uses
+
+	Hides how instances of these classes are created and put together
+
+2. Abstract Factory
+
+	Provide an interface for creating families of related or dependent objects without specifying their concrete classes
+
+3. When to use Abstract Factory?
+
+	Use Abstract Factory when:
+
+		- System should be independent of how its products are created, composed and represented
+		- System should be configured with one of multiple families of products
+		- A family of related product objects must be used together and this constraint need to be enforced
+
+4. Consequences of using Abstract Factory
+
+	Isolates concrete classes
+
+	Makes exchanging products families easy
+
+	Promotes consistency among products
+
+	Supporting new kinds of products is difficult
+
+
+									
+
+									Quiz Question
+
+1. The insistency on consistency in abstract factory could be both an advantage and a drawback
+2. The design principles that play a role in the abstract factory pattern are DIP, OCP and DRY
+3. Abstract factory abstracts creating families of related objects
+4. The principle that's used in the implementation of abstract factory is DIP
+5. Instead of creating a factory class, in Java we can use the Class class and reflection

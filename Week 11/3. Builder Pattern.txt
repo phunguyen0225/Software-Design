@@ -1,0 +1,95 @@
+									Builder Pattern
+
+1. What's that for?
+
+	Helps to streamline or standardize object creation while allowing each step of creation to vary.
+
+	---JAVA CODE---
+
+	public class Pizza {
+		private Crust _crust;
+		private Sauce _sauce;
+		private _cheese;
+		private String[] _toppings;
+
+		public void createCrust() {_crust = new Crust();}
+
+		public void spreadSauce() {_sauce = new Sauce();}
+
+		public void addCheese() {_cheese = "Mozzarrella";}
+
+		public void addToppingss(String... toppings) {_toppings = toppings}
+
+		public void bake() {System.out.println("...baking");}
+
+		@Override
+		public String toString() {return "" + _crust + ":" + _sauce + ":" + _cheese + ":" + _toppings;}
+	}
+
+	public abstract class PizzaBuilder {
+		private Pizza _pizza = new Pizza();
+
+		protected Pizza getPizza() {
+			return _pizza;
+		}
+
+		public abstract void createCrust();
+		public abstract void spreadSauce();
+		public abstract void addCheese();
+		public abstract void addToppings();
+		public abstract void bake();
+		public Pizza create() {
+			return _pizza;
+		}
+	}
+
+	public class PizzaDirector {
+		public void makePizza(PizzaBuilder pizzaBuilder) {
+			pizzaBuilder.createCrust();
+			pizzaBuilder.spreadSauce();
+			pizzaBuilder.addCheese();
+			pizzaBuilder.addToppings("cheese");
+			pizzaBuilder.bake();
+		}
+	}
+
+	public class CheesePizzaBuilder extends PizzaBuilder {
+		@Override public void createCrust() {
+			getPizze().createCrust();
+		}
+
+		@Override public void spreadSauce() {
+			getPizza().spreadSauce();
+		}
+
+		@Override public void addCheese() {
+			getPizza().addChese();
+		}
+
+		@Override public void addToppings() {
+			getPizza().addToppings("...cheese...");
+		}
+
+		@Override public void bake() {
+			getPizza.bake();
+		}
+	}
+
+	public class Main{
+		public static void main(String[] args) {
+			PizzaDirector pizzaDirector = new PizzaDirector();
+
+			PizzaBuilder cheesePizzaBuilder = new CheesePizzaBuilder();
+			pizzaDirector.makePizza(cheesePizzaBuilder);
+			System.out.println(cheesePizzaBuilder.create());
+		}
+	}
+
+									
+								Quiz Question
+
+1. The principles behind builder pattern are DRY and OCP
+2. The steps are preserved by the director while the parts are varied by the builders
+3. Builder doesnot preserves the families of products being created 
+4. A builder is usefull to vary the parts, but not the steps in creation of an object
+5. To preserve the family of products use abstract factory pattern, to preserve the steps in creation use the builder pattern

@@ -1,0 +1,98 @@
+									Prototype Pattern
+
+Specify the kinds of object to create using a prototypical instance, and create new objects by copying this prototype. 
+
+1. Example that would benefit from Prototype Pattern
+
+	There are serveral types of Memory available. A computer may have Memory Model I or Memoru Model II (or any other model that may be created later). If I want a COmputer that is equivalent to a given Computer, how do I create it?
+
+	---JAVA CODE---
+
+	public interface Memory{
+		public Memory copyOf();
+	}	
+
+	public class Computer{
+		private Memory _memory;
+
+		public Computer(Memory memory) {
+			_memory = memory;
+		}
+
+		public Computer copyOf() {
+			return new Computer(_memory.copyOf());
+		}
+
+		@Override
+		public String toString() {
+			return  "Computer with memory " + _memory.getClass() + ":" + _memory.hashCode();
+		}
+	}
+
+	public class Memory1 implements Memory {
+		@Override
+		public Memory copyOf() {
+			return new Memory1();
+		}
+	}
+
+	public class Memory2 implements Memory {
+		@Override
+		public Memory copyOf() {
+			return new Memory2();
+		}
+	}
+
+	public class Main {
+		public static Computer makeCopy(Computer computer) {
+			return computer.copyOf();
+		}
+
+		public static void main(String[] args) {
+			Computer computer1 = new Computer(new Memory1());
+			Computer2 computer2 = new Computer(new Memory2());
+
+			System.out.println(makeCopy(computer1));
+			System.out.println(makeCopy(computer2));
+		}
+	}
+
+2. When to use Prototype Pattern?
+
+	System should be independent of how its products are created, composed and represented AND the classes to instantiated are specified at runtime. 
+
+	You want to avoid creating class hierarchy of factories that parallel the class hierarchy of products.
+
+3. Another example of prototype
+
+	An application that stores objects to disk. Making the load method extensible for new types of classes being added to the system
+
+4. Consequences of using Prototype
+
+	Adding and removing products at run-time is very easy
+
+	Specifying new objects by varying values
+
+	Specifying new objects by varying structure
+
+	Reduced subclassing
+
+	COnfiguring application with classes dynamically is very easy to do
+
+	Each subclass must implement, clone operation.
+
+5. Prototype Vs. Other Patterns
+
+	Abstract Factory is a competing Patter, however, may work together as well
+
+	Composite and Decorator benefit from Prototype
+
+
+
+									Quiz Question
+
+1. If we check the instance type in the copy constructor we'd be violating OCP
+2. The prototype pattern does not requires a parrallel hierarchies of classes, you want to avoid it
+3. Even though both factory method and prototype pattern rely on a derived class to devide on the instance to create, the context of the client is different in them
+4. The principle used in the solution for the prototpye pattern is DIP
+5. Even with the clone method available, there's still reason to have the copy constuctor

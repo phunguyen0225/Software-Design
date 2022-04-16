@@ -1,0 +1,71 @@
+									Adapter Pattern
+
+1. Structural Patterns
+
+	Concerned with how classes and objects are composed to form large structures
+
+	Class Patterns use inheritance to compose interfaces or implementation
+
+	Object Patterns describe ways to compose object to realize new functionality
+
+2. Adapter Pattern
+
+	"Convert the interface of a class into another interface clients expect. Adapter lets classes work together that couldn't otherwise because of incompatible interfaces"
+
+
+	---JAVA CODE---
+	public interface Memory() {
+		void store(int addr, byte value);
+	}
+
+	public class Memory1 implements Memory {
+		@Override
+		void store(int addr, but value) {}
+	}
+
+	public class Memory2 {  //a third party code, we dont have access to the code, it's an example here
+		public void setAddr(int addr) {}
+		public void write(byte value) {}
+	}
+
+	public class Memory2Adapter1 extends Memory2 implements Memory { //memory 2 is from a third party
+		@Override
+		void store(int addr, byte value) {
+			super.setAddr(addr);
+			super.write(value);
+		}
+	}
+
+	public class Computer {
+		private Memory _memory;
+
+		public Computer(Memory memory) {
+			_memory = memory;
+		}
+
+		public void work() {
+			_memory.store(11111, (byte) 0);
+		}
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			Computer computer = new Computer(new Memory1());
+			computer.work();
+
+			Computer Computer1 = new Computer(new Memory2Adapter1());
+			computer1.work();
+		}
+	}
+
+	//one negative about class adapter is, if what we are trying to adapt into is not an interface but a class, we cannot use multiple inheritance in a lot of different languages and as a result we would be in trouble wiht it. But with interfaces it's not a problem.
+
+
+									Quiz Question Part 1
+
+1. A class adapter makes use of inheritance and polymorphism
+2. To adapt a class to an exisiting interface, in Java/C#, we would use an object adapter and a class adapter
+3. The main problem that adapter addresses is the incompatibility of the interfaces
+4. Adapter cannot help fix incompatibility at multiple levels, interfaces and implementation
+5. Scope of adapters are object and class
+

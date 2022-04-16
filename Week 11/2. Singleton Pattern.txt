@@ -1,0 +1,344 @@
+									Singleton Pattern
+
+	Ensure a class only has one instance, and provide a global point of access to it
+
+1. Example that would benefit from Singleton Pattern
+
+	An application uses a Database Manager. It needs only one Database Manager object. It must not allow the creation of more than one object of this class. 
+
+	---C++ pseudocode--
+
+	class DBMgr{
+		static DBMgr* pMgr;
+
+	private:
+		DBMgr() {} //no way to create outside of this Class
+
+	public:
+		static DBMgr* getDBMgr() {//only way to create
+			if(pMgr == 0) pMgr = new DBMgr;
+		}
+	};
+
+	DBMgr* DBMgr::pMGR = 0;
+
+
+USAGE:
+	
+	DBMgr* dbmgrPtr = DBMgr::getDBMgr(); 
+	//created first time called 
+
+
+
+	---JAVA Code---
+
+	public class DBManager {
+		private DBManager _instance = new DBManager(); //eager creation
+
+		private DBManager() {
+			System.out.println("...creating...");
+		}
+
+		public static getInstance() {
+			return _instance;
+		}
+
+		@Override
+		public string toString() {
+			return String.format("%s %d", getClass(), hashCode());
+		}
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			DBManager dbmanager = DBManager.getInstance();
+			System.out.println(dbManager);
+
+			DBManager dbmanager1 = DBManager.getInstance();
+			System.out.println(dbManager1);
+
+		}
+	}
+
+	//the code above does not really meet the requirements because you still can by pass the private and relfection to create another object. For example:
+
+	Constructor<DBManager> constructor = DBManager.class.getDeclaredConstructor();
+	constructor.setAccessible(true);
+	DBManager dbManager2 = constructor.newInstance();
+	System.out.println(dbManager2);
+
+	//the code above will bypass the private and create a new instance, a new object onf DBmanager, which is not what we want. 
+
+
+	---JAVA Code---
+
+	public class DBManager {
+		private DBManager _instance;
+
+		private DBManager() {
+			if(_instance != null)
+				throw new RuntimeException("OOPs already created... use getInstance to access");
+			System.out.println("...creating...");
+		}
+
+		public static DBManager getInstance() {
+			if (_instance == null)   //both threads comming in at the same time
+				try{
+					Thread.sleep(1000);
+				}catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				_instance = new DBManager();
+			return _instance;
+		}
+
+		@Override
+		public string toString() {
+			return String.format("%s %d", getClass(), hashCode());
+		}
+	}
+
+	public class Main {
+
+		public static void getDBManager() {
+			DBManager dbmanager = DBManager.getInstance();
+			System.out.println(dbManager);
+		}
+
+		public static void main(String[] args) {
+			System.out.println("no instance asked for yet");
+
+			ExecutorService executorService = Executors.newFixedThreadPool(10);
+
+			executorService.submit(Main::getDBManager()); //thread 1
+			executorService.submit(Main::getDBManager()); //thread 2
+
+			Thread.sleep(2000);
+			executorService.shutdown();
+
+		}
+	}
+	OUTPUT:
+	no instance asked for yet 
+	...creating....   //creating was call twice, this is proof that 2 objects are created 
+	...creating....
+	class example.DBManager 2312151
+	class exmaple.DBManager 5155125
+
+	//there is still problem with the code above because if we have multithreads coming in at the same time, it would create different objects. Whats happening is that 2 threads are coming in and asking if the _instance is null, and both threads coming in the if block at the same time, therefore creating 2 differnet objects.
+
+
+	//to fix the code above, we can make the getInstance() a synchronized
+
+
+	---JAVA Code---
+
+	public class DBManager {
+		private DBManager _instance;
+
+		private DBManager() {
+			if(_instance != null)
+				throw new RuntimeException("OOPs already created... use getInstance to access");
+			System.out.println("...creating...");
+		}
+
+		public static synchronized DBManager getInstance() { //dont go in if you dont have a lock already
+			if (_instance == null)  
+				System.out.println("...entering...");
+				try{
+					Thread.sleep(1000);
+				}catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				_instance = new DBManager();
+				System.out.println("...exiting...");
+			return _instance;
+		}
+
+		@Override
+		public string toString() {
+			return String.format("%s %d", getClass(), hashCode());
+		}
+	}
+
+	public class Main {
+
+		public static void getDBManager() {
+			DBManager dbmanager = DBManager.getInstance();
+			System.out.println(dbManager);
+		}
+
+		public static void main(String[] args) {
+			System.out.println("no instance asked for yet");
+
+			ExecutorService executorService = Executors.newFixedThreadPool(10);
+
+			executorService.submit(Main::getDBManager()); //thread 1
+			executorService.submit(Main::getDBManager()); //thread 2
+
+			Thread.sleep(2000);
+			executorService.shutdown();
+
+		}
+	}
+	OUTPUT:
+	no instance asked for yet
+	...entering...
+	...creating...
+	...exiting....
+	class example.DBManger 12412441
+	class example.DBManger 12412441
+
+	//the code above have a disadvantage because every single call you would have to go through synchronized, which is totally unnecessary because once the object has been created you don't have a contention anymore so you only want to makre sure this synchronization happens when the object doesn't exits, and once the object exits you never want to perform a lock anymore. Here is a more creative solution to fix the problem 
+
+
+	---JAVA Code---
+
+	public class DBManager {
+		private DBManager _instance;
+
+		private DBManager() {
+			if(_instance != null)
+				throw new RuntimeException("OOPs already created... use getInstance to access");
+			System.out.println("...creating...");
+		}
+
+		public static DBManager getInstance() { 
+			if (_instance == null)  
+				System.out.println("...checking again...");
+				synchronized (DBManager.class) {
+					if (_instance == null) {
+						_instance = new DBManager();
+					}
+				}
+			return _instance;
+		}
+
+		@Override
+		public string toString() {
+			return String.format("%s %d", getClass(), hashCode());
+		}
+	}
+
+	public class Main {
+
+		public static void getDBManager() {
+			DBManager dbmanager = DBManager.getInstance();
+			System.out.println(dbManager);
+		}
+
+		public static void main(String[] args) {
+			System.out.println("no instance asked for yet");
+
+			ExecutorService executorService = Executors.newFixedThreadPool(10);
+
+			executorService.submit(Main::getDBManager()); //thread 1
+			executorService.submit(Main::getDBManager()); //thread 2
+
+			Thread.sleep(2000);
+			executorService.shutdown();
+
+		}
+	}
+	OUTPUT:
+	no instance asked for yet
+	...checking again...
+	...checking again...
+	...creating...
+	class example.DBManager 1241515
+	class example.DBManager 1241515
+
+	//the example above solve the problem but it is too much code and safety we have to check. A better way to implement singleton in java is using "enum". Enum are automatically singletons with thread safety if you create only one instance of the singleton
+
+
+	---JAVA Code---
+
+	public enum DBManager {
+		
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			
+		}
+	}
+
+	---Scala code--
+	Object DBManager {
+		def operation() = println("operation called...")
+	}
+
+	DBManager.operation()
+
+	//An object in scala is nothing but a singleton, that's already implemented at the language level becuase it's implemented the language level it's pretty safe and all the issues with safety and eveyrything is handled at the language level itself
+
+									
+
+									Quiz Part 1
+
+1. In Java, we can use enum to safely implement a singleton
+2. Singleton pattern limits the number of instances to often one, but generally a limited number
+3. If we implement singleton, we have to keep an eye on reflection based failures, serialization based failures, multithreaded failures and resulting complexities
+4. Singleton is hard to implement in a multithreahded scenario
+5. While synchronization may provide thread-safety, it introduces other problems when implementing singleton
+
+
+
+
+									Singleton Pattern: Part 2
+
+	Enum prevent the construction based attack, enum make sure we don't have the serialization problem, they also make sure we don't have the thread safety issuse because enum are loading that the class loading time. 
+
+	---JAVA Code---
+
+	public enum DBManager {
+		INSTANCE; //whatever name we want to give
+
+		public void operation1() {
+			System.out.println("operation 1 called");
+		}
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			DBManager dbManager = DBManager.INSTANCE;
+			System.out.println(dbManager);
+
+			dbManager.operation1();
+
+		}
+	}
+	OUTPUT: 
+	INSTANCE
+	operation 1 called
+
+1. When to use Singleton Pattern
+
+	There must be exactly one instance of a class, and it must be accessible to clients from a well known access point.
+
+	When the sole instance should be extensible by subclassing, and clients should be able to use an extended instance without modifying their code.
+
+2. Consequences of using Singleton
+
+	Controlled access to sole instance
+
+	Reduced name space
+
+	Permits refinement of operations and represention  //inheritence
+
+	Permits a variable number of instances
+
+	More flexible than class operation (static method)
+
+3. Singleton Vs. Other Patterns
+
+	Several patterns are implemented using Singleton Patter. For instance Abstract Factory needs a singleton pattern for single instance of the factory
+
+
+									Quiz Part 2
+
+1. Instead of creating a class with static method, we could go the singleton route if we want to be able to extend the singleton by subclassing.
+2. Singleton class can help avoid or reduce large utility classses with static methods
+3. Rather than fightin the complexities of implementation, in Java, we could us an enum to create a singleton
+4. enum is implemented as a final class, it can't be exnteded
+5. enum remove the reflection based and serialization based issues of singleton creation

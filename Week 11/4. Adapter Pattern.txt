@@ -1,4 +1,6 @@
-									Adapter Pattern
+									Adapter Pattern 
+
+									CLASS ADAPTER
 
 1. Structural Patterns
 
@@ -69,3 +71,121 @@
 4. Adapter cannot help fix incompatibility at multiple levels, interfaces and implementation
 5. Scope of adapters are object and class
 
+
+
+
+									Adapter Pattern Part 2
+
+									OBJECT ADAPTER
+
+	---JAVA CODE---
+	public interface Memory() {
+		void store(int addr, byte value);
+	}
+
+	public class Memory1 implements Memory {  //no adapter
+		@Override
+		void store(int addr, but value) {}
+	}
+
+	public class Memory2 {  //a third party code, we dont have access to the code, it's an example here
+		public void setAddr(int addr) {}
+		public void write(byte value) {}
+	}
+
+	public class Memory2Adapter1 extends Memory2 implements Memory { //class adapter
+		@Override
+		void store(int addr, byte value) {
+			super.setAddr(addr);
+			super.write(value);
+		}
+	}
+
+	public class Memory2Adapter2 implements Memory {   //object adapter
+		private Memory2 _memory2;
+
+		public Memory2Adapter2(Memory2 memory2) {
+			_memory = memory2;
+		}
+
+		@Override
+		public void store(int addr, byte value) {
+			_memory2.setAddr(addr);
+			_memory2.write(value);
+		}
+	}
+
+	public class Computer {
+		private Memory _memory;
+
+		public Computer(Memory memory) {
+			_memory = memory;
+		}
+
+		public void work() {
+			_memory.store(11111, (byte) 0);
+		}
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			Computer computer = new Computer(new Memory1());    //no adapter
+			computer.work();
+
+			Computer Computer1 = new Computer(new Memory2Adapter1());   //class adapter
+			computer1.work();
+
+			Computer computer2 = new Computer(new Memory2Adapter2(new Memory2()));  //object adapter
+			computer2.work();
+		}
+	}
+
+	//class adapter uses inheritance, object adapter uses delegation as the primary solution. 
+
+1. When to use Adapter Pattern
+
+	You want to use existing class, and its interface does not match the one you need. 
+
+	You want to create a reusable class that cooperates with unrelated or unforeseen classes, that is, classes that don't necessarily have compatible interfaces
+
+	(object adapter) you need to use several existing subclasses, but it's impractical to adapt their interface by subclassing every one. An object adapter can adapt the interface of its parent class
+
+
+	** A class adapter adapts a single class, while an object adapter adapts a hierarchy of classes (derived classses) . Object adapter is more powerful, more flexibility. 
+
+	A class adapter is not usefull if we want to adapt to a class intead of an interface, likewise a class adapter is not usefull if you are adapting a final class, a final class you don't get the benefit of inheriting a hierarchy when it comes to an objetc adapter because if a class is final, you're not going to have a derived class
+
+2. Consequences of Using Adapter
+
+	Class Adapter:
+
+		Adapts Adaptee to Target by committing to a concrete Adapter class
+		Can't adapt a class and all its subclasses (single adapter)
+		Lets Adapter override some of Adaptee's behavior
+		No extra objects dude to adapter usage
+
+	Object Adapter:
+
+		Lets a single Adapter work with many Adaptees - a class and its subclasses
+		Can add functionality to all Adaptees
+		Harder to override Adaptee
+
+3. Adapter Vs. Other Patterns
+
+	Structure similar to Bridge, different intent
+
+	Bridge: separate interface from implementation
+
+	Adapter: change the interface
+
+	Decorator enhances another object without changing interface
+
+
+
+									Quiz Question Part 2
+
+1. No: An object adapter can be substituted anywhere an object of the adapted class is expected.
+2. An object adapter can adapt a class, a class and it's sub classes, to a class, and to an interface
+3. Overall an object adapter is more flexible than a class adapter
+4. A class adapter can possibly override the methods from the class being adapted.
+5. Adapter can help conform to interfaces introduced for the purpose of testing.

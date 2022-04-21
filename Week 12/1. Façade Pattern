@@ -1,0 +1,81 @@
+									Façade Pattern
+
+"Provide a unified interface to a set of interfaces in a subsystem. Facade defines a higher-level interface that makes the subsystem easier to use"
+
+Facade is stateless, it can be implement using singleton
+
+1. Example that would benefit from Facade Pattern
+
+	A hi-tech mailer subsystem has several classes to specify the destination of mail. routing preference-shortest, most reliatble, most economical, etc. and delivery options like urgent, important, confidential, encrypted and return notification options.
+
+	While some clients of the subsystem may be interested in these finer classes, others may just be interested in a subset that provides basic functionality
+
+
+	---JAVA CODE---
+	public class Main{
+		public static void main(String[] args) {
+			HotelReservation hotelReservation = new HotelReservation();
+			hotelReservation.reserveRoom(checkIn, checkOut, bedSize, nonSmoking, breakFast);
+
+			FlightReservation flightReservation = new FlightReservation();
+			flightReservation.reserveFlight(data, roundTrip, returnDate, classOfTravel, from, to, loyalteProgramNumber);
+
+			CarReservation carReservation = new CarReservation();
+			carReservation.reserveCar(type, data, returnDate, location, insurace, fillGass, rewardProgram);
+
+			//we have to provide a lot of detail to reserve or room or flight or car, that can take a lot of work, instead we can do something like..
+
+
+			TravelAgent travelAgent = TravelAgent.getInstance(); //singleton.
+			Reservation reservation = travelAgent.reserve(data, returnData, from, to, selfProfile);
+		}
+	}
+
+2. When to use Facade Pattern
+
+	You want to provide simple interface to a complex subsystem
+
+	Clients that need to customized features do not look beyond Facade
+
+	You want a decouple subsystem from clients
+
+	You want to layer the subsystem to reduce dependecy between various levels of the subsystem
+
+3. Consequences of using Facade
+
+	Shields clients from subsystem components
+
+	Makes subsystem easier to use
+
+	Promotes weak coupling between client and subsystem
+
+	Helps layer subsystem
+
+	Reduced coupling helps build time for large systems
+
+	No limit on clients looking beyond Facade
+
+4. Facade Vs. Other Patterns
+
+	Abstract Factory may be used with Facade
+
+	Interface for creating subsystem objects in subsystem independent way
+
+	Abstract Factory may be an alternate to Facade to hide platform-specific classes
+
+	Mediator similar to Facade
+
+	In Mediator, Colleague objects know Mediator
+
+	In Facade subsytems classes do not see Facade
+
+	Usually Singletons
+
+
+									Quiz Questions
+
+1. The subsystem is not coupled to the Façade.
+2. A user can either use a subsystem or a Façade to access it, where available. 
+3. A Façade does not eliminates coupling, it helps decouple.
+4. A Façade is useful to quickly make use of a subsystem by providing some defaults
+5. A Façade helps not hides

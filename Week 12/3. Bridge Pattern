@@ -1,0 +1,142 @@
+									Bridge Pattern
+
+"Decouple an abstraction from its implementation so that the two can vary independently"
+
+Providing a bridge between abstractions while vary the implementations
+
+1. Example that would benefit from Bridge Pattern
+
+	An application wants to be able to use one of several databases available. However, each database has different API. How to write one set of code such that the code is not affected by which database is used or when new database is considered?
+
+
+	---JAVA CODE---
+
+	public interface Translator {
+		void translate(String text);
+	}
+
+	public SpanishTranslator implements Translator {
+		@Override
+		public void translate(String text) {
+			if(text.equals("let me talk about indirection..."))
+				System.out.println("permitanme hablar sobre indireccion...");
+			else
+				System.out.println("déjame hablar de la automatización...")
+		}
+	}
+
+	public ChineseTranslator implements Translator {
+		@Override
+		public void translate(String text) {
+			if(text.equals("let me talk about indirection..."))
+				System.out.println("让我谈谈间接...");
+			else
+				System.out.println("让我谈谈自动化...");
+		}
+	}
+
+	public class TamilTranslator implements Translator {
+		@Override
+		public void translate(String text) {
+			if(text.equals("let me talk about indirection..."))
+				System.out.println("மறைமுகம் பற்றி பேசுகிறேன்...");
+			else
+				System.out.println("ஆட்டோமேஷன் பற்றி பேசுகிறேன்...");
+		}
+	}
+
+	public abstract class Expert {
+		private Translator _translator;
+
+		public Translator getTranslator() {return _translator;}
+
+		public void setTranslator(Translator translator) {_translator = translator;}
+
+		public abstract void talk();
+	}
+
+	public class Programmer extends Expert{
+		public void talk() {
+			getTranslator().translate("let me talk about indrection...");
+		}
+	}
+
+	public class Tester extends Expert{
+		public void talk() {
+			getTranslator().translate("let me talk about automation...")
+		}
+	}
+
+	public class Architect extends Expert {
+		@Override
+		public void talk() {
+			getTranslator().translate("let me talk about how to evolve the design and architecture...")
+		}
+	}
+
+	public class Main {
+		public static void giveTalk(List<Expert> experts, String language) {
+			try {
+				Class translatorClass = (Class<Translator>) Class.forName("com.agiledeveloper." + language + "Translator");
+				Translator translator = (Translator) translatorClass.newInstance();
+
+				for(Expert expert : experts) {
+					expert.setTranslator(translator);
+					expert.talk();
+				}
+
+			} catch(Exception e) {
+				System.out.println(e)
+			}
+		}
+
+		public static void main(String[] args) {
+			List<Expert> experts = Arrays.asList(new Programmer(), new Tester(), new Architect());
+
+			giveTalk(experts, "Spanish");
+			giveTalk(experts, "Chinese");
+		}
+	}
+
+2. When to use Bridge Pattern
+
+	You want to avoid a permananet binding between an abstraction and its implementation - especially when implementation may be selected or switched at runtime
+
+	Both the abstractions and their implementation should be extensible by subclassing
+
+	Change in the implementation of an abstraction should not impact the clients, no recompilation of client code
+
+	In C++, you want to hide the implementation from the .h file
+
+	Avoid proliferation of classes
+
+3. Consequences of using Bridge
+
+	Decoupling interface and implementation - may be configured at runtime - may even be changed
+
+	Eliminate compile time dependency on implementation
+
+	Encourages layering - resulting in better system
+
+	Improved extensibility
+
+	Shields clients from implementation details
+
+4. Bridge Vs. Other Patterns
+
+	Abstract Factory can create and configure a particular Bridge
+
+	Different from Adapter Pattern:
+
+		Adapter - making unrelated classes work together - usually applied to system after redesign
+
+		Bridge: lets abstraction and implementation vary independently - used up-front in design
+
+
+									Quiz Question
+
+1. While Adapter help to vary the interfaces, Bridge helps vary the implementations
+2. The force behind the Bridge pattern is OCP
+3. The OO features used in the Bridge pattern are abstraction, inheritance, polymorphism and association
+4. The principle used in the solution of the bridge pattern is DIP
+5. A bridge draws a relationship between two abstractions that can both evolve independently

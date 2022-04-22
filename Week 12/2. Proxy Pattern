@@ -1,0 +1,219 @@
+									Proxy Pattern
+
+"Provide a surrogate or placeholder for another object to control access to it"
+
+1. Example that would benefit from Proxy Pattern
+
+	An application needs to communicate with a remote subsystem to obtain some critical information
+
+	The application may have code all over that deals with communication logic and data
+
+	How to minimize the code for communication logic?
+
+	What if not all data on the remote subsystem is changing dynamically?
+
+
+	---JAVA CODE--- Project 1
+	import java.rmi.Remote;
+
+	public interface Greeter extends Remote{
+		String greet(String name) throws RemoteException;
+	}
+
+	public class Server implements Greeter {
+		public static void main(String[] args) throws RemoteException{
+			Server server = new Server();
+
+			System.setProperty("java.rmi.server.hostname", "127.0.0.1");
+
+			Remote remote = UnicastRemoteObject.exportObject(server, 8002);
+
+			Registry registry - LocateRegistry.createRegistry(8002);
+
+			registry.bind("Server", remote);
+
+			System.out.println("Server running....");
+		}
+
+		@Override
+		public String greet(String name) throws RemoteException {
+			System.out.println("greetings...");
+			return "hello " + name;
+		}
+	}
+
+
+	//Project 2
+
+	public class LocalGreeter implements Greeter{
+		@Override
+		public String greet(String name) {
+			return "Howdy " + name;
+		}
+	}
+	public class Main {
+		//this userGreeter() have no clue if it's talking to local object or server object
+		public static void userGreeter(Greeter greeter) throws RemoteException { 
+			System.out.println(greeter.greet("Earthling"));
+		}
+
+		public static void main(String[] args) throws RemoteException {
+			Registry registry = LocateRegistry.getRegistry(8002); 
+
+			Greeter remoteGreeter = (Greeter) registry.lookup("Server");
+			Greeter localGreeter = new LocalGreeter();
+
+			userGreeter(localGreeter);  //talking to local
+			userGreeter(remoteGreeter): //talking to remote
+
+			System.out.println(localGreeter.getClass());    //class example.LocalGreeter  -> a LocalGretter class
+			System.out.println(remoteGreeter.getClass());   //class example.sun.proxy.$Proxy0 -> a proxy class
+		}
+	}
+
+
+	AppCode  ------> RemoteObjectProxy Deals with communcationLogic Caches static information  ---->  Remote Object
+
+
+2. Virual Proxy
+
+class Holder {
+	private Heavy heavy = new Heavy();
+
+	public Heavy getHeavy() {
+		return heavy;
+	}
+
+	public Holder() {
+		System.out.println("Creating Holder");
+	}
+}
+
+class Heavy {
+	public Heavy() {
+		System.out.println("Creating Heavy object");
+	}
+
+	public int someMethod() {
+		return 2;
+	}
+}
+public class Main {
+	public static void main(String[] args) {
+		Holder holder = new Holder();
+
+		System.out.printlm("About to call getHeavy");
+		Heavy heavy = holder.getHeavy();
+
+		System.out.println(heavy.someMethod());
+
+	}
+}
+
+OUTPUT:
+Creating Heavy object
+Creating Holder
+About to call getHeavy
+2
+
+//the code above created different object eventhough we did not mean to create until the user click on it. TO fix the code we use virual proxy
+
+
+---JAVA CODE---
+class Holder {
+	private Heavy heavy = new Heavy();
+
+	public Heavy getHeavy() {
+		return heavy;
+	}
+
+	public Holder() {
+		System.out.println("Creating Holder");
+	}
+}
+
+class Heavy {   //virtual proxy
+	private HeavyImpl _heavy = null;
+	private HeavyImpl getHeavyImpl() {
+		if(_heavy == null) 
+			_heavy = new HeavyImpl();
+		return _heavy;
+	}
+
+	public in someMethod() {
+		return getHeavyImpl().someMethod();
+	}
+}
+
+class HeavyImpl {
+	public HeavyImpl() {
+		System.out.println("Creating Heavy object");
+	}
+
+	public int someMethod() {
+		return 2;
+	}
+}
+public class Main {
+	public static void main(String[] args) {
+		Holder holder = new Holder();
+
+		System.out.printlm("About to call getHeavy");
+		Heavy heavy = holder.getHeavy();    //only call when created
+
+		System.out.println(heavy.someMethod());
+
+	}
+}
+
+OUTPUT:
+Creating Holder
+About to call getHeavy
+Creating Heavy object   //only call when created
+2
+
+
+
+2. When to use Proxy Pattern
+
+	A more sophisticated reference than a simple pointer is needed
+
+	Remote proxy provides local representative for object in different address space
+
+	Virtual proxy creates expensive objects on demand
+
+	Protection proxy controls access to original object
+
+	Copy-on-modify proxy guts of data not copied until if and when data modification starts
+
+	Smart pointers are needed to manage object lifetime
+
+	Loading object into memory when first referenced
+
+	Lock management for synchronization
+
+3. Consequences of using Proxy
+
+	Introduces a level of indirection in accessing objects
+
+	Indirection provides flexibility
+
+	Incurred cost on additional object and computations
+
+4. Proxy Vs. Other Patterns
+
+	Adapter changes interface, Proxy provides the same interface
+
+	Protection Proxy implements ubset of interface may deny access to certain functions
+
+	Decorator adds functionality, proxy controls functionality
+
+
+
+									Quiz Questions
+
+1. A spy used in testing is an example of proxy
+2. A proxy preserves the interface of the object it represents
+3. A remote proxy is useful to talk to an external system, giving an illusion of local access
+4. A Facade is not a proxy
+5. While proxy in general preserves the interface, a protection proxy withdraws or retrict parts of an interface

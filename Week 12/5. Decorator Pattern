@@ -1,0 +1,396 @@
+									Decorator Pattern
+
+"Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality."
+
+1. Example that would benefit from Decorator Pattern
+
+	A stream of bytes may be read as raw data. It may also be read from a file. It may be read as a buffered stream. We may also read integer, double, etc. from the stream. A user may use one or a combination of the above features.
+
+	We don't want to create several classes with a combination of these features.
+
+
+	---JAVA CODE---
+
+	public class Candidate {
+		final private String _firstName;
+		final private String _lastName;
+		final private boolean _qualified;
+		final private String _evaluations;
+
+		public Candidate(String firstName, String lastName, boolean qualified, String evaluations) {
+			_firstName = firstName;
+			_lastName = lastName;
+			_qualified = qualified;
+			_evaluations = evluations;
+		}
+
+		public String getFirstName() {return _firstName;}
+		public String getLastName() {return _lastName;}
+		public boolean isQualified() {return _qualified;}
+		public String getEvaluations() {return _evaluations;}
+
+		@Override
+		public String toString() {
+			return String.format("%s %s Qualified: %b based on evaluations: %s", _firstName, _lastName, _qualified, _evaluations)
+		}
+	}
+
+	public class ResidenceEvaluator {
+		public Candidate evaluate(Candidate candidate) {
+			boolean passed = true;
+			if(Math.random() > 0.5)
+				passed = false;
+
+			return new Candidate(candidate.getFirstName(), candidate.getLastName(), candidate.isQualified() && passed, candidate.getEvaluations() + "\nResidenceEvaluator:n" + passed);
+		}
+	}
+
+	public class Main {
+		private static void evaluateCandidate(Candidate candidate, ResidenceEvaluator evaluator) {
+			System.out.println("Evaluating: " + candidate.getFirstName() + " " + candidate.getLastName());
+
+			System.out.println(evaluator.evaluate(candidate));
+		}
+
+		public static void main(String[] args) {
+			ResidenceEvaluator residenceEvaluator = new ResidenceEvaluator();
+
+			Candidate candidate = new Candidate("John", "Doe", true, "");
+			evaluateCandidate(candidate.residenceEvaluator);
+
+
+		}
+	}
+
+
+	//let say that the application does wonderfully for a while and now we get a request we receive from an agency comes to us and says we want you to evaluate not just on residency alone but we want you to evaluate on residency and on experience. to do that :
+
+
+
+	---JAVA CODE---
+
+	public class Candidate {
+		final private String _firstName;
+		final private String _lastName;
+		final private boolean _qualified;
+		final private String _evaluations;
+
+		public Candidate(String firstName, String lastName, boolean qualified, String evaluations) {
+			_firstName = firstName;
+			_lastName = lastName;
+			_qualified = qualified;
+			_evaluations = evaluations;
+		}
+
+		public String getFirstName() {return _firstName;}
+		public String getLastName() {return _lastName;}
+		public boolean isQualified() {return _qualified;}
+		public String getEvaluations() {return _evaluations;}
+
+		@Override
+		public String toString() {
+			return String.format("%s %s Qualified: %b based on evaluations: %s", _firstName, _lastName, _qualified, _evaluations)
+		}
+	}
+
+	public class ResidenceEvaluator {
+		public Candidate evaluate(Candidate candidate) {
+			boolean passed = true;
+			if(Math.random() > 0.5)
+				passed = false;
+
+			return new Candidate(candidate.getFirstName(), candidate.getLastName(), candidate.isQualified() && passed, candidate.getEvaluations() + "\nResidenceEvaluator:n" + passed);
+		}
+	}
+
+	public class ExperienceEvaluator extends ResidenceEvaluator {
+		@Override
+		public Candidate evaluate(Candidate candidate) {
+			Candidate evaluatedCandidate = super.evaluate(candidate);
+
+			boolean passed = true;
+			if(Math.random() > 0.5)
+				passed = false;
+
+			return new Candidate(evaluatedCandidate.getFirstName(), evaluatedCandidate.getLastName(), evaluatedCandidate.isQualified() && passed, evaluatedCandidate.getEvaluations() + "\nExperienceEvaluator:n" + passed);
+
+		}
+	}
+
+	public class Main {
+		private static void evaluateCandidate(Candidate candidate, ResidenceEvaluator evaluator) {
+			System.out.println("Evaluating: " + candidate.getFirstName() + " " + candidate.getLastName());
+
+			System.out.println(evaluator.evaluate(candidate));
+		}
+
+		public static void main(String[] args) {
+			Candidate candidate = new Candidate("John", "Doe", true, "");
+
+			ResidenceEvaluator residenceEvaluator = new ResidenceEvaluator();
+			ExperienceEvaluator experienceEvaluator = new ExperienceEvaluator(); 
+
+			evaluateCandidate(candidate, experienceEvaluator);
+		}
+	}
+
+	OUTPUT:
+	Evaluating: John Doe
+	John Doe Qualified: false based on evluations: //random
+	ResidenceEvaluator: false /random
+	ExperienceEvaluator: true //random
+
+
+
+	//now lets say the agency also want to evaluate based on the crimminal records as well
+
+
+	---JAVA CODE---
+
+	public class Candidate {
+		final private String _firstName;
+		final private String _lastName;
+		final private boolean _qualified;
+		final private String _evaluations;
+
+		public Candidate(String firstName, String lastName, boolean qualified, String evaluations) {
+			_firstName = firstName;
+			_lastName = lastName;
+			_qualified = qualified;
+			_evaluations = evaluations;
+		}
+
+		public String getFirstName() {return _firstName;}
+		public String getLastName() {return _lastName;}
+		public boolean isQualified() {return _qualified;}
+		public String getEvaluations() {return _evaluations;}
+
+		@Override
+		public String toString() {
+			return String.format("%s %s Qualified: %b based on evaluations: %s", _firstName, _lastName, _qualified, _evaluations)
+		}
+	}
+
+	public class ResidenceEvaluator {
+		public Candidate evaluate(Candidate candidate) {
+			boolean passed = true;
+			if(Math.random() > 0.5)
+				passed = false;
+
+			return new Candidate(candidate.getFirstName(), candidate.getLastName(), candidate.isQualified() && passed, candidate.getEvaluations() + "\nResidenceEvaluator:n" + passed);
+		}
+	}
+
+	public class ExperienceEvaluator extends ResidenceEvaluator {
+		@Override
+		public Candidate evaluate(Candidate candidate) {
+			Candidate evaluatedCandidate = super.evaluate(candidate);
+
+			boolean passed = true;
+			if(Math.random() > 0.5)
+				passed = false;
+
+			return new Candidate(evaluatedCandidate.getFirstName(), evaluatedCandidate.getLastName(), evaluatedCandidate.isQualified() && passed, evaluatedCandidate.getEvaluations() + "\nExperienceEvaluator:n" + passed);
+
+		}
+	}
+
+	public class CrimeEvaluator extends ResidenceEvaluator {
+		@Override
+		public Candidate evaluateCandidate candidate) {
+			Candidate evaluatedCandidate = super.evaluate(candidate);
+
+			boolean passed = true;
+			if(Math.random() > 0.5)
+				passed = false;
+
+			return new Candidate(evaluatedCandidate.getFirstName(), evaluatedCandidate.getLastName(), evaluatedCandidate.isQualified() && passed, evaluatedCandidate.getEvaluations() + "\nCrimeEvaluator:n" + passed);
+
+		}
+	}
+
+	public class Main {
+		private static void evaluateCandidate(Candidate candidate, ResidenceEvaluator evaluator) {
+			System.out.println("Evaluating: " + candidate.getFirstName() + " " + candidate.getLastName());
+
+			System.out.println(evaluator.evaluate(candidate));
+		}
+
+		public static void main(String[] args) {
+			Candidate candidate = new Candidate("John", "Doe", true, "");
+
+			ResidenceEvaluator residenceEvaluator = new ResidenceEvaluator();
+			ExperienceEvaluator experienceEvaluator = new ExperienceEvaluator(); 
+			CrimeEvaluator crimeEvaluator = new CrimeEvaluator();
+
+			evaluateCandidate(candidate, crimeEvaluator);
+		}
+	}
+
+	OUTPUT:
+	Evaluating: John Doe
+	John Doe Qualified: false based on evluations: //random
+	ResidenceEvaluator: false //random
+	ExperienceEvaluator: true //random
+	CrimeEvaluator: false    //random
+
+
+	//now lets say the agency wants to use your serice but they want you to evaluate the candidate for the experience and the criminal and the residence, all three of them. 
+
+	// Notice tha crimeEvaluator extends from residence that takes care of criminal also experiences extends from residence as well. But how do we mix the ExperienceEvaluator and CrimeEvaluator together?
+
+
+	// We are going to use Decorator Pattern. We are going to perform decorations and by decorating we are going to have multiple evaluations work together.
+
+
+
+
+	---JAVA CODE---
+
+	public class Candidate {
+		final private String _firstName;
+		final private String _lastName;
+		final private boolean _qualified;
+		final private String _evaluations;
+
+		public Candidate(String firstName, String lastName, boolean qualified, String evaluations) {
+			_firstName = firstName;
+			_lastName = lastName;
+			_qualified = qualified;
+			_evaluations = evaluations;
+		}
+
+		public String getFirstName() {return _firstName;}
+		public String getLastName() {return _lastName;}
+		public boolean isQualified() {return _qualified;}
+		public String getEvaluations() {return _evaluations;}
+
+		@Override
+		public String toString() {
+			return String.format("%s %s Qualified: %b based on evaluations: %s", _firstName, _lastName, _qualified, _evaluations)
+		}
+	}
+
+	public interface Evaluator {
+		public Candidate evaluate(Candidate candidate);
+	}
+
+	public abstract class EvaluatorDecorator implements Evaluator {   
+		private final Evaluator _next;
+
+		public EvaluatorDecorator(Evaluator next) {
+			_next = next;
+		}	
+
+		protected abstract Candidate evaluateCandidate(Candidate candidate);
+
+		@Override
+		public final Candidate evaluate(Candidate candidate) {
+			Candidate evaluatedCandidate = candidate;
+			if (_next != null) 
+				evaluatedCandidate = _next.evaluate(candidate);
+
+			return evaluatedCandidate(evaluatedCandidate);  //evualuted further
+		}
+	}
+
+	public class ResidenceEvaluator implements Evaluator{  //leaf object/ cannot go further down
+		public Candidate evaluate(Candidate candidate) {
+			boolean passed = true;
+			if(Math.random() > 0.5)
+				passed = false;
+
+			return new Candidate(candidate.getFirstName(), candidate.getLastName(), candidate.isQualified() && passed, candidate.getEvaluations() + "\nResidenceEvaluator:n" + passed);
+		}
+	}
+
+	public class ExperienceEvaluator extends EvaluatorDecorator {
+		public ExperienceEvaluator(Evaluator next) {
+			super(next);
+		}
+
+		@Override
+		public Candidate evaluateCandidate(Candidate candidate) {
+			boolean passed = true;
+			if(Math.random() > 0.5)
+				passed = false;
+
+			return new Candidate(candidate.getFirstName(), candidate.getLastName(), candidate.isQualified() && passed, candidate.getEvaluations() + "\nExperienceEvaluator:n" + passed);
+
+		}
+	}
+
+	public class CrimeEvaluator extends EvaluatorDecorator {
+		public CrimeEvaluator(Evaluator next) {
+			super(next);
+		}
+
+		@Override
+		public Candidate evaluateCandidate(Candidate candidate) {
+			boolean passed = true;
+			if(Math.random() > 0.5)
+				passed = false;
+
+			return new Candidate(candidate.getFirstName(), candidate.getLastName(), candidate.isQualified() && passed, candidate.getEvaluations() + "\nCrimeEvaluator:n" + passed);
+
+		}
+	}
+
+	public class Main {
+		private static void evaluateCandidate(Candidate candidate, Evaluator evaluator) {
+			System.out.println("Evaluating: " + candidate.getFirstName() + " " + candidate.getLastName());
+
+			System.out.println(evaluator.evaluate(candidate));
+		}
+
+		public static void main(String[] args) {
+			Candidate candidate = new Candidate("John", "Doe", true, "");
+
+			//evaluateCandidate(candidate, new ResidenceEvaluator);
+			//evaluateCandidate(candidate, new ExperienceEvaluator(new ResidenceEvaluator()));
+			evaluateCandidate(candidate, new ExperienceEvaluator(new CrimeEvaluator(new ResidenceEvaluator())));
+		}
+	}
+
+	//we can choose to have different type of combination and and it will still work.
+
+2. When to use Decorator Pattern
+
+	To add responsibilities to individual objects dynamically and transparently, without affecting other objects
+
+	Responsibilities may be withdrawn
+
+	Extension by subclassing is impractical
+
+3. Consequences of using Decorator
+
+	Flexibility compare to static inheritance
+
+	Functionality may be added / removed at runtime
+
+	You only get features you ask for
+
+	Decorator acts as transparent enclosure
+
+	Can't rely on Object indentity //System.out.println(evaluator) will not print the actual object type, it's hidden 
+
+	Lots of little objects
+
+4. Decorator Vs. Other Patterns
+	
+	Adapter changes objects interface. Decorator changes only its responsibilities
+
+	Decorator is not intended for object aggregation like Composite
+
+	Strategy and Decorator are used to change an object. Strategy lets you change the guts of an object. Decorator its skin.
+
+	Adapter changes interface. Proxy preserves and controls interface. Decorator improves the responsibility of the object while preserving the interface
+	
+
+									Quiz Question
+
+1. The main force behind the Decorator pattern is OCP
+2. The main principle used in the solution of the Decorator pattern is DIP
+3. The solution to the Decorator pattern mainly relies upon association
+4. Decorator does not makes heavy use of inheritance as it is a great and flexible way to add responsibilities to an object.
+5. The relationship used in the Decorator pattern is recursive

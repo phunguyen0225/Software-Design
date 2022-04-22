@@ -1,0 +1,122 @@
+									Composite Pattern
+
+"Compose objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly"
+
+1. Example that would benefit from Composite Pattern
+
+	An application wants to be able to use several types of Gates. Gates like AND, OR are primitive, while Gates like Flip-Flops are Containers of other gates. Define the hierarchy of these classes such that the client can treat all the types of Gate classes uniformaly.
+
+
+	---JAVA CODE---
+	public abstract class Gate {
+		public void add(Gate andGate) {
+			throw new RunTimeException("Can't add a gate to that gate");
+		}
+
+		public int getNumberOfComponents() {
+			return 0;
+		}
+	}
+
+	public class ANDGate extends Gate{}
+	public class ORGate extends Gate{}
+
+	public class FlipFlop extends Gate{
+		private List<Gate> _gates = new ArrayList<>();
+		public void add(Gate andGate) {
+			_gates.add(gate);
+		}
+
+		public int getNumberOfComponents() {
+			return _gates.size();
+		}
+	}
+
+	public class Board {
+		private List<Gate> _gates = new ArrayList<>();
+		public void add(Gate gate) {
+			_gates.add(gate);
+		}
+
+		public int getGatesCount() {
+			return _gates.size();
+		}
+
+		public Gate getGateAt(int location) {
+			return _gates.get(location);
+		}
+	}
+
+
+	public class Main {
+		public static void addAGateToFlipFlop(Board board, int location, Gate gate) {
+			Gate gateAtLocation = board.getGateAt(location);
+			gateAtLocation.add(gate)
+		}
+
+		public static void main(String[] args) {
+			Board board = new Board();
+
+			board.add(new ANDGate());
+			board.add(new ORGate());
+			board.add(new ORGate());
+			board.add(new FlipFlop());
+
+			addAGateToAFlipFlop(board, 3, new ANDGate());
+			addAGateToAFlipFlop(board, 3, new ANDGate());
+
+			System.out.println(board.getGatesCount());
+
+			for (int i = 0; i < board.getGatesCount(); i++) {
+				Gate gateAtLocation = board.getGateAt(i);
+				System.out.println(gateAtlocation);
+				int count = gateAtLocation.getNumberOfComponents();
+				if(count > 0) {
+					System.out.println("Contains: " + count + " components");
+				}	
+			}
+		}
+	}
+
+2. When to use Composite Pattern
+
+	You want to represent part-whole hierarchies of objects 
+
+	You want the clients to be able to ignore the differences between the compositions of objects and individual objects. Clients will treat all objects in the composite structure
+
+3. Consequences of using Composite
+
+	Primitive objects recursively composed into more complex objects
+
+	Where ever client code expects primitive object, it can also take a composite
+
+	Simplifies Client code - can treat composite and individual objects uniformly
+
+	Easier to add new kinds of Components
+
+	Makes design overly general
+
+	Harder to restrict the componenets of a composite
+
+4. Composite Vs. Other Patterns
+
+	Used for Chain of Responsibility
+
+	Decorator oftern used with Composite
+
+	Flyweight lets you share components but they no longer refer to their parents
+
+	Iterator can be used to traverse Composites
+
+	Visitor localizes operation and behavior that would otherwise be distributed across composite and leaf classes
+
+
+
+									Quiz Question
+
+1. While the Composite pattern tries to address the LSP, it may end up shifting that issue to another part of code.
+2. The force behind the Composite pattern is LSP
+3. When the Composite pattern is used, some of the classes that implement the abstraction may be more restrictive than other classes
+4. The association between the composite and the component is recurisve
+5. 
+Any time we use a collection of objects, it does not mean we're using the composite pattern.

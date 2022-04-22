@@ -1,0 +1,94 @@
+									Decorator Using Lambdas
+
+---JAVA CODE---
+
+	public class Candidate {
+		final private String _firstName;
+		final private String _lastName;
+		final private boolean _qualified;
+		final private String _evaluations;
+
+		public Candidate(String firstName, String lastName, boolean qualified, String evaluations) {
+			_firstName = firstName;
+			_lastName = lastName;
+			_qualified = qualified;
+			_evaluations = evaluations;
+		}
+
+		public String getFirstName() {return _firstName;}
+		public String getLastName() {return _lastName;}
+		public boolean isQualified() {return _qualified;}
+		public String getEvaluations() {return _evaluations;}
+
+		@Override
+		public String toString() {
+			return String.format("%s %s Qualified: %b based on evaluations: %s", _firstName, _lastName, _qualified, _evaluations)
+		}
+	}
+
+	public interface ResidenceEvaluator {  
+		public static Candidate evaluate(Candidate candidate) {
+			boolean passed = true;
+			if(Math.random() > 0.5)
+				passed = false;
+
+			return new Candidate(candidate.getFirstName(), candidate.getLastName(), candidate.isQualified() && passed, candidate.getEvaluations() + "\nResidenceEvaluator:n" + passed);
+		}
+	}
+
+	public interface ExperienceEvaluator {
+		public static Candidate evaluate(Candidate candidate) {
+			boolean passed = true;
+			if(Math.random() > 0.5)
+				passed = false;
+
+			return new Candidate(candidate.getFirstName(), candidate.getLastName(), candidate.isQualified() && passed, candidate.getEvaluations() + "\nExperienceEvaluator:n" + passed);
+
+		}
+	}
+
+	public interface CrimeEvaluator {
+		public static Candidate evaluate(Candidate candidate) {
+			boolean passed = true;
+			if(Math.random() > 0.5)
+				passed = false;
+
+			return new Candidate(candidate.getFirstName(), candidate.getLastName(), candidate.isQualified() && passed, candidate.getEvaluations() + "\nCrimeEvaluator:n" + passed);
+
+		}
+	}
+
+	public class Main {
+		private static void evaluateCandidate(Candidate candidate, Function<Candidate, Candidate> evaluator) {
+			System.out.println("Evaluating: " + candidate.getFirstName() + " " + candidate.getLastName());
+
+			System.out.println(evaluator.apply(candidate));
+		}
+
+		private static Function<Candidate, Candidate> decorateEvaluators(Function<Candidate, Candidate>... evaluators) {
+			return Stream.of(evaluators)
+						 .reduce(Function::andThen)
+						 .orElse(Function.identity()); //if the input is empty just return the candidate. i.e if the evaluators is empty.
+		}
+
+		public static void main(String[] args) {
+			Candidate candidate = new Candidate("John", "Doe", true, "");
+
+			//evaluateCandidate(candidate, ResidenceEvaluator::evaluate);
+
+			evaluateCandidate(candidate, 
+			decorateEvaluators(ResidenceEvaluator::evaluate,
+			ExperienceEvaluator::evaluate,
+			CrimeEvaluator::evaluate));
+		}
+	}
+
+//change the class into an interface and make the methods static so we can apply lambdas. And then using Function<> to apply and chain the functions together.
+
+									Quiz Question
+
+1. One disadvantage of the Decorator pattern is that we may end up with a lot of little objects forming the chain.
+2. We can form decoration of two functions into one using the andThen method of Function interface
+3. Function is a functional interface in Java 8 that abstracts a function which takes a parameter and returns a result
+4. We can combine multiple Functions together using the andThen and the reduce operation
+5. The abstract method in the Function interface is apply

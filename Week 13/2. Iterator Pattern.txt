@@ -1,0 +1,90 @@
+									Iterator Pattern
+
+	Provide a way to access the elements of an aggregate object sequentially without exposing its underlying representation
+
+---JAVA CODE---
+
+public class Person {
+	private String _firstName;
+	private String _lastName;
+
+	public Person(String firstName, String lastName) {
+		_firstName = firstName;
+		_lastName = lastName;
+	}
+
+	@Override
+	public String to_string() {
+		return String.format("%s %s", _firstName, _lastName);
+	}
+}
+
+public class Main {
+	public static void iterateAndPrint(Iterator<Person> iterator) {
+		while(iterator.hasNext()) {
+			System.out.println(iterator.next());
+		}
+	}
+	public static void main(String[] args) {
+		List<Person> people = new Arrays.asList(
+			new Person("John, "Smith"),
+			new Person("Sara", "Smith"),
+			new Person("Bob", "Walker"));
+
+		iterateAndPrint(people.iterator());
+
+		Set<Person> peopleSet = new HashSet<>();
+		peopleSet.add(new Person("Sara, "Smith"));
+		peopleSet.add(new Person("Jill, "Walker"));
+
+		iterateAndPrint(peopleSet.iterator());
+
+		//1. Consistency of teration or navigation
+		//2. we want to treat the list, set, etc. the same as for as iteration is concerned
+		//we don't care about the specific type of the collection, we just want to iterate
+		//3. We want to work with a view of the data rather than the data itself.
+		//this lets us have multiple different views at the same time
+}
+
+//a List and Set have a different way to iterating through data, an Interator is an iterface we abstract out and the underlaying implementation of a List and Set is different. That is one benefit we get, to hides the implementation while the iterator is an abstraction
+
+1. Example that would benefit from Iterator
+
+	The forces behind the Iterator Pattern is OCP. The principle we use in the solution is DIP
+
+	Several types of collections are available: List, Set, Queue, Vector
+
+	We are interested in performing some operation on each element in a collection, without regard to which collection we use
+
+2. When to use Iterator Pattern
+
+	Elements of an Aggregate needs to be accessed without exposing internal representation of the aggregate
+
+	Multiple traversal on an aggregate
+
+	uniform traversal on different aggregates
+
+3. Consequences of using Iterator
+
+	Supports variations in the traversal
+
+	Simplifies interface of Aggregates
+
+	More than one traversal may be acting on the aggregate at any time
+
+4. Iterator Vs. Other Patterns
+
+	Oftern applied to recursive structures such as Composite
+
+	Factory method instantiate appropriate Iterator
+
+	Memento used in conjunction with Iterator. Iterator stores memento internally to capture the state
+
+
+									Quiz Question
+
+1. The iterator pattern reduces Coupling 
+2. Instead of directly traversing a collection we use iterators because it can provide multiple views
+3. The main principle used in the solution of the iterator pattern is DIP
+4. The factory method pattern is often used to instantiate the iterator.
+5. Iterator can make navigating through a new collection easy.

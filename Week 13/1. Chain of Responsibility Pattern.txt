@@ -1,0 +1,350 @@
+									Chain of Responsibility Pattern
+
+1. Behavioral Patterns
+
+	Concerned with algorithms and assignment of responsibilities
+
+	Patterns of Communication between Objects
+
+2. Chain of Responsibility Pattern
+
+	Avoid coupling the sender of a request to its receriver by giving more than one object a chance to handle the request. Chain the receiving objects and pass the request along the chain until an object handles it
+
+3. Example that would benefit from Chain of Responsibility Pattern
+
+	Various types of Controls are used in an application. Controls handle certain events while they do not handle others. Each control may be invoked from other controls. An event not handled by a control must be passed on to its parent control.
+
+
+	---JAVA CODE---
+
+	public class OurDataSource {
+		private AboutThreshHoldHandler _handler;
+
+		public void start() {
+			Random random = new Random();
+			while(true) {
+				try {
+					Thread.sleep(1000);
+				} catch(InterruptionException e) {
+					e.printStackTrace();
+				}
+
+				int value = random.nextInt(1000);
+				_handler.handle(value);
+			}
+		}
+
+		public void addListener(AboutThreshHoldHandler aboutThreshHoldHandler) {
+			_handler = aboutThreshHoldHandler
+		}
+	}
+
+	public class AboutThreshHoldHandler {
+		private int _threshold;
+
+		public AboutThreshHoldHandler(int threshold) {
+			_threshold = threshold;
+		}
+
+		void handle(int value) {
+			if(value > _threshold)
+				System.out.println("value " + value + " exceeded the threshold " + _threshold);
+		}
+	}
+
+	public class LowerThresholdHandler {
+		private in _threshold;
+
+		public LowerThresholdHandler(int threshold) {
+			_threshold = threshold;
+		}
+
+		public void handle(int value) {
+			if(value < _threshold)
+				System.out.println("value " + value + " is below the threshold " + _threshold);
+		}
+	}
+	public class Main {
+		public static void main(String[] args) {
+			OurDataSource ourDataSource = new OurDataSource();
+
+			AboutThreshHoldHandler aboutThreshHoldHandler = new AboutThreshHoldHandler(900);
+			LowerThresholdHandler lowerThresholdHandler = new LowerThresholdHandler(100);
+
+			ourDataSource.addListener(aboutThreshHoldHandler);
+			ourDataSource.addListener(lowerThresholdHandler);
+
+			ourDataSource.start();
+		}
+	}
+
+	//the code above have a few problem. It first violate OCP because everytime we want to add a new handler we have to comeback and change the code. Second problem is, how do we know which one of the handle is really going to handle the request. TO change this we would have a handler in ourDataSource and that handler decide what to do with it. 
+
+
+	---JAVA CODE---
+
+	public class OurDataSource {
+		private OurDataHandler _handler;
+
+		public void start() {
+			Random random = new Random();
+			while(true) {
+				try {
+					Thread.sleep(1000);
+				} catch(InterruptionException e) {
+					e.printStackTrace();
+				}
+
+				int value = random.nextInt(1000);
+				_handler.handle(value);
+			}
+		}
+
+		public void addListener(OurDataHandler handler) {
+			_handler = handler
+		}
+	}
+
+	public abstract class OurDataHandler {
+		private OurDataHandler _next;
+
+		public OurDataHandler() {}
+
+		public OurDataHandler(OurDataHandler next) {
+			_next = next;
+		}
+
+		public final void handle(int value) {
+			if(canHandleEvent(value))
+				handleEvent(value);
+			else
+				if(_next != null)
+					_next.handle(value)
+		}
+
+		protected abstract boolean canHandleEvent(int value);
+		protected abstract void handleEvent(int value);
+	}
+
+	public class AboveThreshHoldHandler extends OurDataHandler{
+		private int _threshold;
+
+		public AboveThreshHoldHandler(int threshold) {
+			super();
+			_threshold = threshold;
+		}
+
+		public AboveThreshHoldHandler(int threshold, OurDataHandler next) {
+			super(next);
+			_threshold = threshold;
+		}
+
+		@Override
+		protected boolean canHandleEvent(int value) {
+			return value > _threshold;
+		}
+
+		public void handleEvent(int value) {
+			System.out.println("value " + value + " exceeded the threshold " + _threshold);
+		}
+	}
+
+	public class LowerThresholdHandler extends OurDataHandler{
+		private int _threshold;
+
+		public LowerThresholdHandler() {super();}
+
+		public LowerThresholdHandler(int threshold, OurDataHandler next) {
+			super(next);
+			_threshold = threshold;
+		}
+
+		@Override
+		protected boolean canHandleEvent(int value) {
+			return value < _threshold;
+		}
+
+		public void handleEvent(int value) {
+			System.out.println("value " + value + " is below the threshold " + _threshold);
+		}
+	}
+
+	public class EvenValueHandler extends OurDataHandler {
+		public EvenValueHandler() {super();}
+		public EvenValueHandler(OurDataHandler next) {super(next);}
+
+		@Override
+		protected boolean canHandleEvent(int value) {
+			return value % 2 == 0;
+		}
+
+		@Override
+		protected void handleEvent(int value) {
+			System.out.println("value " + value + " is even");
+		}
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			OurDataSource ourDataSource = new OurDataSource();
+
+			OurDataHandler aboveThreshHoldHandler = new AboveThreshHoldHandler(900);
+			OurDataHandler evenValueHandler = new EvenValueHandler(aboveThreshHoldHandler);
+			LowerThresholdHandler lowerThresholdHandler = new LowerThresholdHandler(100, evenValueHandler);
+
+			ourDataSource.addListener(lowerThresholdHandler);
+
+			ourDataSource.start();
+		}
+	}
+
+	//lower will talk to even, even will talk to aobe, and above is the last one it wouldnt do anything. We can further reduce the noise of null by using Optional
+
+
+	---JAVA CODE---
+
+	public class OurDataSource {
+		private OurDataHandler _handler;
+
+		public void start() {
+			Random random = new Random();
+			while(true) {
+				try {
+					Thread.sleep(1000);
+				} catch(InterruptionException e) {
+					e.printStackTrace();
+				}
+
+				int value = random.nextInt(1000);
+				_handler.handle(value);
+			}
+		}
+
+		public void addListener(OurDataHandler handler) {
+			_handler = handler
+		}
+	}
+
+	public abstract class OurDataHandler {
+		private Optional<OurDataHandler> _next = Optional.empty();
+
+		public OurDataHandler() {}
+
+		public OurDataHandler(OurDataHandler next) {
+			_next = Optional.of(next);
+		}
+
+		public final void handle(int value) {
+			if(canHandleEvent(value))
+				handleEvent(value);
+			else
+				_next.ifPresent(next -> next.handle(value));
+		}
+
+		protected abstract boolean canHandleEvent(int value);
+		protected abstract void handleEvent(int value);
+	}
+
+	public class AboveThreshHoldHandler extends OurDataHandler{
+		private int _threshold;
+
+		public AboveThreshHoldHandler(int threshold) {
+			super();
+			_threshold = threshold;
+		}
+
+		public AboveThreshHoldHandler(int threshold, OurDataHandler next) {
+			super(next);
+			_threshold = threshold;
+		}
+
+		@Override
+		protected boolean canHandleEvent(int value) {
+			return value > _threshold;
+		}
+
+		public void handleEvent(int value) {
+			System.out.println("value " + value + " exceeded the threshold " + _threshold);
+		}
+	}
+
+	public class LowerThresholdHandler extends OurDataHandler{
+		private int _threshold;
+
+		public LowerThresholdHandler() {super();}
+
+		public LowerThresholdHandler(int threshold, OurDataHandler next) {
+			super(next);
+			_threshold = threshold;
+		}
+
+		@Override
+		protected boolean canHandleEvent(int value) {
+			return value < _threshold;
+		}
+
+		public void handleEvent(int value) {
+			System.out.println("value " + value + " is below the threshold " + _threshold);
+		}
+	}
+
+	public class EvenValueHandler extends OurDataHandler {
+		public EvenValueHandler() {super();}
+		public EvenValueHandler(OurDataHandler next) {super(next);}
+
+		@Override
+		protected boolean canHandleEvent(int value) {
+			return value % 2 == 0;
+		}
+
+		@Override
+		protected void handleEvent(int value) {
+			System.out.println("value " + value + " is even");
+		}
+	}
+
+	public class Main {
+		public static void main(String[] args) {
+			OurDataSource ourDataSource = new OurDataSource();
+
+			OurDataHandler aboveThreshHoldHandler = new AboveThreshHoldHandler(900);
+			OurDataHandler evenValueHandler = new EvenValueHandler(aboveThreshHoldHandler);
+			LowerThresholdHandler lowerThresholdHandler = new LowerThresholdHandler(100, evenValueHandler);
+
+			ourDataSource.addListener(lowerThresholdHandler);
+			ourDataSource.start();
+		}
+	}
+
+4. When to use Chain of Responsibility
+
+	More than one object may handle a request, and the handler isn't known ahead of time
+
+	One of several objects may be the intended receiver
+
+	Set of objects that handle request is dynamic
+
+
+5. Consequences of using Chain of Responsibility
+
+	Reduced Coupling
+
+	Flexibility in asssigning responsibilities
+
+	Distributes responsibilities among objects
+
+	Receipts isn't guaranteed
+
+6. Chain of Responsibility vs Other Patterns
+
+	Often used with Composite
+
+	Parent acts as Successor
+
+									Quiz Question
+
+1. While implementing the chain of responsibility principle, be mindful of duplicated code, keep the code DRY
+2. The chaining of the handlers is managed by the abstract handler
+3. The principle force behind this pattern is OCP
+4. The main design concern that the chain of responsibility pattern address is coupling
+5. The chain of responsibility is useful when the specific handler may not be known ahead of time

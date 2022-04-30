@@ -1,0 +1,77 @@
+									Internal vs. External Iterators
+
+1. Iteration
+
+	- navigate through a collection 
+
+2. Good old external iteration
+
+---JAVA CODE---
+
+public class Main {
+	public static void main(String[] args) {
+		List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+
+		for(int i = 0; i < numbers.size(); i++) {
+			System.out.println(numbers.get(i));
+		}
+	}
+}
+
+3. What's wrong with it?
+
+	- Too many moving parts
+	- A lot of noise
+
+4. A better form of external iteration
+
+---JAVA CODE---
+
+public class Main {
+	public static void main(String[] args) {
+		List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+
+		for(int element : numbers) {
+			System.out.println(element);
+		}
+	}
+}
+
+5. What's wrong with external interation?
+
+	- Controlling the iterations
+
+6. Trading that to internal interation
+
+---JAVA CODE---
+
+public class Main {
+	public static void main(String[] args) {
+		List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+
+		numbers.forEach(new Consumer<Integer>() {
+			public void accept(Integer value) {
+				System.out.println(value);
+			}
+		});
+	}
+}
+
+
+7. What are the benefits?
+
+	- Indicate what we want to do instead of how we want to do it
+	- lose control is a good thing here
+	- polymorphism, the object can decide how to control the loop, and can make judgement
+
+8. Avoiding the ceremony
+
+---JAVA CODE---
+
+public class Main {
+	public static void main(String[] args) {
+		List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+
+		numbers.forEach(value -> System.out.println(value));
+	}
+}

@@ -1,0 +1,182 @@
+									Mediator Pattern
+
+	Define an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from referring to each other explicitly, and it lets you vary their interaction independently
+
+1. Example that would benefit from Mediator
+
+	An application is used to design Wheels. The diamater of the rim is restricteed by the Hub diameter. The tire diameter is dependent on the rim. The spokes length needs to be altered if hub diameter or rim diameter is changed.
+
+
+---JAVA CODE---
+
+public class Tire{
+	private Wheel _wheel;
+	private int _radius;
+
+	public Tire(Wheel wheel) {
+		_wheel = wheel;
+		_wheel.setTire(this);
+	}
+
+	void setRadius(int radius){_radius = radius;}
+
+	public boolean changeRadius(int radius) {
+		return _wheel.setRadius(this, radius);
+	}
+
+	public int getRadius() {return _radius;}
+
+	@Override
+	public String toString() {
+		return getClass().toString() + " radius: " + _radius;
+	}
+}
+
+public class Hub{
+	private Wheel _wheel;
+	private int _radius;
+
+	public Hub(Wheel wheel) {
+		_wheel = wheel;
+		_wheel.setHub(this);
+
+	}
+	void setRadius(int radius) {_radius = radius;}
+
+	public boolean changeRadius(int radius) {
+		return _wheel.setRadius(this, radius);
+	}
+
+	public int getRadius() {return _radius;}
+
+	@Override
+	public String toString() {
+		return getClass().toString() + " radius: " + _radius;
+	}
+}
+
+public class Spoke{
+	private Wheel wheel;
+	private int _size;
+
+	public Spoke(Wheel wheel) {
+		_wheel = wheel;
+		_wheel.setSpoke(this);
+	}
+
+	void setSize(int size) {_size = size;}
+
+	public boolean changeSize(int size) {
+		return _wheel.setSize(this, size);
+	}
+
+	public void getSize(){return _size;}
+
+	@Override
+	public String toString() {
+		return getClass().toString() + " size: " + _size;
+	}
+}
+
+public class Wheel {
+	private Tire _tire;
+	private Hub _hub;
+	private Spoke _spoke;
+
+	public void setTire(Tire tire) {_tire = tire;}
+	public void getTire(){return _tire;}
+
+	public void setHub(Hub hub) {_hub = hub;}
+	public void getHub(){return _hub;}
+
+	public void setSpoke(Spoke spoke) {_spoke = spoke;}
+	public void getSpoke(){return _spoke;}
+
+	public boolean setRadius(Tire tire, int radius) {
+		if(_hub == null || _hub.getRadius() < radius) {
+			tire.setRadius(radius);
+			_spoke.setSize(_tire.getRadius() - hub.getRadius());
+			return true;
+		}
+		return false;
+	}
+
+	public boolean setRadius(Hub hub, int radius) {
+		if(_tire == null || _tire.getRadius() > radius) {
+			_hub.setRadius(radius);
+			_spoke.setSize(_tire.getRadius() - hub.getRadius());
+			return true;
+		}
+		return false;
+	}
+
+	public boolean setSize(Spoke spoke, int size) {
+		if(_tire == null || _hub == null || _tire.getRadius() - _hub.getRadius() == size) {
+			spoke.setSize(size);
+			return true;
+		}
+		return false;
+	}
+}
+
+
+public class Main{
+	public static void main(String[] args) {
+		Wheel wheel = new Wheel();   //a mediator that couples to Tire, Hub and Spoke
+
+		Tire tire = new Tire(wheel);
+		Hub hub = new Hub(wheel);
+		Spoke spoke = new Spoke(wheel);
+
+		tire.changeRadius(100);
+		hub.changeRadius(20);
+		spoke.changeSize(80);
+
+	
+
+		System.out.println(tire);
+		System.out.println(hub);
+		System.out.println(spoke);
+	}	
+}
+
+2. When to use Mediator Pattern
+
+	Set of objects communicate in complex well defined way. 
+
+	You want to reduce interdependecy between objects
+
+	Reusing object is difficult if it refers to serveral other objects
+
+	Behavior distributed between several classes must be customizable wihtout lot of sub-classing
+
+3. COnsequences of using Mediator
+
+	Localizes behavior that may otherwise be distributed among several objects
+
+	Subclass mediator to change this behavior
+
+	Decouples Colleagues
+
+	Replaces many-to-many interactions with one-to-many interaction
+
+	Easy to maintain, extend and understand
+
+4. Mediator Vs. Other Pattern
+	
+	Facade:
+
+		In mediator, Colleague objects know Mediator
+
+		In Facade subsytem classes do not see Facade
+
+	Colleagues may communicate with Mediator using Observer
+
+
+									Quiz Question
+
+1. In the mediator pattern, the business logic related to interactions, that may otherwise be spread out, is centralized into the
+2. Mediator encapsulates how a set of objects interact
+3. The mediator helps to turn a nxn relationship to a 1xn relationship.
+4. The mediator may be considered a sacrificial class that's introduced to reduce coupling.
+5. The colleagues know the mediator instead of knowing each other.

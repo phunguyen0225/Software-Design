@@ -1,0 +1,104 @@
+									Observer Pattern
+
+	Define a one-to-many dependecy between objects so that when one object changes state, all its dependents are notified and updated automatically
+
+1. Example that would benefit from Observer Pattern
+
+	You have serval views of a document. Graph View, Tabular View, Chartview, etc.... The user may change the data of a document from any of the visible views. You want to keep all the views synched with the change to the document's data.
+
+
+---JAVA CODE---
+
+public class Stock extends Observable {
+	public void generatePrice() {
+		while(true) {
+			sleep(1000);
+			double value = Math.random();
+			notifyObservers(value);
+			setChanged();
+		}
+	}
+
+	private void sleep(int ms) {
+		try {
+			Thread.sleep(ms);
+		} catch (e) {}
+	}
+
+	public void start() {
+		Thread th = new Thread(()- > generatePrice());
+		th.start();
+	}
+}
+
+public class DisplayStock implements Observer {
+	@Override
+	public void update(Observable observable, Object data) {
+		System.out.println("Stock value: " + data);
+	}
+}
+
+public class DisplaySelectStock implements Observer{
+	private double _threshold;
+
+	public DisplaySelectStock(double threshold) {
+		_threshold = threshold;
+	}
+
+	@Override
+	public void update(Observable observable, Object data) {
+		double value = (double) data;
+		if (value > _threshold)
+			System.out.println("Stock value exceeds the threshold: " + value);
+	}
+}
+
+public class Main{
+	public static void main(String[] args) {
+		Stock stock = new Stock();
+		DisplayStock display = new DisplayStock();
+		DisplaySelectStock displaySelectStock = new DisplaySelectStock();
+
+		stock.addObserver(display);
+		stock.addObserver(displaySelectStock);
+		stock.start();
+	}
+}
+
+//the Stock class no longer depends on the DisplayStock class. Instead the stock become the Observable, and whenever there is a change in data, it simply notifies its observers. 
+
+
+2. When to use Observer 
+
+	When an abstraction has two aspects one dependent on the other. Encapsulating these aspects in separate objects lets you vary and reuse them independently
+
+	Change to one object requires change to others
+
+	Don't know how many objects need change
+
+	Object is able to notify other objects without knowing who these objects are - don't want tight coupling
+
+3. Consequences of using Observer
+	
+	Abstract the coupling between observers and subject
+
+	Support for broadcast communication
+
+	Unexpected updates
+
+	May be expensive and untimely
+
+	May abstract a hint on the subject change
+
+4. Observer Vs. Other Pattern
+
+	Mediator may be used to mediate between several subjects and observers
+
+
+									Quiz Question
+
+1. The principles involved in the observer pattern are DIP and OCP
+2. The observer pattern decouples the event source from the receivers of the event.
+3. The main principle used in the solution of the observer pattern is the DIP
+4. The principle force behind the observer pattern is the OCP
+5. Structurally both the observer and the bridge pattern have similar structure.
